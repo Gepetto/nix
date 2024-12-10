@@ -71,7 +71,7 @@
             with pkgs;
             writeShellApplication {
               name = "nixgl-gepetto-gui";
-              text = "${lib.getExe nixgl.auto.nixGLDefault} ${lib.getExe python3Packages.gepetto-gui}";
+              text = "${lib.getExe' nixgl.auto.nixGLDefault "nixGL"} ${lib.getExe python3Packages.gepetto-gui}";
             };
           python = pkgs.python3.withPackages (p: [
             p.example-robot-data
