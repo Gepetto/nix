@@ -38,22 +38,50 @@
                 inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
               };
             })
+            (_super: prev: {
+              # Override protobuf version to ensure compatibility
+              protobuf = prev.protobuf3_21;
+            })
           ];
           patches = [
             inputs.patch-example-robot-data
             inputs.patch-hpp
           ];
         };
+        pure-packages = [
+          pkgs.colcon
+          self.packages.${system}.python
+          self.packages.${system}.ros
+        ];
+        # Precompute the BASE_DIR path
+        baseDir = pkgs.python3Packages.example-robot-data.outPath;
+        # Define the shared shell hook, referencing the precomputed path
+        sharedShellHook = ''
+          if [ -z "$BASE_DIR" ]; then
+            echo "Error: Could not locate the example-robot-data package." >&2
+          else
+            SHARE_DIR=$BASE_DIR
+            export AMENT_PREFIX_PATH=$SHARE_DIR:$AMENT_PREFIX_PATH
+            export ROS_PACKAGE_PATH=$SHARE_DIR/share:$ROS_PACKAGE_PATH
+            echo "Added $SHARE_DIR to AMENT_PREFIX_PATH and ROS_PACKAGE_PATH"
+          fi
+        '';
       in
       {
         devShells = {
           default = pkgs.mkShell {
-            name = "Gepetto Main Dev Shell";
-            packages = [
-              pkgs.colcon
-              self.packages.${system}.python
-              self.packages.${system}.ros
+            name = "Gepetto Main Dev Shell with NixGL";
+            packages = pure-packages ++ [
+              self.packages.${system}.nixgl-gepetto-gui
             ];
+          };
+          pure = pkgs.mkShell {
+            name = "Gepetto Main Dev Shell";
+            packages = pure-packages;
+            shellHook = ''
+              export BASE_DIR='${baseDir}'
+              ${sharedShellHook}
+            '';
           };
         };
         packages = {
@@ -67,7 +95,10 @@
             buildEnv {
               paths = [
                 ros-core
-                turtlesim
+                rmw-fastrtps-cpp
+                rmw-cyclonedds-cpp
+                plotjuggler
+                plotjuggler-ros
                 pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
                 pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
               ];
