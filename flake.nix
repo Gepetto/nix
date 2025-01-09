@@ -39,7 +39,7 @@
               };
             })
             (_super: prev: {
-              # Override protobuf version to ensure compatibility
+              # Override protobuf version to ensure compatibility with plotjuggler.
               protobuf = prev.protobuf3_21;
             })
           ];
