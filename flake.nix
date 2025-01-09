@@ -49,14 +49,18 @@
           ];
         };
         pure-packages = [
+          pkgs.eigen
+          pkgs.octomap # from coal?
           pkgs.colcon
           self.packages.${system}.python
           self.packages.${system}.ros
         ];
         # Precompute the BASE_DIR path
         baseDir = pkgs.python3Packages.example-robot-data.outPath;
+        rosDir = self.packages.${system}.ros.outPath;
         # Define the shared shell hook, referencing the precomputed path
         sharedShellHook = ''
+          export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
           if [ -z "$BASE_DIR" ]; then
             echo "Error: Could not locate the example-robot-data package." >&2
           else
@@ -95,10 +99,22 @@
             buildEnv {
               paths = [
                 ros-core
+                # linear-feedback-controller-msgs
+                ament-cmake-core
+                eigen3-cmake-module
+                tf2-eigen
+                python-cmake-module
+                # linear-feedback-controller
+                urdfdom
+                urdfdom-headers
+                generate-parameter-library
+                ros2-control
+                control-toolbox
+                # Others
                 rmw-fastrtps-cpp
-                rmw-cyclonedds-cpp
                 plotjuggler
                 plotjuggler-ros
+                pal-statistics
                 pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
                 pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
               ];
