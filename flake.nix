@@ -3,6 +3,8 @@
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
 
+    # nix-gazebo-sim-overlay.url = "github:muellerbernd/gazebo-sim-overlay/main";
+
     ## Patches for nixpkgs
     # init HPP v6.0.0
     # also: hpp-fcl v2.4.5 -> coal v3.0.0
@@ -32,6 +34,7 @@
         pkgs = import ./patched-nixpkgs.nix {
           inherit nixpkgs system;
           overlays = [
+            # inputs.nix-gazebo-sim-overlay.overlays.default
             inputs.nix-ros-overlay.overlays.default
             (_super: prev: {
               gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
@@ -49,11 +52,14 @@
           ];
         };
         pure-packages = [
-          pkgs.eigen
+          pkgs.eigen # Dependencies package for pinocchio and many package
           pkgs.octomap # from coal?
-          pkgs.colcon
-          self.packages.${system}.python
-          self.packages.${system}.ros
+          pkgs.colcon # ROS2 super-builder
+          # Gazebo Ignition?
+          # pkgs.gazebo
+          #
+          self.packages.${system}.python # Python packages see below
+          self.packages.${system}.ros # ROS packages see below
         ];
         # Precompute the BASE_DIR path
         baseDir = pkgs.python3Packages.example-robot-data.outPath;
@@ -65,9 +71,9 @@
             echo "Error: Could not locate the example-robot-data package." >&2
           else
             SHARE_DIR=$BASE_DIR
-            export AMENT_PREFIX_PATH=$SHARE_DIR:$AMENT_PREFIX_PATH
-            export ROS_PACKAGE_PATH=$SHARE_DIR/share:$ROS_PACKAGE_PATH
-            echo "Added $SHARE_DIR to AMENT_PREFIX_PATH and ROS_PACKAGE_PATH"
+            # export AMENT_PREFIX_PATH=$SHARE_DIR:$AMENT_PREFIX_PATH
+            # export ROS_PACKAGE_PATH=$SHARE_DIR/share:$ROS_PACKAGE_PATH
+            # echo "Added $SHARE_DIR to AMENT_PREFIX_PATH and ROS_PACKAGE_PATH"
           fi
         '';
       in
@@ -99,12 +105,12 @@
             buildEnv {
               paths = [
                 ros-core
-                # linear-feedback-controller-msgs
+                # linear-feedback-controller-msgs dependencies
                 ament-cmake-core
                 eigen3-cmake-module
                 tf2-eigen
                 python-cmake-module
-                # linear-feedback-controller
+                # linear-feedback-controller dependencies
                 urdfdom
                 urdfdom-headers
                 generate-parameter-library
