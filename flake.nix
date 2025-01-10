@@ -51,47 +51,28 @@
             inputs.patch-hpp
           ];
         };
-        pure-packages = [
-          pkgs.eigen # Dependencies package for pinocchio and many package
-          pkgs.octomap # from coal?
-          pkgs.colcon # ROS2 super-builder
-          # Gazebo Ignition?
-          # pkgs.gazebo
-          #
-          self.packages.${system}.python # Python packages see below
-          self.packages.${system}.ros # ROS packages see below
-        ];
         # Precompute the BASE_DIR path
         baseDir = pkgs.python3Packages.example-robot-data.outPath;
         rosDir = self.packages.${system}.ros.outPath;
         # Define the shared shell hook, referencing the precomputed path
         sharedShellHook = ''
-          export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-          if [ -z "$BASE_DIR" ]; then
-            echo "Error: Could not locate the example-robot-data package." >&2
-          else
-            SHARE_DIR=$BASE_DIR
-            # export AMENT_PREFIX_PATH=$SHARE_DIR:$AMENT_PREFIX_PATH
-            # export ROS_PACKAGE_PATH=$SHARE_DIR/share:$ROS_PACKAGE_PATH
-            # echo "Added $SHARE_DIR to AMENT_PREFIX_PATH and ROS_PACKAGE_PATH"
-          fi
+
         '';
       in
       {
         devShells = {
           default = pkgs.mkShell {
             name = "Gepetto Main Dev Shell with NixGL";
-            packages = pure-packages ++ [
-              self.packages.${system}.nixgl-gepetto-gui
+            packages = [
+              pkgs.eigen # Dependencies package for pinocchio and many package
+              pkgs.octomap # from coal?
+              pkgs.colcon # ROS2 super-builder
+              # Gazebo Ignition?
+              # pkgs.gazebo
+              #
+              self.packages.${system}.python # Python packages see below
+              self.packages.${system}.ros # ROS packages see below
             ];
-          };
-          pure = pkgs.mkShell {
-            name = "Gepetto Main Dev Shell";
-            packages = pure-packages;
-            shellHook = ''
-              export BASE_DIR='${baseDir}'
-              ${sharedShellHook}
-            '';
           };
         };
         packages = {
