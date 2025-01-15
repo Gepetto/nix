@@ -29,7 +29,7 @@
       url = "github:loco-3d/linear-feedback-controller-msgs/humble-devel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     linear-feedback-controller = {
       url = "github:loco-3d/linear-feedback-controller/humble";
       inputs.nixpkgs.follows = "nixpkgs";
