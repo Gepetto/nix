@@ -3,8 +3,6 @@
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
 
-    # nix-gazebo-sim-overlay.url = "github:muellerbernd/gazebo-sim-overlay/main";
-
     ## Patches for nixpkgs
     # init HPP v6.0.0
     # also: hpp-fcl v2.4.5 -> coal v3.0.0
@@ -25,7 +23,19 @@
       url = "github:Gepetto/gepetto-viewer/devel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Add linear-feedback-controller
+    linear-feedback-controller-msgs = {
+      url = "github:loco-3d/linear-feedback-controller-msgs/humble-devel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    linear-feedback-controller = {
+      url = "github:loco-3d/linear-feedback-controller/humble";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
+
   outputs =
     { nixpkgs, self, ... }@inputs:
     inputs.nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
@@ -40,8 +50,8 @@
               gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
                 inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
               };
-            })
-            (_super: prev: {
+              linear-feedback-controller = inputs.linear-feedback-controller.packages.${system}.linear-feedback-controller;
+              linear-feedback-controller-msgs = inputs.linear-feedback-controller-msgs.packages.${system}.linear-feedback-controller-msgs;
               # Override protobuf version to ensure compatibility with plotjuggler.
               protobuf = prev.protobuf3_21;
             })
@@ -56,7 +66,7 @@
         rosDir = self.packages.${system}.ros.outPath;
         # Define the shared shell hook, referencing the precomputed path
         sharedShellHook = ''
-
+          export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
         '';
       in
       {
@@ -86,19 +96,14 @@
             buildEnv {
               paths = [
                 ros-core
-                # linear-feedback-controller-msgs dependencies
-                ament-cmake-core
+                # To use with linear-feedback-controller-msgs
                 eigen3-cmake-module
-                tf2-eigen
-                python-cmake-module
-                # linear-feedback-controller dependencies
-                urdfdom
-                urdfdom-headers
-                generate-parameter-library
-                ros2-control
-                control-toolbox
+                rosidl-typesupport-c
+                pkgs.linear-feedback-controller
+                pkgs.linear-feedback-controller-msgs
                 # Others
-                rmw-fastrtps-cpp
+                rmw-fastrtps-cpp # Add both to choose dynamically
+                rmw-cyclonedds-cpp # Add both to choose dynamically
                 plotjuggler
                 plotjuggler-ros
                 pal-statistics
