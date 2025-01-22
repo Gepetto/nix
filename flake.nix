@@ -24,14 +24,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Add linear-feedback-controller
+    # Ongoing development packages
     linear-feedback-controller-msgs = {
       url = "github:loco-3d/linear-feedback-controller-msgs/humble-devel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     linear-feedback-controller = {
       url = "github:loco-3d/linear-feedback-controller/humble";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    franka_description = {
+      url = "github:agimus-project/franka_description/humble_devel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -50,8 +53,12 @@
               gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
                 inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
               };
+              #
               linear-feedback-controller = inputs.linear-feedback-controller.packages.${system}.linear-feedback-controller;
+              #
               linear-feedback-controller-msgs = inputs.linear-feedback-controller-msgs.packages.${system}.linear-feedback-controller-msgs;
+              #
+              franka_description = inputs.franka_description.packages.${system}.franka_description;
               # Override protobuf version to ensure compatibility with plotjuggler.
               protobuf = prev.protobuf3_21;
             })
@@ -67,6 +74,11 @@
         # Define the shared shell hook, referencing the precomputed path
         sharedShellHook = ''
           export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+          export CMAKE_PREFIX_PATH="$$NIXPKGS_CMAKE_PREFIX_PATH:$${CMAKE_PREFIX_PATH}"
+
+          # Enable colcon-argcomplete autocompletion
+          activate-global-python-argcomplete
+          source ${pkgs.python3Packages.colcon-argcomplete.out}/share/colcon_argcomplete/hook/colcon-argcomplete.bash
         '';
       in
       {
@@ -77,6 +89,7 @@
               pkgs.eigen # Dependencies package for pinocchio and many package
               pkgs.octomap # from coal?
               pkgs.colcon # ROS2 super-builder
+              pkgs.python3Packages.colcon-argcomplete # ROS2 super-builder argcomplete
               # Gazebo Ignition?
               # pkgs.gazebo
               #
@@ -90,6 +103,7 @@
             p.crocoddyl
             p.gepetto-gui
             p.hpp-corba
+            p.mim-solvers
           ]);
           ros =
             with pkgs.rosPackages.humble;
