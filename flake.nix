@@ -33,8 +33,8 @@
       url = "github:loco-3d/linear-feedback-controller/humble";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    franka_description = {
-      url = "github:agimus-project/franka_description/humble_devel";
+    franka-description = {
+      url = "github:agimus-project/franka_description/humble-devel";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -58,7 +58,7 @@
               #
               linear-feedback-controller-msgs = inputs.linear-feedback-controller-msgs.packages.${system}.linear-feedback-controller-msgs;
               #
-              franka_description = inputs.franka_description.packages.${system}.franka_description;
+              franka-description = inputs.franka-description.packages.${system}.franka-description;
               # Override protobuf version to ensure compatibility with plotjuggler.
               protobuf = prev.protobuf3_21;
             })
@@ -71,15 +71,7 @@
         # Precompute the BASE_DIR path
         baseDir = pkgs.python3Packages.example-robot-data.outPath;
         rosDir = self.packages.${system}.ros.outPath;
-        # Define the shared shell hook, referencing the precomputed path
-        sharedShellHook = ''
-          export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-          export CMAKE_PREFIX_PATH="$$NIXPKGS_CMAKE_PREFIX_PATH:$${CMAKE_PREFIX_PATH}"
-
-          # Enable colcon-argcomplete autocompletion
-          activate-global-python-argcomplete
-          source ${pkgs.python3Packages.colcon-argcomplete.out}/share/colcon_argcomplete/hook/colcon-argcomplete.bash
-        '';
+        rosidlDir = "${pkgs.rosPackages.humble.rosidl-generator-cpp.outPath}/share/rosidl_generator_cpp/resource";
       in
       {
         devShells = {
@@ -96,6 +88,22 @@
               self.packages.${system}.python # Python packages see below
               self.packages.${system}.ros # ROS packages see below
             ];
+            shellHook = ''
+              export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+              export CMAKE_PREFIX_PATH="$NIXPKGS_CMAKE_PREFIX_PATH:$CMAKE_PREFIX_PATH"
+
+              # Enable colcon-argcomplete autocompletion
+              activate-global-python-argcomplete
+              source ${pkgs.python3Packages.colcon-argcomplete.outPath}/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+
+              # Enable ros to find idl template
+              if [ -d "${rosidlDir}" ]; then
+                export ROSIDL_TEMPLATES_PATH="${rosidlDir}"
+              else
+                echo "Error: ROSIDL templates directory not found!"
+                return 1
+              fi
+            '';
           };
         };
         packages = {
@@ -104,6 +112,7 @@
             p.gepetto-gui
             p.hpp-corba
             p.mim-solvers
+            pkgs.rosPackages.humble.xacro # Use the ROS package instead
           ]);
           ros =
             with pkgs.rosPackages.humble;
@@ -112,7 +121,6 @@
                 ros-core
                 # To use with linear-feedback-controller-msgs
                 eigen3-cmake-module
-                rosidl-typesupport-c
                 pkgs.linear-feedback-controller
                 pkgs.linear-feedback-controller-msgs
                 # Others
@@ -122,7 +130,31 @@
                 plotjuggler-ros
                 pal-statistics
                 pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
-                pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
+                pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATHl
+                # Build ros msgs packages.
+                rosidl-adapter
+                rosidl-cli
+                rosidl-cmake
+                rosidl-default-generators
+                rosidl-default-runtime
+                rosidl-generator-c
+                rosidl-generator-cpp
+                rosidl-generator-dds-idl
+                rosidl-generator-py
+                rosidl-parser
+                rosidl-runtime-c
+                rosidl-runtime-cpp
+                rosidl-runtime-py
+                rosidl-typesupport-c
+                rosidl-typesupport-cpp
+                rosidl-typesupport-fastrtps-c
+                rosidl-typesupport-fastrtps-cpp
+                rosidl-typesupport-interface
+                rosidl-typesupport-introspection-c
+                rosidl-typesupport-introspection-cpp
+                # Robot descriptions
+                xacro
+                # pkgs.franka-description
               ];
             };
         };

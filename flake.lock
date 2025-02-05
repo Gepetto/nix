@@ -90,21 +90,21 @@
         "type": "github"
       }
     },
-    "franka_description": {
+    "franka-description": {
       "inputs": {
         "nix-ros-overlay": "nix-ros-overlay"
       },
       "locked": {
-        "lastModified": 1736955143,
-        "narHash": "sha256-xnwRBZmzraZOFu9qKwKwwz4twvKLW2gIFeQzpziiGoM=",
+        "lastModified": 1738575305,
+        "narHash": "sha256-KPDQ15USDBZN/9dsxTheOr5MICVzFPQb+leZhevWZno=",
         "owner": "agimus-project",
         "repo": "franka_description",
-        "rev": "ff76abb19362ce3c002af415699ca037f90072a6",
+        "rev": "77a3284a94e5a7059223af0bc537f30b9aaf4607",
         "type": "github"
       },
       "original": {
         "owner": "agimus-project",
-        "ref": "humble_devel",
+        "ref": "humble-devel",
         "repo": "franka_description",
         "type": "github"
       }
@@ -374,7 +374,7 @@
     },
     "root": {
       "inputs": {
-        "franka_description": "franka_description",
+        "franka-description": "franka-description",
         "gepetto-viewer": "gepetto-viewer",
         "linear-feedback-controller": "linear-feedback-controller",
         "linear-feedback-controller-msgs": "linear-feedback-controller-msgs_2",
