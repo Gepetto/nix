@@ -134,7 +134,7 @@
     "patch-osg": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-X3dFgNkXOXyNGJmnR+FRuLCsBcyN8CZk/MXzu1EeGzA=",
+        "narHash": "sha256-gJL0e5cGFzUGLQOefln8FUqAGNXdjb6QceakP1KGH/o=",
         "type": "file",
         "url": "https://github.com/NixOS/nixpkgs/pull/384430.patch"
       },
@@ -146,7 +146,7 @@
     "patch-piqp": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-ELsBThA2/Z3z12UObkVM8lkreq99MbChQP7E4dmqM6s=",
+        "narHash": "sha256-r+kYmIImYLYj3PnCSpG5Yfs8SR/v412l0+SKim72B7s=",
         "type": "file",
         "url": "https://github.com/NixOS/nixpkgs/pull/374657.patch"
       },
