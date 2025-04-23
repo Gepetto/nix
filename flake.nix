@@ -26,6 +26,10 @@
       url = "https://github.com/NixOS/nixpkgs/pull/397664.patch";
       flake = false;
     };
+    src-agimus-controller = {
+      url = "github:agimus-project/agimus_controller";
+      flake = false;
+    };
     src-agimus-msgs = {
       url = "github:agimus-project/agimus_msgs";
       flake = false;
@@ -251,6 +255,7 @@
               packages = [
                 (pkgs.python3.withPackages (p: [
                   # keep-sorted start
+                  p.agimus-controller
                   p.example-parallel-robots
                   p.fatrop
                   p.gepetto-gui

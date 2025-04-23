@@ -9,13 +9,12 @@
   pythonImportsCheckHook,
 
   # propagatedBuildInputs
-  python3Packages
+  python3Packages,
 }:
 
 buildPythonPackage {
   pname = "agimus-controller";
   version = "0-unstable-2025-04-08";
-  pyproject = false;
 
   src = src-agimus-controller;
 

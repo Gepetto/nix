@@ -131,6 +131,54 @@
         "url": "https://github.com/NixOS/nixpkgs/pull/397664.patch"
       }
     },
+    "patch-osg": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-X3dFgNkXOXyNGJmnR+FRuLCsBcyN8CZk/MXzu1EeGzA=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/384430.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/384430.patch"
+      }
+    },
+    "patch-piqp": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ELsBThA2/Z3z12UObkVM8lkreq99MbChQP7E4dmqM6s=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/374657.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/374657.patch"
+      }
+    },
+    "patch-qtwebengine": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-NkLO1FruRQ/OE0MkX83XUA+ieTATrVkmHE+fLqkAQR8=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/386846.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/386846.patch"
+      }
+    },
+    "patch-qtwebengine-2": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-pwhGFwoWRS1mbcQXJDRKf9Hs6Lknc+9AvON57g1O8F8=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/383990.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/383990.patch"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -142,6 +190,12 @@
         ],
         "patch-hpp": "patch-hpp",
         "patch-mim-solvers": "patch-mim-solvers",
+        "patch-mim-solvers-2": "patch-mim-solvers-2",
+        "patch-osg": "patch-osg",
+        "patch-piqp": "patch-piqp",
+        "patch-qtwebengine": "patch-qtwebengine",
+        "patch-qtwebengine-2": "patch-qtwebengine-2",
+        "src-agimus-controller": "src-agimus-controller",
         "src-agimus-msgs": "src-agimus-msgs",
         "src-colmpc": "src-colmpc",
         "src-example-parallel-robots": "src-example-parallel-robots",
@@ -150,6 +204,22 @@
         "src-toolbox-parallel-robots": "src-toolbox-parallel-robots",
         "system-manager": "system-manager",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "src-agimus-controller": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745425862,
+        "narHash": "sha256-CZf9NFWLGp9Et6lEc9HjUIVHIrHjxtIp7aI3ruaiVxc=",
+        "owner": "agimus-project",
+        "repo": "agimus_controller",
+        "rev": "94e5fb3a8a2c693501ef8bc9a1c0303b103d155d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "agimus-project",
+        "repo": "agimus_controller",
+        "type": "github"
       }
     },
     "src-agimus-msgs": {
