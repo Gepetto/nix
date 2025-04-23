@@ -3,25 +3,24 @@
 
   buildPythonPackage,
 
-  src-agimus-controller-examples,
+  src-agimus-controller,
 
   # nativeBuildInputs
   pythonImportsCheckHook,
 
   # propagatedBuildInputs
   python3Packages,
-  franka-description,
-  xacro,
-  ament-index-python,
 }:
 
 buildPythonPackage {
   pname = "agimus-controller-examples";
   version = "0-unstable-2025-04-08";
 
-  src = src-agimus-controller-examples;
+  src = lib.sourceInfo src-agimus-controller "agimus_controller_examples";
 
   nativeBuildInputs = [
+    python3Packages.franka-description
+    python3Packages.xacro
     pythonImportsCheckHook
   ];
   propagatedBuildInputs = [
@@ -32,9 +31,7 @@ buildPythonPackage {
     python3Packages.meshcat
     python3Packages.matplotlib
     python3Packages.numpy
-    franka-description
-    xacro
-    ament-index-python
+    python3Packages.ament-index-python
   ];
 
   doCheck = true;

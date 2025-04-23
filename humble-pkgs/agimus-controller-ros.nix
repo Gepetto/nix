@@ -8,9 +8,12 @@
   cmake,
   fmt,
   python3Packages,
-  ament_copyright,
-  ament_flake8,
-  ament_pep257,
+  ament-cmake,
+  ament-lint-auto,
+  ament-cmake-auto,
+  ament-copyright,
+  ament-flake8,
+  ament-pep257,
   generate-parameter-library-py,
 
   # propagatedBuildInputs
@@ -23,13 +26,12 @@
   agimus-msgs,
   geometry-msgs,
   builtin-interfaces,
-  agimus-controller,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "agimus-controller-ros";
   version = "0-unstable-2025-04-23";
 
-  src = src-agimus-controller;
+  src = lib.sourceInfo src-agimus-controller "agimus_controller_ros";
 
   nativeBuildInputs = [
     cmake
@@ -37,9 +39,7 @@ stdenv.mkDerivation (finalAttrs: {
     ament-cmake
     ament-cmake-auto
     ament-lint-auto
-    eigen3-cmake-module # this is a mistake on humble
     generate-parameter-library-py
-    pluginlib
   ];
 
   propagatedBuildInputs = [

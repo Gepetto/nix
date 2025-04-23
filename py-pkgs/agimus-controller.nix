@@ -10,16 +10,19 @@
 
   # propagatedBuildInputs
   python3Packages,
+  ament-index-python,
 }:
 
 buildPythonPackage {
   pname = "agimus-controller";
   version = "0-unstable-2025-04-08";
 
-  src = src-agimus-controller;
+  src = lib.sourceInfo src-agimus-controller "agimus_controller";
 
   nativeBuildInputs = [
     pythonImportsCheckHook
+    python3Packages.franka-description
+    python3Packages.xacro
   ];
   propagatedBuildInputs = [
     python3Packages.colmpc
@@ -30,9 +33,6 @@ buildPythonPackage {
     python3Packages.numpy
     python3Packages.pinocchio
     python3Packages.rospkg
-
-    franka-description
-    xacro
     ament-index-python
   ];
 

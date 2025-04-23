@@ -104,6 +104,7 @@
                   # keep-sorted start
                   src-example-parallel-robots
                   src-toolbox-parallel-robots
+                  src-agimus-controller
                   # keep-sorted end
                   ;
                 brax = python-prev.brax.overrideAttrs {
@@ -146,6 +147,7 @@
                 inherit (inputs)
                   # keep-sorted start
                   src-agimus-msgs
+                  src-agimus-controller
                   # keep-sorted end
                   ;
                 franka-description = humble-prev.franka-description.overrideAttrs {
@@ -165,6 +167,7 @@
                 inherit (inputs)
                   # keep-sorted start
                   src-agimus-msgs
+                  src-agimus-controller
                   # keep-sorted end
                   ;
               }
@@ -255,7 +258,6 @@
               packages = [
                 (pkgs.python3.withPackages (p: [
                   # keep-sorted start
-                  p.agimus-controller
                   p.example-parallel-robots
                   p.fatrop
                   p.gepetto-gui
@@ -284,6 +286,8 @@
             {
               python = pkgs.python3.withPackages (p: [
                 # keep-sorted start
+                p.agimus-controller
+                p.agimus-controller-examples
                 p.crocoddyl
                 p.gepetto-gui
                 p.hpp-corba
@@ -385,6 +389,7 @@
             // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
               inherit (pkgs.rosPackages.humble)
                 # keep-sorted start
+                agimus-controller-ros
                 agimus-msgs
                 franka-description
                 linear-feedback-controller
@@ -395,6 +400,7 @@
             // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
               inherit (pkgs.rosPackages.jazzy)
                 # keep-sorted start
+                agimus-controller-ros
                 agimus-msgs
                 linear-feedback-controller
                 linear-feedback-controller-msgs
