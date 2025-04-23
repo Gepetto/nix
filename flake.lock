@@ -131,54 +131,6 @@
         "url": "https://github.com/NixOS/nixpkgs/pull/397664.patch"
       }
     },
-    "patch-osg": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-gJL0e5cGFzUGLQOefln8FUqAGNXdjb6QceakP1KGH/o=",
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/384430.patch"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/384430.patch"
-      }
-    },
-    "patch-piqp": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-r+kYmIImYLYj3PnCSpG5Yfs8SR/v412l0+SKim72B7s=",
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/374657.patch"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/374657.patch"
-      }
-    },
-    "patch-qtwebengine": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-NkLO1FruRQ/OE0MkX83XUA+ieTATrVkmHE+fLqkAQR8=",
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/386846.patch"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/386846.patch"
-      }
-    },
-    "patch-qtwebengine-2": {
-      "flake": false,
-      "locked": {
-        "narHash": "sha256-pwhGFwoWRS1mbcQXJDRKf9Hs6Lknc+9AvON57g1O8F8=",
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/383990.patch"
-      },
-      "original": {
-        "type": "file",
-        "url": "https://github.com/NixOS/nixpkgs/pull/383990.patch"
-      }
-    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -190,11 +142,6 @@
         ],
         "patch-hpp": "patch-hpp",
         "patch-mim-solvers": "patch-mim-solvers",
-        "patch-mim-solvers-2": "patch-mim-solvers-2",
-        "patch-osg": "patch-osg",
-        "patch-piqp": "patch-piqp",
-        "patch-qtwebengine": "patch-qtwebengine",
-        "patch-qtwebengine-2": "patch-qtwebengine-2",
         "src-agimus-controller": "src-agimus-controller",
         "src-agimus-msgs": "src-agimus-msgs",
         "src-colmpc": "src-colmpc",
