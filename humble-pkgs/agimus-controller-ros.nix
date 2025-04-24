@@ -27,7 +27,7 @@
   geometry-msgs,
   builtin-interfaces,
 }:
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (_finalAttrs: {
   pname = "agimus-controller-ros";
   version = "0-unstable-2025-04-23";
 
@@ -40,6 +40,9 @@ stdenv.mkDerivation (finalAttrs: {
     ament-cmake
     ament-cmake-auto
     ament-lint-auto
+    ament-copyright
+    ament-flake8
+    ament-pep257
     generate-parameter-library-py
   ];
 

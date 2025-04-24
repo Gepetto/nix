@@ -102,9 +102,9 @@
               {
                 inherit (inputs)
                   # keep-sorted start
+                  src-agimus-controller
                   src-example-parallel-robots
                   src-toolbox-parallel-robots
-                  src-agimus-controller
                   # keep-sorted end
                   ;
                 brax = python-prev.brax.overrideAttrs {
@@ -146,8 +146,8 @@
               {
                 inherit (inputs)
                   # keep-sorted start
-                  src-agimus-msgs
                   src-agimus-controller
+                  src-agimus-msgs
                   # keep-sorted end
                   ;
                 franka-description = humble-prev.franka-description.overrideAttrs {
