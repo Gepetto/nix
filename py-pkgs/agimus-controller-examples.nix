@@ -16,9 +16,9 @@
   meshcat,
   matplotlib,
   numpy,
-  # ament-index-python
-  # franka-description
-  # xacro
+# ament-index-python
+# franka-description
+# xacro
 }:
 
 buildPythonPackage {

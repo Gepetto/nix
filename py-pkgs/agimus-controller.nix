@@ -18,10 +18,10 @@
   pinocchio,
   rospkg,
 
-  # None python inputs
-  # franka-description,
-  # xacro,
-  # ament-index-python,
+# None python inputs
+# franka-description,
+# xacro,
+# ament-index-python,
 }:
 
 buildPythonPackage {
