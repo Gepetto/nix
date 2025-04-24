@@ -16,7 +16,8 @@ buildPythonPackage {
   pname = "agimus-controller-examples";
   version = "0-unstable-2025-04-08";
 
-  src = lib.sourceInfo src-agimus-controller "agimus_controller_examples";
+  src = src-agimus-controller;
+  sourceRoot = "${src.name}/agimus_controller_examples";
 
   nativeBuildInputs = [
     python3Packages.franka-description
