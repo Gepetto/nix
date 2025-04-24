@@ -32,7 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
   version = "0-unstable-2025-04-23";
 
   src = src-agimus-controller;
-  sourceRoot = "${src.name}/agimus_controller_ros";
+  sourceRoot = "./agimus_controller_ros";
 
   nativeBuildInputs = [
     cmake

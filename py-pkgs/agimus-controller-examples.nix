@@ -9,7 +9,16 @@
   pythonImportsCheckHook,
 
   # propagatedBuildInputs
-  python3Packages,
+  agimus-controller,
+  hpp-corbaserver,
+  hpp-gepetto-viewer,
+  hpp-manipulation-corba,
+  meshcat,
+  matplotlib,
+  numpy,
+  # ament-index-python
+  # franka-description
+  # xacro
 }:
 
 buildPythonPackage {
@@ -17,22 +26,22 @@ buildPythonPackage {
   version = "0-unstable-2025-04-08";
 
   src = src-agimus-controller;
-  sourceRoot = "${src.name}/agimus_controller_examples";
+  sourceRoot = "./agimus_controller_examples";
 
   nativeBuildInputs = [
-    python3Packages.franka-description
-    python3Packages.xacro
+    # franka-description
+    # xacro
     pythonImportsCheckHook
   ];
   propagatedBuildInputs = [
-    python3Packages.agimus-controller
-    python3Packages.hpp-corbaserver
-    python3Packages.hpp-gepetto-viewer
-    python3Packages.hpp-manipulation-corba
-    python3Packages.meshcat
-    python3Packages.matplotlib
-    python3Packages.numpy
-    python3Packages.ament-index-python
+    agimus-controller
+    hpp-corbaserver
+    hpp-gepetto-viewer
+    hpp-manipulation-corba
+    meshcat
+    matplotlib
+    numpy
+    # ament-index-python
   ];
 
   doCheck = true;

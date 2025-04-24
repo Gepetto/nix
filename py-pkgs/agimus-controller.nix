@@ -9,19 +9,19 @@
   pythonImportsCheckHook,
 
   # propagatedBuildInputs
-  colmpc
-  crocoddyl
-  coal
-  example-robot-data
-  mim-solvers
-  numpy
-  pinocchio
-  rospkg
+  colmpc,
+  crocoddyl,
+  coal,
+  example-robot-data,
+  mim-solvers,
+  numpy,
+  pinocchio,
+  rospkg,
 
   # None python inputs
-  franka-description
-  xacro
-  ament-index-python,
+  # franka-description,
+  # xacro,
+  # ament-index-python,
 }:
 
 buildPythonPackage {
@@ -29,12 +29,12 @@ buildPythonPackage {
   version = "0-unstable-2025-04-08";
 
   src = src-agimus-controller;
-  sourceRoot = "${src.name}/agimus_controller";
+  sourceRoot = "./agimus_controller";
 
   nativeBuildInputs = [
     pythonImportsCheckHook
-    franka-description
-    xacro
+    # franka-description
+    # xacro
   ];
   propagatedBuildInputs = [
     colmpc
@@ -45,7 +45,7 @@ buildPythonPackage {
     numpy
     pinocchio
     rospkg
-    ament-index-python
+    # ament-index-python
   ];
 
   doCheck = true;
