@@ -156,11 +156,11 @@
     "src-agimus-controller": {
       "flake": false,
       "locked": {
-        "lastModified": 1745425862,
-        "narHash": "sha256-CZf9NFWLGp9Et6lEc9HjUIVHIrHjxtIp7aI3ruaiVxc=",
+        "lastModified": 1745505708,
+        "narHash": "sha256-z1Pguea2gho2VF7b8SkvkBd7R7kzdmewOjOSW6o+HSY=",
         "owner": "agimus-project",
         "repo": "agimus_controller",
-        "rev": "94e5fb3a8a2c693501ef8bc9a1c0303b103d155d",
+        "rev": "675be1aafb001bada88250bc6094f9b9a8e17d49",
         "type": "github"
       },
       "original": {
