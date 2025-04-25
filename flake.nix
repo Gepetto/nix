@@ -150,6 +150,7 @@
                   src-agimus-msgs
                   # keep-sorted end
                   ;
+                buildPythonPackage = humble-final.python3Packages.buildPythonPackage;
                 franka-description = humble-prev.franka-description.overrideAttrs {
                   src = inputs.src-franka-description;
                   # depends on pyside2 which is broken on darwin
@@ -170,6 +171,7 @@
                   src-agimus-msgs
                   # keep-sorted end
                   ;
+                buildPythonPackage = jazzy-final.python3Packages.buildPythonPackage;
               }
               // final.lib.filesystem.packagesFromDirectoryRecursive {
                 inherit (jazzy-final) callPackage;

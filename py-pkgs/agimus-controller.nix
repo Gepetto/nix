@@ -17,7 +17,7 @@ buildPythonPackage {
   version = "0-unstable-2025-04-08";
 
   src = src-agimus-controller;
-  sourceRoot = "${src-agimus-controller}/agimus_controller";
+  sourceRoot = "source/agimus_controller";
 
   nativeBuildInputs = [
     pythonImportsCheckHook

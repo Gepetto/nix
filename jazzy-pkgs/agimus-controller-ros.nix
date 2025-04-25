@@ -1,16 +1,13 @@
 {
+  buildPythonPackage,
   lib,
-  stdenv,
+  python3Packages,
 
   src-agimus-controller,
 
   # nativeBuildInputs
-  cmake,
   fmt,
-  python3Packages,
-  ament-cmake,
   ament-lint-auto,
-  ament-cmake-auto,
   ament-copyright,
   ament-flake8,
   ament-pep257,
@@ -27,18 +24,20 @@
   geometry-msgs,
   builtin-interfaces,
 }:
-stdenv.mkDerivation (_finalAttrs: {
+buildPythonPackage {
   pname = "agimus-controller-ros";
   version = "0-unstable-2025-04-23";
 
   src = src-agimus-controller;
-  sourceRoot = "./agimus_controller_ros";
+  sourceRoot = "source/agimus_controller_ros";
+
+  dontUseCmakeConfigure = true;
+  dontUseCmakeBuild = true;
+  dontUseCmakeCheck = true;
+  dontUseCmakeInstall = true;
 
   nativeBuildInputs = [
-    cmake
     fmt
-    ament-cmake
-    ament-cmake-auto
     ament-lint-auto
     ament-copyright
     ament-flake8
@@ -63,17 +62,8 @@ stdenv.mkDerivation (_finalAttrs: {
     builtin-interfaces
   ];
 
-  # revert https://github.com/lopsided98/nix-ros-overlay/blob/develop/distros/rosidl-generator-py-setup-hook.sh
-  # as they break tests
-  postConfigure = ''
-    cmake $cmakeDir -DCMAKE_SKIP_BUILD_RPATH:BOOL=OFF
-  '';
-
   doCheck = true;
-
-  # generate_parameter_library_markdown complains that build/doc exists
-  # ref. https://github.com/PickNikRobotics/generate_parameter_library/pull/212
-  enableParallelBuilding = false;
+  pythonImportsCheck = [ "agimus_controller_ros" ];
 
   meta = {
     description = "ROS2 wrapper around the agimus_controller package.";
@@ -82,4 +72,4 @@ stdenv.mkDerivation (_finalAttrs: {
     maintainers = [ lib.maintainers.nim65s ];
     platforms = lib.platforms.linux;
   };
-})
+}
