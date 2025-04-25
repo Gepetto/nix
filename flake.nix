@@ -166,8 +166,8 @@
               {
                 inherit (inputs)
                   # keep-sorted start
-                  src-agimus-msgs
                   src-agimus-controller
+                  src-agimus-msgs
                   # keep-sorted end
                   ;
               }
