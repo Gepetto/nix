@@ -44,6 +44,6 @@ buildPythonPackage {
     homepage = "https://github.com/agimus-project/agimus_controller";
     license = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [ nim65s ];
-    platforms = lib.platforms.linux;
+    platforms = lib.platforms.unix;
   };
 }
