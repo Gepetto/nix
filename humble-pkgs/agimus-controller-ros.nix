@@ -1,5 +1,4 @@
 {
-  buildPythonPackage,
   lib,
   python3Packages,
 
@@ -24,7 +23,7 @@
   geometry-msgs,
   builtin-interfaces,
 }:
-buildPythonPackage {
+python3Packages.buildPythonPackage {
   pname = "agimus-controller-ros";
   version = "0-unstable-2025-04-23";
 
