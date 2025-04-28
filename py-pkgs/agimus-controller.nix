@@ -9,7 +9,14 @@
   pythonImportsCheckHook,
 
   # propagatedBuildInputs
-  python3Packages,
+  colmpc,
+  crocoddyl,
+  coal,
+  example-robot-data,
+  mim-solvers,
+  numpy,
+  pinocchio,
+  rospkg,
 }:
 
 buildPythonPackage {
@@ -21,19 +28,19 @@ buildPythonPackage {
 
   nativeBuildInputs = [
     pythonImportsCheckHook
-    # python3Packages.franka-description
-    # python3Packages.xacro
+    # franka-description
+    # xacro
   ];
   propagatedBuildInputs = [
-    python3Packages.colmpc
-    python3Packages.crocoddyl
-    python3Packages.coal
-    python3Packages.example-robot-data
-    python3Packages.mim-solvers
-    python3Packages.numpy
-    python3Packages.pinocchio
-    python3Packages.rospkg
-    # python3Packages.ament-index-python
+    # ament-index-python
+    colmpc
+    crocoddyl
+    coal
+    example-robot-data
+    mim-solvers
+    numpy
+    pinocchio
+    rospkg
   ];
 
   doCheck = true;
