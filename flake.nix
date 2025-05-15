@@ -11,6 +11,7 @@
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    systems.follows = "nix-ros-overlay/flake-utils/systems";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -54,15 +55,14 @@
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
       { self, lib, ... }:
+      let
+        flakeModule = inputs.flake-parts.lib.importApply ./module.nix { localFlake = self; };
+      in
       {
-        systems = [
-          "x86_64-linux"
-          "aarch64-darwin"
-        ];
-        imports = [ inputs.treefmt-nix.flakeModule ];
+        systems = import inputs.systems;
+        imports = [ flakeModule ];
         flake = {
-          overlays.default = import ./overlay.nix { inherit inputs; };
-          patches = lib.fileset.toList (lib.fileset.fileFilter (f: f.hasExt "patch") ./patches/NixOS/nixpkgs);
+          inherit flakeModule;
           systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
             modules = [
               inputs.nix-system-graphics.systemModules.default
@@ -88,30 +88,7 @@
             ...
           }:
           {
-            _module.args.pkgs =
-              let
-                pkgsForPatching = inputs'.nixpkgs.legacyPackages;
-                patchedNixpkgs = (
-                  pkgsForPatching.applyPatches {
-                    inherit (self) patches;
-                    name = "patched nixpkgs";
-                    src = inputs.nixpkgs;
-                  }
-                );
-              in
-              import patchedNixpkgs {
-                inherit system;
-                overlays = [
-                  inputs.nix-ros-overlay.overlays.default
-                  self.overlays.default
-                ];
-              };
-            checks =
-              let
-                devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
-                packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
-              in
-              lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (devShells // packages);
+
             devShells = {
               default = pkgs.mkShell {
                 name = "Gepetto Main Dev Shell";
@@ -296,13 +273,9 @@
                 ".git-blame-ignore-revs"
                 "LICENSE"
               ];
-              pkgs = inputs'.nixpkgs.legacyPackages;
               programs = {
                 # keep-sorted start
-                deadnix.enable = true;
-                keep-sorted.enable = true;
                 mdformat.enable = true;
-                nixfmt.enable = true;
                 yamlfmt.enable = true;
                 # keep-sorted end
               };
