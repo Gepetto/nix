@@ -48,6 +48,15 @@
       url = "github:gepetto/toolbox-parallel-robots";
       flake = false;
     };
+    src-odri-masterboard-sdk = {
+      url = "github:open-dynamic-robot-initiative/master-board";
+      flake = false;
+      # TODO: sparse checkout
+    };
+    src-odri-control = {
+      url = "github:open-dynamic-robot-initiative/odri_control_interface";
+      flake = false;
+    };
 
     # keep-sorted end
   };

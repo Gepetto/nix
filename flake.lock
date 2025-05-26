@@ -122,6 +122,8 @@
         "src-example-parallel-robots": "src-example-parallel-robots",
         "src-franka-description": "src-franka-description",
         "src-gepetto-viewer": "src-gepetto-viewer",
+        "src-odri-control": "src-odri-control",
+        "src-odri-masterboard-sdk": "src-odri-masterboard-sdk",
         "src-toolbox-parallel-robots": "src-toolbox-parallel-robots",
         "system-manager": "system-manager",
         "systems": [
@@ -226,6 +228,38 @@
         "owner": "Gepetto",
         "ref": "devel",
         "repo": "gepetto-viewer",
+        "type": "github"
+      }
+    },
+    "src-odri-control": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720196841,
+        "narHash": "sha256-sUMjSTXf7Re32Zle40vOH6dUrqhaYiGIg3LMIbHuy38=",
+        "owner": "open-dynamic-robot-initiative",
+        "repo": "odri_control_interface",
+        "rev": "24e5f86c92a519f303ad69e78728d6272d8a1c27",
+        "type": "github"
+      },
+      "original": {
+        "owner": "open-dynamic-robot-initiative",
+        "repo": "odri_control_interface",
+        "type": "github"
+      }
+    },
+    "src-odri-masterboard-sdk": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747757934,
+        "narHash": "sha256-Aace/p6K7r1HWav6b3FH0nUpf1vZxYROCs3P3qvucDo=",
+        "owner": "open-dynamic-robot-initiative",
+        "repo": "master-board",
+        "rev": "9388c843e569d5bd3cd836f442ddfef43c8a7528",
+        "type": "github"
+      },
+      "original": {
+        "owner": "open-dynamic-robot-initiative",
+        "repo": "master-board",
         "type": "github"
       }
     },

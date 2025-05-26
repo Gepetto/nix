@@ -1,4 +1,7 @@
 {
+
+  src-odri-control,
+
   stdenv,
   cmake,
   eigen,
@@ -12,11 +15,7 @@ stdenv.mkDerivation rec {
   pname = "odri-control";
   version = rosVersion ./package.xml;
 
-  src = fetchgit {
-    url = "https://github.com/open-dynamic-robot-initiative/odri_control_interface";
-    rev = "v${version}";
-    hash = "sha256-NGsgrSyhD2fFTm/IqgdqXw7aMEwD7QSsPDhjDm+50qQ=";
-  };
+  src = src-odri-control;
 
   nativeBuildInputs = [
     odri-masterboard-sdk

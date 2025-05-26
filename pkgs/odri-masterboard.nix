@@ -1,6 +1,6 @@
 {
+  src-odri-masterboard-sdk,
   stdenv,
-  fetchFromGithub,
   jrl-cmakemodules,
   cmake,
   python312,
@@ -8,19 +8,12 @@
   catch2_3,
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "odri-masterboard-sdk";
   version = rosVersion ./sdk/master_board_sdk/package.xml;
 
-  src = fetchgit {
-    url = "https://github.com/open-dynamic-robot-initiative/master-board";
-    rev = version;
-    hash = "sha256-3vx3bOQkFnZXZ4jSh89Se7T8t6VpfL+JV3sVHz8+X78=";
-    sparseCheckout = [
-      "sdk/master_board_sdk"
-    ];
-  };
-
+  src = src-odri-masterboard-sdk;
+  # TODO put this in src-odri-masterboard-sdk somehow?
   sourceRoot = "${src.name}/sdk/master_board_sdk";
 
   doCheck = true;
