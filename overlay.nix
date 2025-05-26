@@ -7,7 +7,6 @@
     inherit (inputs)
       # keep-sorted start
       src-colmpc
-      src-odri-masterboard-sdk
       # keep-sorted end
       ;
     # keep-sorted start block=yes
