@@ -10,7 +10,8 @@
 
 stdenv.mkDerivation rec {
   pname = "odri-masterboard-sdk";
-  version = rosVersion ./sdk/master_board_sdk/package.xml;
+  # replaced by version from package.xml in the repository's flake
+  version = "unknown";
 
   src = src-odri-masterboard-sdk;
   # TODO put this in src-odri-masterboard-sdk somehow?

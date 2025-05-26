@@ -13,7 +13,8 @@
 
 stdenv.mkDerivation rec {
   pname = "odri-control";
-  version = rosVersion ./package.xml;
+  # replaced by version from package.xml in the repository's flake
+  version = "unknown";
 
   src = src-odri-control;
 
