@@ -1,12 +1,10 @@
 {
-
   src-odri-control-interface,
 
   stdenv,
   cmake,
   eigen,
-  python312Packages,
-  python312,
+  python3Packages,
   yaml-cpp,
   odri-masterboard-sdk,
 }:
@@ -22,9 +20,9 @@ stdenv.mkDerivation {
     odri-masterboard-sdk
     cmake
     eigen
-    python312Packages.eigenpy
-    python312Packages.boost
-    python312
+    python3Packages.eigenpy
+    python3Packages.boost
+    python3Packages.python
   ];
 
   propagatedBuildInputs = [ yaml-cpp ];
