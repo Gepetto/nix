@@ -1,6 +1,7 @@
 {
   src-odri-control-interface,
 
+  lib,
   stdenv,
   cmake,
   eigen,
@@ -26,4 +27,15 @@ stdenv.mkDerivation {
   ];
 
   propagatedBuildInputs = [ yaml-cpp ];
+  meta = {
+    description = "Low level control interface";
+    homepage = "https://github.com/open-dynamic-robot-initiative/odri_control_interface";
+    license = lib.licenses.bsd3;
+    maintainers = with lib.maintainers; [
+      gwennlbh
+      nim65s
+    ];
+    mainProgram = "odri-control-interface";
+    platforms = lib.platforms.all;
+  };
 }

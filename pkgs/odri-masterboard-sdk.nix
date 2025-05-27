@@ -1,5 +1,7 @@
 {
   src-odri-masterboard-sdk,
+
+  lib,
   stdenv,
   jrl-cmakemodules,
   cmake,
@@ -32,4 +34,17 @@ stdenv.mkDerivation {
   nativeCheckInputs = [ catch2_3 ];
 
   propagatedBuildInputs = with python3Packages; [ boost ];
+
+  meta = {
+    description = "Hardware and Firmware of the Solo Quadruped Master Board";
+    homepage = "https://github.com/open-dynamic-robot-initiative/master-board";
+    changelog = "https://github.com/open-dynamic-robot-initiative/master-board/blob/master/CHANGELOG.md";
+    license = lib.licenses.bsd2;
+    maintainers = with lib.maintainers; [
+      nim65s
+      gwennlbh
+    ];
+    mainProgram = "master-board";
+    platforms = lib.platforms.all;
+  };
 }
