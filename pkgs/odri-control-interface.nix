@@ -17,6 +17,10 @@ stdenv.mkDerivation {
 
   src = src-odri-control-interface;
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-fail 'set(DEMO_ROOT "''${PROJECT_SOURCE_DIR}/demos")' "set(DEMO_ROOT \"$out/demos\")"
+  '';
+
   nativeBuildInputs = [
     odri-masterboard-sdk
     cmake
@@ -27,6 +31,12 @@ stdenv.mkDerivation {
   ];
 
   propagatedBuildInputs = [ yaml-cpp ];
+
+  postInstall = ''
+    mkdir -p $out/demos
+    cp -r demos/* $out/demos
+  '';
+
   meta = {
     description = "Low level control interface";
     homepage = "https://github.com/open-dynamic-robot-initiative/odri_control_interface";
