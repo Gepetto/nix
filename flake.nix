@@ -177,7 +177,7 @@
                   };
               }
               // lib.optionalAttrs (system == "x86_64-linux") {
-                inherit (inputs'.system-manager.packages) system-manager;
+                system-manager = inputs'.system-manager.packages.default;
               }
               // {
                 inherit (pkgs)
