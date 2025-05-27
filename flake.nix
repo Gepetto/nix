@@ -53,7 +53,7 @@
       flake = false;
       # TODO: sparse checkout
     };
-    src-odri-control = {
+    src-odri-control-interface = {
       url = "github:open-dynamic-robot-initiative/odri_control_interface";
       flake = false;
     };

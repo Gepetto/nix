@@ -1,6 +1,6 @@
 {
 
-  src-odri-control,
+  src-odri-control-interface,
 
   stdenv,
   cmake,
@@ -11,12 +11,12 @@
   odri-masterboard-sdk,
 }:
 
-stdenv.mkDerivation rec {
-  pname = "odri-control";
+stdenv.mkDerivation {
+  pname = "odri-control-interface";
   # replaced by version from package.xml in the repository's flake
   version = "unknown";
 
-  src = src-odri-control;
+  src = src-odri-control-interface;
 
   nativeBuildInputs = [
     odri-masterboard-sdk
