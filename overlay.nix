@@ -8,6 +8,7 @@
       # keep-sorted start
       src-colmpc
       src-odri-masterboard-sdk
+      src-odri-control-interface
       # keep-sorted end
       ;
     # keep-sorted start block=yes

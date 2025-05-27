@@ -212,6 +212,7 @@
                   hpp-universal-robot
                   hpp-util
                   mim-solvers
+                  odri-control-interface
                   odri-masterboard-sdk
                   pinocchio
                   # keep-sorted end
