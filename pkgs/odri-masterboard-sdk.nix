@@ -8,15 +8,17 @@
   catch2_3,
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "odri-masterboard-sdk";
   # replaced by version from package.xml in the repository's flake
   version = "unknown";
 
   src = src-odri-masterboard-sdk;
-  # TODO put this in src-odri-masterboard-sdk somehow?
-  sourceRoot = "${src.name}/sdk/master_board_sdk";
 
+  # TODO sourceRoot = "${src.name}/sdk/master_board_sdk"; when we'll switch to fetchFromGitHub
+  preConfigure = ''
+    cd sdk/master_board_sdk
+  '';
   doCheck = true;
 
   nativeBuildInputs = [
