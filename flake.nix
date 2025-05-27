@@ -44,8 +44,8 @@
       url = "github:Gepetto/gepetto-viewer/devel";
       flake = false;
     };
-    src-toolbox-parallel-robots = {
-      url = "github:gepetto/toolbox-parallel-robots";
+    src-odri-control-interface = {
+      url = "github:open-dynamic-robot-initiative/odri_control_interface";
       flake = false;
     };
     src-odri-masterboard-sdk = {
@@ -53,8 +53,8 @@
       flake = false;
       # TODO: sparse checkout
     };
-    src-odri-control-interface = {
-      url = "github:open-dynamic-robot-initiative/odri_control_interface";
+    src-toolbox-parallel-robots = {
+      url = "github:gepetto/toolbox-parallel-robots";
       flake = false;
     };
 
