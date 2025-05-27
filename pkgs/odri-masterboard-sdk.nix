@@ -3,8 +3,7 @@
   stdenv,
   jrl-cmakemodules,
   cmake,
-  python312,
-  python312Packages,
+  python3Packages,
   catch2_3,
 }:
 
@@ -23,14 +22,14 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     jrl-cmakemodules
+    python3Packages.python
     cmake
-    python312
   ];
 
   # from package.xml
-  buildInputs = with python312Packages; [ numpy ];
+  buildInputs = with python3Packages; [ numpy ];
 
   nativeCheckInputs = [ catch2_3 ];
 
-  propagatedBuildInputs = with python312Packages; [ boost ];
+  propagatedBuildInputs = with python3Packages; [ boost ];
 }
