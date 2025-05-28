@@ -12,7 +12,7 @@
 stdenv.mkDerivation {
   pname = "odri-masterboard-sdk";
   # replaced by version from package.xml in the repository's flake
-  version = "unknown";
+  version = "1.0.7";
 
   src = src-odri-masterboard-sdk;
 
