@@ -18,7 +18,10 @@ stdenv.mkDerivation {
   src = src-odri-control-interface;
 
   postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-fail 'set(DEMO_ROOT "''${PROJECT_SOURCE_DIR}/demos")' "set(DEMO_ROOT \"$out/demos\")"
+    demo_root_decl=`printf 'set(DEMO_ROOT "%s")\n' "$out/demos"`
+    substituteInPlace CMakeLists.txt --replace-fail 'set(DEMO_ROOT "''${PROJECT_SOURCE_DIR}/demos")' "$demo_root_decl"
+    mkdir -p $out/demos
+    cp -r demos/* $out/demos
   '';
 
   nativeBuildInputs = [
@@ -32,10 +35,11 @@ stdenv.mkDerivation {
 
   propagatedBuildInputs = [ yaml-cpp ];
 
-  postInstall = ''
-    mkdir -p $out/demos
-    cp -r demos/* $out/demos
-  '';
+  # FIXME demos/ not available at this point
+  # postInstall = ''
+  #   mkdir -p $out/demos
+  #   cp -r demos/* $out/demos
+  # '';
 
   meta = {
     description = "Low level control interface";
