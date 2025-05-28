@@ -20,7 +20,13 @@ stdenv.mkDerivation {
   preConfigure = ''
     cd sdk/master_board_sdk
   '';
+
   doCheck = true;
+
+  cmakeFlags = [
+    # see https://github.com/open-dynamic-robot-initiative/master-board/pull/128
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" stdenv.hostPlatform.isLinux) 
+  ];
 
   nativeBuildInputs = [
     jrl-cmakemodules
