@@ -17,7 +17,6 @@ stdenv.mkDerivation {
 
   src = src-odri-control-interface;
 
-
   nativeBuildInputs = [
     odri-masterboard-sdk
     cmake
