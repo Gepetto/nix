@@ -45,7 +45,7 @@
       flake = false;
     };
     src-odri-control-interface = {
-      # TODO url = "github:open-dynamic-robot-initiative/odri_control_interface";
+      # TODO url = "github:open-dynamic-robot-initiative/odri_control_interface"; see https://github.com/open-dynamic-robot-initiative/odri_control_interface/pull/26
       url = "github:gwennlbh/odri_control_interface/nix";
       flake = false;
     };
