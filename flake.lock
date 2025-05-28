@@ -234,11 +234,11 @@
     "src-odri-control-interface": {
       "flake": false,
       "locked": {
-        "lastModified": 1748433067,
-        "narHash": "sha256-gAwwUU2Upzc3KCRu0JOacw6cv9yMwOKJ/QNxMtxAZQg=",
+        "lastModified": 1748441093,
+        "narHash": "sha256-aOPlxLAcfvF3LINTZBGilyKGAvuV7X1AJEoAHLbGxmk=",
         "owner": "gwennlbh",
         "repo": "odri_control_interface",
-        "rev": "4f4cc7350bb43d17023fdb405d953c942d0e4c47",
+        "rev": "57fd233c24511f51fe3ebed66d66a1a4b78bdb96",
         "type": "github"
       },
       "original": {
