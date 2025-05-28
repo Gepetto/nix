@@ -137,11 +137,11 @@
     "src-agimus-controller": {
       "flake": false,
       "locked": {
-        "lastModified": 1747904554,
-        "narHash": "sha256-IHA+1KrtMKIiBw3NaO3VuMk6h/JIPgNpb7vvu2FGrjk=",
+        "lastModified": 1748356703,
+        "narHash": "sha256-6zfD0802BtdXI4koWp/ZI8WOI9LXXmMBTPPIU1+MjpA=",
         "owner": "agimus-project",
         "repo": "agimus_controller",
-        "rev": "92797f93c2a80d4e362ac687f1311a149748bb36",
+        "rev": "5e9e2c225c2937d9b72feaf7aae51b4833b27488",
         "type": "github"
       },
       "original": {
@@ -169,11 +169,11 @@
     "src-colmpc": {
       "flake": false,
       "locked": {
-        "lastModified": 1748282597,
-        "narHash": "sha256-m15hIbykq4T27TCbWhlzv6MOvOMcEUoP7J6COaGIEwE=",
+        "lastModified": 1748425695,
+        "narHash": "sha256-Eku/uorPx/ToApoIIGD9LgBT6vrFetm2ZFFmE/iUa+I=",
         "owner": "agimus-project",
         "repo": "colmpc",
-        "rev": "17c82fa0d6db53494da9f9e6af4266c342715dbf",
+        "rev": "b26daa44ba0069bf5849d8ac716d3dd5090fd482",
         "type": "github"
       },
       "original": {
@@ -234,11 +234,11 @@
     "src-odri-control-interface": {
       "flake": false,
       "locked": {
-        "lastModified": 1748350018,
-        "narHash": "sha256-I/+0grgW5FyaiuTaw1hNPKuyW/87idFTM+y9fXyJypg=",
+        "lastModified": 1748433067,
+        "narHash": "sha256-gAwwUU2Upzc3KCRu0JOacw6cv9yMwOKJ/QNxMtxAZQg=",
         "owner": "gwennlbh",
         "repo": "odri_control_interface",
-        "rev": "67604595c7859f920dd89ae5e647f70e53b6190f",
+        "rev": "4f4cc7350bb43d17023fdb405d953c942d0e4c47",
         "type": "github"
       },
       "original": {
