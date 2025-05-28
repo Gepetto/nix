@@ -50,7 +50,7 @@
       flake = false;
     };
     src-odri-masterboard-sdk = {
-      url = "github:gwennlbh/master-board";
+      url = "github:gwennlbh/master-board/nix";
       flake = false;
       # TODO: sparse checkout
     };

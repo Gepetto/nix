@@ -251,15 +251,16 @@
     "src-odri-masterboard-sdk": {
       "flake": false,
       "locked": {
-        "lastModified": 1747757934,
-        "narHash": "sha256-Aace/p6K7r1HWav6b3FH0nUpf1vZxYROCs3P3qvucDo=",
+        "lastModified": 1748437437,
+        "narHash": "sha256-eWw3gTLq3rWtMzVLffwKODAP3XGO4GwZF7CLzAr1umA=",
         "owner": "gwennlbh",
         "repo": "master-board",
-        "rev": "9388c843e569d5bd3cd836f442ddfef43c8a7528",
+        "rev": "4521b8627f032fa606ade0024c24b65098e8e7e0",
         "type": "github"
       },
       "original": {
         "owner": "gwennlbh",
+        "ref": "nix",
         "repo": "master-board",
         "type": "github"
       }
