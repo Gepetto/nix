@@ -25,7 +25,7 @@ stdenv.mkDerivation {
 
   cmakeFlags = [
     # see https://github.com/open-dynamic-robot-initiative/master-board/pull/128
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" stdenv.hostPlatform.isLinux) 
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" stdenv.hostPlatform.isLinux)
   ];
 
   nativeBuildInputs = [
