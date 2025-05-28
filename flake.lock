@@ -253,13 +253,13 @@
       "locked": {
         "lastModified": 1747757934,
         "narHash": "sha256-Aace/p6K7r1HWav6b3FH0nUpf1vZxYROCs3P3qvucDo=",
-        "owner": "open-dynamic-robot-initiative",
+        "owner": "gwennlbh",
         "repo": "master-board",
         "rev": "9388c843e569d5bd3cd836f442ddfef43c8a7528",
         "type": "github"
       },
       "original": {
-        "owner": "open-dynamic-robot-initiative",
+        "owner": "gwennlbh",
         "repo": "master-board",
         "type": "github"
       }

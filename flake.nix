@@ -50,7 +50,7 @@
       flake = false;
     };
     src-odri-masterboard-sdk = {
-      url = "github:open-dynamic-robot-initiative/master-board";
+      url = "github:gwennlbh/master-board";
       flake = false;
       # TODO: sparse checkout
     };
