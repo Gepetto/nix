@@ -44,6 +44,16 @@
       url = "github:Gepetto/gepetto-viewer/devel";
       flake = false;
     };
+    src-odri-control-interface = {
+      # TODO url = "github:open-dynamic-robot-initiative/odri_control_interface"; see https://github.com/open-dynamic-robot-initiative/odri_control_interface/pull/26
+      url = "github:gwennlbh/odri_control_interface/nix";
+      flake = false;
+    };
+    src-odri-masterboard-sdk = {
+      url = "github:gwennlbh/master-board/nix";
+      flake = false;
+      # TODO: sparse checkout
+    };
     src-toolbox-parallel-robots = {
       url = "github:gepetto/toolbox-parallel-robots";
       flake = false;
@@ -203,6 +213,8 @@
                   hpp-universal-robot
                   hpp-util
                   mim-solvers
+                  odri-control-interface
+                  odri-masterboard-sdk
                   pinocchio
                   # keep-sorted end
                   ;
