@@ -124,6 +124,11 @@
         "src-gepetto-viewer": "src-gepetto-viewer",
         "src-toolbox-parallel-robots": "src-toolbox-parallel-robots",
         "system-manager": "system-manager",
+        "systems": [
+          "nix-ros-overlay",
+          "flake-utils",
+          "systems"
+        ],
         "treefmt-nix": "treefmt-nix"
       }
     },
