@@ -3,9 +3,11 @@ on:
   push:
     branches:
       - main
+      - module
   pull_request:
     branches:
       - main
+      - module
 jobs:
   ci:
     name: "Nix build on ${{ matrix.os }}"
