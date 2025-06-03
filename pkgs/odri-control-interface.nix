@@ -11,7 +11,7 @@
 }:
 
 stdenv.mkDerivation {
-  pname = "odri-control-interface";
+  pname = "odri_control_interface";
   # replaced by version from package.xml in the repository's flake
   version = "1.0.1";
 
