@@ -51,6 +51,6 @@ stdenv.mkDerivation {
       gwennlbh
     ];
     mainProgram = "master-board";
-    platforms = lib.platforms.all;
+    platforms = lib.platforms.unix;
   };
 }
