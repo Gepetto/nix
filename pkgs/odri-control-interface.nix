@@ -37,6 +37,6 @@ stdenv.mkDerivation {
       nim65s
     ];
     mainProgram = "odri-control-interface";
-    platforms = lib.platforms.all;
+    platforms = lib.platforms.unix;
   };
 }
