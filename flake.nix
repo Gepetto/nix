@@ -306,6 +306,7 @@
                   mim-solvers
                   pinocchio
                   toolbox-parallel-robots
+                  unitree-sdk2-python
                   # keep-sorted end
                   ;
               }
