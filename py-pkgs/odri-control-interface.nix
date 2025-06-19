@@ -5,7 +5,9 @@
   stdenv,
   cmake,
   eigen,
-  python3Packages,
+  eigenpy,
+  boost,
+  python,
   yaml-cpp,
   odri-masterboard-sdk,
 }:
@@ -21,9 +23,9 @@ stdenv.mkDerivation {
     odri-masterboard-sdk
     cmake
     eigen
-    python3Packages.eigenpy
-    python3Packages.boost
-    python3Packages.python
+    eigenpy
+    boost
+    python
   ];
 
   propagatedBuildInputs = [ yaml-cpp ];

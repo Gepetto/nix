@@ -5,7 +5,9 @@
   stdenv,
   jrl-cmakemodules,
   cmake,
-  python3Packages,
+  python,
+  numpy,
+  boost,
   catch2_3,
 }:
 
@@ -30,16 +32,16 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     jrl-cmakemodules
-    python3Packages.python
+    python
     cmake
   ];
 
   # from package.xml
-  buildInputs = with python3Packages; [ numpy ];
+  buildInputs = [ numpy ];
 
   nativeCheckInputs = [ catch2_3 ];
 
-  propagatedBuildInputs = with python3Packages; [ boost ];
+  propagatedBuildInputs = [ boost ];
 
   meta = {
     description = "Hardware and Firmware of the Solo Quadruped Master Board";
