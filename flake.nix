@@ -115,75 +115,78 @@
                   # keep-sorted end
                 ];
               };
-              hpp = pkgs.mkShell {
-                name = "dev shell for HPP";
-                CMAKE_C_COMPILER_LAUNCHER = "ccache";
-                CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
-                CMAKE_GENERATOR = "Unix Makefiles";
-                ROS_PACKAGE_PATH = "${pkgs.example-robot-data}/share";
-                shellHook = ''
-                  export DEVEL_HPP_DIR=$(pwd -P)
-                  export INSTALL_HPP_DIR=$DEVEL_HPP_DIR/install
-                  export PATH=$INSTALL_HPP_DIR/bin:$PATH
-                  export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
-                  export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
-                  export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
-                  PYTHONPATH="$(dirname $(dirname $(which python)))/${pkgs.python3.sitePackages}"
-                  if [[ ! -d install ]]
-                  then
-                      python -m venv --system-site-packages --upgrade-deps install
-                      echo "$PYTHONPATH" > install/${pkgs.python3.sitePackages}/nix.pth
-                  fi
-                  source $INSTALL_HPP_DIR/bin/activate
-                '';
-                packages =
-                  with pkgs;
-                  [
-                    assimp
-                    ccache
-                    cddlib
-                    clp
-                    cmake
-                    console-bridge
-                    doxygen
-                    eigen
-                    glpk
-                    graphviz
-                    jrl-cmakemodules
-                    libGL
-                    libsForQt5.full
-                    octomap
-                    openscenegraph
-                    osgqt
-                    pkg-config
-                    (python3.withPackages (
-                      p:
-                      with p;
-                      [
-                        lxml
-                        numpy
-                        omniorb
-                        omniorbpy
-                        python-qt
-                        scipy
-                        (toPythonModule rosPackages.rolling.xacro)
-                      ]
-                      ++ viser.dependencies
-                      ++ viser.optional-dependencies.dev
-                      ++ viser.optional-dependencies.examples
-                    ))
-                    python3Packages.boost
-                    qhull
-                    qpoases
-                    tinyxml-2
-                    urdfdom
-                    yarn
-                    zlib
-                  ]
-                  ++ lib.optionals stdenv.isLinux [
-                    psmisc
-                  ];
-              };
+              hpp =
+                let
+                  python-venv = pkgs.python3.withPackages (
+                    p:
+                    with p;
+                    [
+                      lxml
+                      numpy
+                      omniorb
+                      omniorbpy
+                      python-qt
+                      scipy
+                      (toPythonModule pkgs.rosPackages.rolling.xacro)
+                    ]
+                    ++ viser.dependencies
+                    ++ viser.optional-dependencies.dev
+                    ++ viser.optional-dependencies.examples
+                  );
+                in
+                pkgs.mkShell {
+                  name = "dev shell for HPP";
+                  CMAKE_C_COMPILER_LAUNCHER = "ccache";
+                  CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
+                  CMAKE_GENERATOR = "Unix Makefiles";
+                  ROS_PACKAGE_PATH = "${pkgs.example-robot-data}/share";
+                  shellHook = ''
+                    export DEVEL_HPP_DIR=$(pwd -P)
+                    export INSTALL_HPP_DIR=$DEVEL_HPP_DIR/install
+                    export PATH=$INSTALL_HPP_DIR/bin:$PATH
+                    export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
+                    export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
+                    export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
+                    if [[ ! -d install ]]
+                    then
+                        python -m venv --system-site-packages --upgrade-deps $INSTALL_HPP_DIR
+                        echo "${python-venv}/${python-venv.sitePackages}" > $INSTALL_HPP_DIR/${python-venv.sitePackages}/nix.pth
+                    fi
+                    source $INSTALL_HPP_DIR/bin/activate
+                  '';
+                  packages =
+                    with pkgs;
+                    [
+                      assimp
+                      ccache
+                      cddlib
+                      clp
+                      cmake
+                      console-bridge
+                      doxygen
+                      eigen
+                      glpk
+                      graphviz
+                      jrl-cmakemodules
+                      libGL
+                      libsForQt5.full
+                      octomap
+                      openscenegraph
+                      osgqt
+                      pkg-config
+                      python-venv
+                      python3Packages.boost
+                      qhull
+                      qpoases
+                      tinyxml-2
+                      urdfdom
+                      yarn
+                      zlib
+                    ]
+                    ++ lib.optionals stdenv.isLinux [
+                      psmisc
+                    ];
+                };
               gs = pkgs.mkShell {
                 name = "Dev Shell for Guilhem";
                 packages = [
