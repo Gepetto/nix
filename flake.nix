@@ -126,9 +126,15 @@
                   export INSTALL_HPP_DIR=$DEVEL_HPP_DIR/install
                   export PATH=$INSTALL_HPP_DIR/bin:$PATH
                   export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
-                  export PYTHONPATH=$INSTALL_HPP_DIR/${pkgs.python3.sitePackages}
                   export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
                   export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
+                  PYTHONPATH="$(dirname $(dirname $(which python)))/${pkgs.python3.sitePackages}"
+                  if [[ ! -d install ]]
+                  then
+                      python -m venv --system-site-packages --upgrade-deps install
+                      echo "$PYTHONPATH" > install/${pkgs.python3.sitePackages}/nix.pth
+                  fi
+                  source $INSTALL_HPP_DIR/bin/activate
                 '';
                 packages =
                   with pkgs;
