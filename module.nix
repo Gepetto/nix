@@ -36,8 +36,13 @@
           in
           import patchedNixpkgs {
             inherit system;
+            config.permittedInsecurePackages = [
+              # SHAME
+              "freeimage-3.18.0-unstable-2024-04-18"
+            ];
             overlays = [
               inputs.nix-ros-overlay.overlays.default
+              inputs.gazebo-sim-overlay.overlays.default
               (import ./overlay.nix { inherit (localFlake) inputs; })
             ] ++ config.gepetto-pkgs.overlays;
           };

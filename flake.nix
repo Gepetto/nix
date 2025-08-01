@@ -1,6 +1,12 @@
 {
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
+    gazebo-sim-overlay = {
+      url = "github:muellerbernd/gazebo-sim-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixgl.follows = "nixpkgs"; # We just dont need that
+      inputs.systems.follows = "systems";
+    };
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nix-system-graphics = {
       url = "github:soupglasses/nix-system-graphics";
@@ -37,6 +43,11 @@
     };
     src-franka-description = {
       url = "github:agimus-project/franka_description";
+      flake = false;
+    };
+    src-franka-ros2 = {
+      # url = "github:agimus-project/franka_ros2";
+      url = "github:nim65s/franka_ros2/harmonic";
       flake = false;
     };
     # gepetto-viewer has a fix to understand AMENT_PREFIX_PATH in #239/devel
@@ -259,6 +270,7 @@
                   crocoddyl
                   example-robot-data
                   gepetto-viewer
+                  gz-harmonic
                   hpp-affordance
                   hpp-affordance-corba
                   hpp-baxter
@@ -337,7 +349,18 @@
                   # keep-sorted start
                   agimus-controller-ros
                   agimus-msgs
+                  franka-bringup
                   franka-description
+                  franka-example-controllers
+                  franka-fr3-moveit-config
+                  franka-gazebo-bringup
+                  franka-gripper
+                  franka-hardware
+                  franka-ign-ros2-control
+                  franka-msgs
+                  franka-robot-state-broadcaster
+                  franka-ros2
+                  franka-semantic-components
                   linear-feedback-controller
                   linear-feedback-controller-msgs
                   # keep-sorted end
