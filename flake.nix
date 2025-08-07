@@ -303,6 +303,7 @@
                   odri-control-interface
                   odri-masterboard-sdk
                   pinocchio
+                  ros2nix
                   # keep-sorted end
                   ;
               }
@@ -352,6 +353,16 @@
                 inherit (pkgs.rosPackages.humble)
                   # keep-sorted start
                   agimus-controller-ros
+                  agimus-demo-00-franka-controller
+                  agimus-demo-01-lfc-alone
+                  agimus-demo-02-simple-pd-plus
+                  agimus-demo-02-simple-pd-plus-tiago-pro
+                  agimus-demo-03-mpc-dummy-traj
+                  agimus-demo-03-mpc-dummy-traj-tiago-pro
+                  agimus-demo-04-visual-servoing
+                  agimus-demo-05-pick-and-place
+                  agimus-demos
+                  agimus-demos-common
                   agimus-msgs
                   franka-bringup
                   franka-description
@@ -367,6 +378,8 @@
                   franka-semantic-components
                   linear-feedback-controller
                   linear-feedback-controller-msgs
+                  tiago-pro-description
+                  tiago-pro-gazebo
                   # keep-sorted end
                   ;
               }
