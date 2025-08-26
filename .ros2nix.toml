@@ -1,0 +1,47 @@
+[humble."gbartyzel/ros2_net_ft_driver"]
+branch = "humble"
+packages = {"net_ft_driver" = {native = ["pkg-config"], propagated = ["curl", "curlpp"]}}
+
+[humble."jpgtzg/omni_drive_controller".packages]
+omni_drive_controller = {do_check = false}
+
+[humble."pal-robotics/pal_pro_gripper".packages]
+pal_pro_gripper_description = {do_check = false}
+pal_pro_gripper_controller_configuration = {do_check = false}
+
+[humble."pal-robotics/pal_sea_arm".packages]
+pal_sea_arm_controller_configuration = {do_check = false}
+pal_sea_arm_description = {do_check = false}
+
+[humble."pal-robotics/pal_sea_arm_moveit_config".packages]
+pal_sea_arm_moveit_config = {do_check = false}
+
+[humble."pal-robotics/pal_sea_arm_simulation"]
+
+[humble."pal-robotics/realsense_gazebo_plugin".packages]
+realsense_gazebo_plugin = {do_check = false}
+
+[humble."pal-robotics/realsense_simulation".packages]
+realsense_simulation = {do_check = false}
+
+[humble."pal-robotics/tiago_pro_head_robot".packages]
+tiago_pro_head_bringup = {do_check = false}
+tiago_pro_head_controller_configuration = {do_check = false}
+tiago_pro_head_description = {do_check = false}
+
+[humble."pal-robotics/tiago_pro_head_simulation"]
+
+[humble."pal-robotics/tiago_pro_moveit_config".packages]
+tiago_pro_moveit_config = {do_check = false}
+
+[humble."pal-robotics/tiago_pro_navigation".packages]
+tiago_pro_2dnav = {do_check = false}
+tiago_pro_laser_sensors = {do_check = false}
+
+[humble."pal-robotics/tiago_pro_robot".packages]
+tiago_pro_bringup = {do_check = false}
+tiago_pro_controller_configuration = {do_check = false}
+tiago_pro_description = {do_check = false}
+
+[humble."pal-robotics/tiago_pro_simulation".packages]
+tiago_pro_gazebo = {do_check = false}
