@@ -149,6 +149,7 @@
                     jrl-cmakemodules
                     libGL
                     libsForQt5.full
+		    libxml2-dev
                     octomap
                     openscenegraph
                     osgqt
