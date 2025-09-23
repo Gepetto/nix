@@ -263,6 +263,7 @@
                   colmpc
                   crocoddyl
                   example-robot-data
+                  flex-joints
                   gepetto-viewer
                   hpp-affordance
                   hpp-affordance-corba
@@ -305,6 +306,7 @@
                   crocoddyl
                   example-parallel-robots
                   example-robot-data
+                  flex-joints
                   gepetto-gui
                   hpp-affordance-corba
                   hpp-corba
