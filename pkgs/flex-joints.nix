@@ -24,8 +24,8 @@ stdenv.mkDerivation (_finalAttrs: {
     owner = "Gepetto";
     repo = "flex-joints";
     #tag = "v${finalAttrs.version}";
-    rev = "141d2bfe9c70e77db23e3e4b63209b78052f2b07";
-    hash = lib.fakeHash;
+    rev = "6bf5f0119bd0a4cb9449e1a40106c36d819eb6ff";
+    hash = "sha256-odnWPd2ECdKfmDWCpVDmlAFgqeVv0Q3NzZzGPUlqyZE=";
   };
 
   nativeBuildInputs = [
