@@ -25,7 +25,7 @@ stdenv.mkDerivation (_finalAttrs: {
     repo = "flex-joints";
     #tag = "v${finalAttrs.version}";
     rev = "6bf5f0119bd0a4cb9449e1a40106c36d819eb6ff";
-    hash = "sha256-odnWPd2ECdKfmDWCpVDmlAFgqeVv0Q3NzZzGPUlqyZE=";
+    hash = "sha256-O4eUjyP/WuqGzRhuYhcUkbEG4NPrIlE+RO9YAt13Hl4=";
   };
 
   nativeBuildInputs = [
