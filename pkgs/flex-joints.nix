@@ -36,13 +36,14 @@ stdenv.mkDerivation (_finalAttrs: {
     [
       eigen
       jrl-cmakemodules
-      boost
     ]
     ++ lib.optionals pythonSupport [
       python3Packages.boost
       python3Packages.eigenpy
       python3Packages.pythonImportsCheckHook
     ];
+
+    checkInputs = [ pkgs.gtest ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
