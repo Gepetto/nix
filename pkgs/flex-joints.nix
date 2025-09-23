@@ -46,7 +46,7 @@ stdenv.mkDerivation (_finalAttrs: {
       python3Packages.pythonImportsCheckHook
     ];
 
-    checkInputs = [ gtest ];
+  checkInputs = [ gtest ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
