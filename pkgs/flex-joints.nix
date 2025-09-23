@@ -13,6 +13,9 @@
   jrl-cmakemodules,
   python3Packages,
 
+  # checkInputs
+  gtest,
+
   pythonSupport ? false,
 }:
 
@@ -43,7 +46,7 @@ stdenv.mkDerivation (_finalAttrs: {
       python3Packages.pythonImportsCheckHook
     ];
 
-    checkInputs = [ pkgs.gtest ];
+    checkInputs = [ gtest ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
