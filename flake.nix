@@ -27,10 +27,6 @@
       url = "github:agimus-project/agimus_msgs";
       flake = false;
     };
-    src-colmpc = {
-      url = "github:agimus-project/colmpc";
-      flake = false;
-    };
     src-example-parallel-robots = {
       url = "github:gepetto/example-parallel-robots";
       flake = false;

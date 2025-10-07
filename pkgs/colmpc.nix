@@ -2,7 +2,7 @@
   lib,
   stdenv,
 
-  src-colmpc,
+  fetchFromGitHub,
 
   pythonSupport ? false,
   python3Packages,
@@ -19,11 +19,16 @@
   ipopt,
 }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "colmpc";
-  version = "0.2.0";
+  version = "0.3.0";
 
-  src = src-colmpc;
+  src = fetchFromGitHub {
+    owner = "agimus-project";
+    repo = "colmpc";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-qvMD3uKRgb0+92DISEX9gfTX708+nmq8tlWjOtfE2yg=";
+  };
 
   nativeBuildInputs = [
     cmake
@@ -56,4 +61,4 @@ stdenv.mkDerivation {
     maintainers = with lib.maintainers; [ nim65s ];
     platforms = lib.platforms.unix;
   };
-}
+})

@@ -6,7 +6,6 @@
   {
     inherit (inputs)
       # keep-sorted start
-      src-colmpc
       src-odri-control-interface
       src-odri-masterboard-sdk
       # keep-sorted end
