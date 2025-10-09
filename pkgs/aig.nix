@@ -30,7 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "Gepetto";
     repo = "aig";
     tag = "v${finalAttrs.version}";
-    hash = lib.fakeHash;
+    hash = "sha256-yrB+no9k63yFmy4a1Fgji6cOcLo81lf7Fc+QW6rOoD4=";
   };
 
   nativeBuildInputs = [
