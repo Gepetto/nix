@@ -1,0 +1,76 @@
+{
+  lib,
+
+  stdenv,
+  fetchFromGitHub,
+
+  # nativeBuildInputs
+  cmake,
+
+  # propagatedBuildInputs
+  boost,
+  eigen,
+  eiquadprog,
+  pinocchio,
+  example-robot-data,
+  jrl-cmakemodules,
+  python3Packages,
+
+  # checkInputs,
+  # doctest,
+
+  pythonSupport ? false,
+}:
+
+stdenv.mkDerivation (finalAttrs: {
+  pname = "aig";
+  version = "1.2.1";
+
+  src = fetchFromGitHub {
+    owner = "Gepetto";
+    repo = "aig";
+    tag = "v${finalAttrs.version}";
+    hash = lib.fakeHash;
+  };
+
+  nativeBuildInputs = [
+    cmake
+  ];
+
+  propagatedBuildInputs = [
+    eigen
+    jrl-cmakemodules
+  ]
+  ++ lib.optionals (!pythonSupport) [
+    boost
+    eiquadprog
+    example-robot-data
+    pinocchio
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.boost
+    python3Packages.eigenpy
+    python3Packages.example-robot-data
+    python3Packages.pinocchio
+    python3Packages.pythonImportsCheckHook
+  ];
+
+  checkInputs = [
+    # doctest
+  ];
+
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+  ];
+
+  doCheck = true;
+  pythonImportsCheck = [ "aig" ];
+
+  meta = {
+    description = "Stabilizer for Biped Locomotion";
+    homepage = "https://github.com/Gepetto/aig";
+    license = lib.licenses.bsd2;
+    maintainers = with lib.maintainers; [ nim65s ];
+    platforms = lib.platforms.unix;
+  };
+})
