@@ -67,7 +67,7 @@ stdenv.mkDerivation (finalAttrs: {
   pythonImportsCheck = [ "aig" ];
 
   meta = {
-    description = "Stabilizer for Biped Locomotion";
+    description = "Analytical inverse geometry for 6 links kinematic chains";
     homepage = "https://github.com/Gepetto/aig";
     license = lib.licenses.bsd2;
     maintainers = with lib.maintainers; [ nim65s ];
