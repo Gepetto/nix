@@ -42,12 +42,12 @@ stdenv.mkDerivation (finalAttrs: {
     jrl-cmakemodules
   ]
   ++ lib.optionals (!pythonSupport) [
-    boost
     eiquadprog
     example-robot-data
     pinocchio
   ]
   ++ lib.optionals pythonSupport [
+    python3Packages.eiquadprog
     python3Packages.boost
     python3Packages.eigenpy
     python3Packages.example-robot-data
@@ -56,7 +56,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   checkInputs = [
-    # doctest
+    boost
   ];
 
   cmakeFlags = [
