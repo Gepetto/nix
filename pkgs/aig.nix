@@ -39,15 +39,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   propagatedBuildInputs = [
     eigen
+    eiquadprog
     jrl-cmakemodules
   ]
   ++ lib.optionals (!pythonSupport) [
-    eiquadprog
     example-robot-data
     pinocchio
   ]
   ++ lib.optionals pythonSupport [
-    python3Packages.eiquadprog
     python3Packages.boost
     python3Packages.eigenpy
     python3Packages.example-robot-data
