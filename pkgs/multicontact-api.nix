@@ -1,6 +1,8 @@
 {
   lib,
+
   fetchFromGitHub,
+  fetchpatch,
   stdenv,
 
   # Native build inputs
@@ -26,6 +28,14 @@ stdenv.mkDerivation (finalAttrs: {
     tag = "v${finalAttrs.version}";
     hash = "sha256-c46nGfcqzMjDcmtiYptTZxXmEEc99KZuHbSsRTWrhCo=";
   };
+
+  patches = [
+    # fix darwin lib name, ref PR 78
+    (fetchpatch {
+      url = "https://github.com/loco-3d/multicontact-api/pull/78/commits/abf30c228d3e335f3a4f4e753db351a70457a508.patch";
+      hash = "sha256-f//w6wr6PncrvzbtHdb3qWGGLT77NPDY3f8TYFvRins=";
+    })
+  ];
 
   nativeBuildInputs = [
     cmake
