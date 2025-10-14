@@ -23,7 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "loco-3d";
     repo = "multicontact-api";
-    rev = "refs/tags/v${finalAttrs.version}";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-c46nGfcqzMjDcmtiYptTZxXmEEc99KZuHbSsRTWrhCo=";
   };
 
