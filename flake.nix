@@ -278,6 +278,7 @@
                   hpp-universal-robot
                   hpp-util
                   mim-solvers
+                  multicontact-api
                   ndcurves
                   odri-control-interface
                   odri-masterboard-sdk
@@ -312,6 +313,7 @@
                   hpp-tutorial
                   hpp-universal-robot
                   mim-solvers
+                  multicontact-api
                   ndcurves
                   pinocchio
                   platypus
