@@ -122,6 +122,9 @@
                   export PYTHONPATH=$INSTALL_HPP_DIR/${pkgs.python3.sitePackages}
                   export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
                   export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
+		  export AMENT_PREFIX_PATH=$INSTALL_HPP_DIR:$AMENT_PREFIX_PATH
+		  export ROS_PACKAGE_PATH=$INSTALL_HPP_DIR/share:$ROS_PACKAGE_PATH
+
                 '';
                 packages =
                   with pkgs;
@@ -138,6 +141,7 @@
                     graphviz
                     libGL
                     libsForQt5.full
+		    libxml2-dev
                     octomap
                     openscenegraph
                     osgqt
