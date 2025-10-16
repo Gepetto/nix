@@ -1,0 +1,24 @@
+From e0b7830b3352f7a3c66d1c2f128bfbf24bf75145 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Thu, 16 Oct 2025 22:09:29 +0200
+Subject: [PATCH] libsForQt5.full: remove insecure qtwebengine
+
+follows https://github.com/NixOS/nixpkgs/pull/435067
+---
+ pkgs/development/libraries/qt-5/5.15/default.nix | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/pkgs/development/libraries/qt-5/5.15/default.nix b/pkgs/development/libraries/qt-5/5.15/default.nix
+index 9c34451b9e8427..2936829b48f9fc 100644
+--- a/pkgs/development/libraries/qt-5/5.15/default.nix
++++ b/pkgs/development/libraries/qt-5/5.15/default.nix
+@@ -377,9 +377,7 @@ let
+               qttranslations
+               qtvirtualkeyboard
+               qtwebchannel
+-              qtwebengine
+               qtwebsockets
+-              qtwebview
+               qtx11extras
+               qtxmlpatterns
+               qtlottie

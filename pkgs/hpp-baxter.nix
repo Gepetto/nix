@@ -38,7 +38,8 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     doxygen
     pkg-config
-  ] ++ lib.optional pythonSupport python3Packages.python;
+  ]
+  ++ lib.optional pythonSupport python3Packages.python;
   propagatedBuildInputs = [
     jrl-cmakemodules
     example-robot-data

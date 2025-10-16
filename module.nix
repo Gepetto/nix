@@ -30,7 +30,9 @@
               pkgsForPatching.applyPatches {
                 name = "gepetto patched nixpkgs";
                 src = inputs.nixpkgs;
-                patches = lib.fileset.toList ./patches/NixOS/nixpkgs ++ config.gepetto-pkgs.patches;
+                patches =
+                  lib.fileset.toList (lib.fileset.maybeMissing ./patches/NixOS/nixpkgs)
+                  ++ config.gepetto-pkgs.patches;
               }
             );
           in
@@ -39,7 +41,8 @@
             overlays = [
               inputs.nix-ros-overlay.overlays.default
               (import ./overlay.nix { inherit (localFlake) inputs; })
-            ] ++ config.gepetto-pkgs.overlays;
+            ]
+            ++ config.gepetto-pkgs.overlays;
           };
         checks =
           let

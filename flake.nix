@@ -322,16 +322,6 @@
                   # keep-sorted end
                   ;
               }
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-noetic-${n}") (
-                lib.optionalAttrs (system == "x86_64-linux") {
-                  inherit (pkgs.rosPackages.noetic)
-                    # keep-sorted start
-                    rosbag
-                    rospy
-                    # keep-sorted end
-                    ;
-                }
-              )
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
                 inherit (pkgs.rosPackages.humble)
                   # keep-sorted start

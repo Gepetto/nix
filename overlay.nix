@@ -39,7 +39,6 @@
     # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
     openscenegraph = prev.openscenegraph.override {
       colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
-      opencollada = final.collada-dom;
     };
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
@@ -74,21 +73,6 @@
       )
     ];
     rosPackages = prev.rosPackages // {
-      noetic = prev.rosPackages.noetic.overrideScope (
-        _noetic-final: noetic-prev: {
-          # https://github.com/lopsided98/nix-ros-overlay/blob/develop/distros/noetic/overrides.nix#L206
-          # has https://github.com/ros/rosconsole/pull/58.patch
-          # but github somehow raises HTTP 429
-          rosconsole = noetic-prev.rosconsole.overrideAttrs {
-            patches = [ ./patches/ros/rosconsole/58_compatibility-fix-for-liblog4cxx-v011-013.patch ];
-          };
-          # drop fixed patch
-          # ref. https://github.com/lopsided98/nix-ros-overlay/pull/636
-          rosgraph = noetic-prev.rosgraph.overrideAttrs {
-            patches = [ ];
-          };
-        }
-      );
       humble = prev.rosPackages.humble.overrideScope (
         humble-final: humble-prev:
         {

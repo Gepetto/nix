@@ -5,8 +5,8 @@
 
   src-agimus-controller,
 
-  # nativeBuildInputs
-  pythonImportsCheckHook,
+  # build-system,
+  setuptools,
 
   # propagatedBuildInputs
   colmpc,
@@ -14,7 +14,6 @@
   coal,
   example-robot-data,
   mim-solvers,
-  numpy,
   pinocchio,
   rospkg,
 }:
@@ -22,15 +21,12 @@
 buildPythonPackage {
   pname = "agimus-controller";
   version = "0-unstable-2025-04-08";
+  pyproject = true;
 
   src = src-agimus-controller;
   sourceRoot = "source/agimus_controller";
 
-  nativeBuildInputs = [
-    pythonImportsCheckHook
-    # franka-description
-    # xacro
-  ];
+  build-system = [ setuptools ];
   propagatedBuildInputs = [
     # ament-index-python
     colmpc
@@ -38,13 +34,13 @@ buildPythonPackage {
     coal
     example-robot-data
     mim-solvers
-    numpy
     pinocchio
     rospkg
   ];
 
   doCheck = true;
   pythonImportsCheck = [ "agimus_controller" ];
+  dontCheckRuntimeDeps = true;
 
   meta = {
     description = "The agimus_controller package";

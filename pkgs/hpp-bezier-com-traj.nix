@@ -38,40 +38,37 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs =
-    [
-      cmake
-      doxygen
-      pkg-config
-    ]
-    ++ lib.optionals pythonSupport [
-      python3Packages.python
-      python3Packages.pythonImportsCheckHook
-    ];
-  propagatedBuildInputs =
-    [
-      cddlib
-      clp
-      glpk
-      qpoases
-    ]
-    ++ lib.optionals pythonSupport [
-      python3Packages.hpp-centroidal-dynamics
-      python3Packages.ndcurves
-    ]
-    ++ lib.optionals (!pythonSupport) [
-      hpp-centroidal-dynamics
-      ndcurves
-    ];
+  nativeBuildInputs = [
+    cmake
+    doxygen
+    pkg-config
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.python
+    python3Packages.pythonImportsCheckHook
+  ];
+  propagatedBuildInputs = [
+    cddlib
+    clp
+    glpk
+    qpoases
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.hpp-centroidal-dynamics
+    python3Packages.ndcurves
+  ]
+  ++ lib.optionals (!pythonSupport) [
+    hpp-centroidal-dynamics
+    ndcurves
+  ];
 
-  cmakeFlags =
-    [
-      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
-      (lib.cmakeBool "USE_GLPK" true)
-    ]
-    ++ lib.optionals stdenv.targetPlatform.isDarwin [
-      (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
-    ];
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "USE_GLPK" true)
+  ]
+  ++ lib.optionals stdenv.targetPlatform.isDarwin [
+    (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
+  ];
 
   doCheck = true;
 

@@ -38,13 +38,13 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     doxygen
     pkg-config
-  ] ++ lib.optional pythonSupport python3Packages.python;
-  propagatedBuildInputs =
-    [
-      jrl-cmakemodules
-    ]
-    ++ lib.optional pythonSupport python3Packages.hpp-corbaserver
-    ++ lib.optional (!pythonSupport) hpp-corbaserver;
+  ]
+  ++ lib.optional pythonSupport python3Packages.python;
+  propagatedBuildInputs = [
+    jrl-cmakemodules
+  ]
+  ++ lib.optional pythonSupport python3Packages.hpp-corbaserver
+  ++ lib.optional (!pythonSupport) hpp-corbaserver;
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
