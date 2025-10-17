@@ -27,6 +27,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-cGt+tL1BgrB4DtPswLI5nAyRfzq0yYlZw1eucY2OA5c=";
   };
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-warn \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
+  '';
+
   outputs = [
     "out"
     "doc"
