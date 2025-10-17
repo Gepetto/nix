@@ -3,6 +3,7 @@
 
   buildPythonPackage,
   fetchFromGitHub,
+  python,
 
   # nativeBuildInputs
   cmake,
@@ -17,15 +18,20 @@
 
 buildPythonPackage rec {
   pname = "toolbox-parallel-robots";
-  version = "1.1.0";
+  version = "1.2.0";
   pyproject = false;
 
   src = fetchFromGitHub {
     owner = "gepetto";
     repo = "toolbox-parallel-robots";
     tag = "v${version}";
-    hash = "sha256-g7W4Ql6yloEIYh65iwPNbOVK0gx8ZWruqJZ0yKvLLgE=";
+    hash = "sha256-tFMKVhBhA3zXEt4Yb8btI0LYc84SndpgfMsJSUlLL48=";
   };
+
+  cmakeFlags = [
+    # Not sure why jrl-cmakemodule fail to set this here
+    (lib.cmakeFeature "PYTHON_SITELIB" python.sitePackages)
+  ];
 
   nativeBuildInputs = [
     cmake

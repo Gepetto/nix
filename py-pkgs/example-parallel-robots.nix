@@ -3,6 +3,7 @@
 
   buildPythonPackage,
   fetchFromGitHub,
+  python,
 
   # nativeBuildInputs
   cmake,
@@ -30,6 +31,8 @@ buildPythonPackage rec {
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
     (lib.cmakeBool "BUILD_TESTING" true)
+    # Not sure why jrl-cmakemodule fail to set this here
+    (lib.cmakeFeature "PYTHON_SITELIB" python.sitePackages)
   ];
 
   nativeBuildInputs = [

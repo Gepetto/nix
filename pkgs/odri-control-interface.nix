@@ -17,6 +17,12 @@ stdenv.mkDerivation {
 
   src = src-odri-control-interface;
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-warn \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
+  '';
+
   nativeBuildInputs = [
     odri-masterboard-sdk
     cmake
