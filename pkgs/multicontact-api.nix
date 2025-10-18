@@ -37,27 +37,31 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-fail \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
+  '';
   nativeBuildInputs = [
     cmake
   ];
 
-  propagatedBuildInputs =
-    [
-      boost
-      jrl-cmakemodules
-    ]
-    ++ lib.optionals (!pythonSupport) [
-      ndcurves
-      pinocchio
-    ]
-    ++ lib.optionals pythonSupport [
-      python3Packages.boost
-      python3Packages.eigenpy
-      python3Packages.example-robot-data
-      python3Packages.ndcurves
-      python3Packages.pinocchio
-      python3Packages.pythonImportsCheckHook
-    ];
+  propagatedBuildInputs = [
+    boost
+    jrl-cmakemodules
+  ]
+  ++ lib.optionals (!pythonSupport) [
+    ndcurves
+    pinocchio
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.boost
+    python3Packages.eigenpy
+    python3Packages.example-robot-data
+    python3Packages.ndcurves
+    python3Packages.pinocchio
+    python3Packages.pythonImportsCheckHook
+  ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)

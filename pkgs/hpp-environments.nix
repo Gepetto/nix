@@ -29,6 +29,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-GCyrt1SkBrfoT2VXrZOoOlysxH4gS2+n5pNYSuAbAs8=";
   };
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-warn \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
+  '';
+
   outputs = [
     "out"
     "doc"
@@ -40,22 +46,22 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     doxygen
     pkg-config
-  ] ++ lib.optional pythonSupport python3Packages.python;
-  propagatedBuildInputs =
-    [
-      jrl-cmakemodules
-    ]
-    ++ lib.optionals pythonSupport [
-      python3Packages.boost
-      python3Packages.eigenpy
-      python3Packages.pinocchio
-      python3Packages.example-robot-data
-    ]
-    ++ lib.optionals (!pythonSupport) [
-      boost
-      pinocchio
-      example-robot-data
-    ];
+  ]
+  ++ lib.optional pythonSupport python3Packages.python;
+  propagatedBuildInputs = [
+    jrl-cmakemodules
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.boost
+    python3Packages.eigenpy
+    python3Packages.pinocchio
+    python3Packages.example-robot-data
+  ]
+  ++ lib.optionals (!pythonSupport) [
+    boost
+    pinocchio
+    example-robot-data
+  ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)

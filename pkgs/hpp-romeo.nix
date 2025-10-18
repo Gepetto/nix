@@ -27,6 +27,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-cGt+tL1BgrB4DtPswLI5nAyRfzq0yYlZw1eucY2OA5c=";
   };
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-warn \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
+  '';
+
   outputs = [
     "out"
     "doc"
@@ -38,13 +44,13 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     doxygen
     pkg-config
-  ] ++ lib.optional pythonSupport python3Packages.python;
-  propagatedBuildInputs =
-    [
-      jrl-cmakemodules
-    ]
-    ++ lib.optional pythonSupport python3Packages.hpp-corbaserver
-    ++ lib.optional (!pythonSupport) hpp-corbaserver;
+  ]
+  ++ lib.optional pythonSupport python3Packages.python;
+  propagatedBuildInputs = [
+    jrl-cmakemodules
+  ]
+  ++ lib.optional pythonSupport python3Packages.hpp-corbaserver
+  ++ lib.optional (!pythonSupport) hpp-corbaserver;
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)

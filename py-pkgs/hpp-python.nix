@@ -24,7 +24,7 @@
   lxml,
 
   # installCheckInputs
-  example-robot-data,
+  pkgs,
 }:
 
 buildPythonPackage rec {
@@ -39,8 +39,14 @@ buildPythonPackage rec {
     hash = "sha256-twBkQqc74kwKkDXWaJg25EtoiqRbTwLlNDvFeP4xs18=";
   };
 
-  postPatch = ''
+  prePatch = ''
     patchShebangs doc/configure.py
+  '';
+
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-warn \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
   '';
 
   outputs = [
@@ -74,11 +80,11 @@ buildPythonPackage rec {
   ];
 
   installCheckInputs = [
-    example-robot-data
+    pkgs.example-robot-data
   ];
 
   preInstallCheck = ''
-    export ROS_PACKAGE_PATH=${example-robot-data}/share
+    export ROS_PACKAGE_PATH=${pkgs.example-robot-data}/share
     make test
   '';
 

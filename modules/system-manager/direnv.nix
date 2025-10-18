@@ -24,13 +24,12 @@ in
           eval "$(${lib.getExe cfg.package} hook bash)"
         '';
       };
-      systemPackages =
-        [
-          cfg.package
-        ]
-        ++ lib.optionals cfg.nix-direnv.enable [
-          cfg.nix-direnv.package
-        ];
+      systemPackages = [
+        cfg.package
+      ]
+      ++ lib.optionals cfg.nix-direnv.enable [
+        cfg.nix-direnv.package
+      ];
     };
   };
 }

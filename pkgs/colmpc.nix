@@ -3,6 +3,7 @@
   stdenv,
 
   fetchFromGitHub,
+  fetchpatch,
 
   pythonSupport ? false,
   python3Packages,
@@ -30,17 +31,30 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-qvMD3uKRgb0+92DISEX9gfTX708+nmq8tlWjOtfE2yg=";
   };
 
+  patches = [
+    # fix for crocoddyl v3.1.0 explicit template instanciation
+    # ref. https://github.com/loco-3d/crocoddyl/pull/1367
+    (fetchpatch {
+      url = "https://github.com/agimus-project/colmpc/commit/811567f91dbe47c4c027359949551eabe8f5ee9e.patch";
+      hash = "sha256-Xc6NlHPUtndOHc9QzCM/s8usHkWPWkl8m3K7rm5pXB0=";
+    })
+  ];
+
+  env.NIX_CFLAGS_COMPILE = "-DCOAL_DISABLE_HPP_FCL_WARNINGS";
+
   nativeBuildInputs = [
     cmake
     pkg-config
-  ] ++ lib.optional pythonSupport python3Packages.pythonImportsCheckHook;
+  ]
+  ++ lib.optional pythonSupport python3Packages.pythonImportsCheckHook;
 
   buildInputs = lib.optional stdenv.cc.isClang llvmPackages.openmp;
 
-  propagatedBuildInputs =
-    [ ipopt ]
-    ++ lib.optional pythonSupport python3Packages.crocoddyl
-    ++ lib.optional (!pythonSupport) crocoddyl;
+  propagatedBuildInputs = [
+    ipopt
+  ]
+  ++ lib.optional pythonSupport python3Packages.crocoddyl
+  ++ lib.optional (!pythonSupport) crocoddyl;
 
   checkInputs = lib.optionals pythonSupport [
     python3Packages.mim-solvers

@@ -1,0 +1,1872 @@
+From d59000cc1afb5ec366e97e27be5c6fd5e0203584 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 24 Sep 2025 18:46:15 +0200
+Subject: [PATCH 01/23] jrl-cmakemodules: 0-unstable-2025-05-04 -> 1.1.0
+
+---
+ pkgs/by-name/jr/jrl-cmakemodules/package.nix | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/pkgs/by-name/jr/jrl-cmakemodules/package.nix b/pkgs/by-name/jr/jrl-cmakemodules/package.nix
+index caf1828b090c8c..f8858ef14c3dbd 100644
+--- a/pkgs/by-name/jr/jrl-cmakemodules/package.nix
++++ b/pkgs/by-name/jr/jrl-cmakemodules/package.nix
+@@ -2,27 +2,31 @@
+   lib,
+   stdenv,
+   fetchFromGitHub,
++  nix-update-script,
+   cmake,
+ }:
+ 
+-stdenv.mkDerivation {
++stdenv.mkDerivation (finalAttrs: {
+   pname = "jrl-cmakemodules";
+-  version = "0-unstable-2025-05-04";
++  version = "1.1.0";
+ 
+   src = fetchFromGitHub {
+     owner = "jrl-umi3218";
+     repo = "jrl-cmakemodules";
+-    rev = "2dd858f5a71d8224f178fb3dc0bcd95256ba10e7";
+-    hash = "sha256-Iq9IuhEJBmDd14FhQ3wb94AoJDUjJ1h1D3qCdQYCnUc=";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-WQiAAexshQ4zgaBNo/CD91XV+PAeoPZatmehSA14aPM=";
+   };
+ 
+   nativeBuildInputs = [ cmake ];
+ 
++  passthru.updateScript = nix-update-script { };
++
+   meta = {
+     description = "CMake utility toolbox";
+     homepage = "https://github.com/jrl-umi3218/jrl-cmakemodules";
++    changelog = "https://github.com/jrl-umi3218/jrl-cmakemodules/releases/tag/${finalAttrs.src.tag}";
+     license = lib.licenses.lgpl3Plus;
+     maintainers = [ lib.maintainers.nim65s ];
+     platforms = lib.platforms.all;
+   };
+-}
++})
+
+From 8d70225c8885f1c5f6234b26d303edf23a5e7eca Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Tue, 7 Oct 2025 15:07:45 +0200
+Subject: [PATCH 02/23] jrl-cmakemodules: fix permissions of installed scripts
+
+---
+ pkgs/by-name/jr/jrl-cmakemodules/package.nix | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/pkgs/by-name/jr/jrl-cmakemodules/package.nix b/pkgs/by-name/jr/jrl-cmakemodules/package.nix
+index f8858ef14c3dbd..b3ba427511e618 100644
+--- a/pkgs/by-name/jr/jrl-cmakemodules/package.nix
++++ b/pkgs/by-name/jr/jrl-cmakemodules/package.nix
+@@ -2,6 +2,7 @@
+   lib,
+   stdenv,
+   fetchFromGitHub,
++  fetchpatch,
+   nix-update-script,
+   cmake,
+ }:
+@@ -17,6 +18,15 @@ stdenv.mkDerivation (finalAttrs: {
+     hash = "sha256-WQiAAexshQ4zgaBNo/CD91XV+PAeoPZatmehSA14aPM=";
+   };
+ 
++  patches = [
++    # ref. https://github.com/jrl-umi3218/jrl-cmakemodules/pull/783
++    (fetchpatch {
++      name = "fix-permissions.patch";
++      url = "https://github.com/jrl-umi3218/jrl-cmakemodules/commit/defed70c8a7c5e4bd5b26006bef26e3fb22c3b26.patch";
++      hash = "sha256-muO6DwQhNPCv6DPmnHnEHjsh/FSj0ljgNCb+ZowLRaY=";
++    })
++  ];
++
+   nativeBuildInputs = [ cmake ];
+ 
+   passthru.updateScript = nix-update-script { };
+
+From 6edce88f40dda051371f63101eb8ed3ff472e4bf Mon Sep 17 00:00:00 2001
+From: "R. Ryantm" <ryantm-bot@ryantm.com>
+Date: Mon, 29 Sep 2025 20:43:54 +0000
+Subject: [PATCH 03/23] coal: 3.0.1 -> 3.0.2
+
+---
+ pkgs/by-name/co/coal/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/co/coal/package.nix b/pkgs/by-name/co/coal/package.nix
+index 22c9d456f0c1d8..a02726d8959603 100644
+--- a/pkgs/by-name/co/coal/package.nix
++++ b/pkgs/by-name/co/coal/package.nix
+@@ -17,13 +17,13 @@
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "coal";
+-  version = "3.0.1";
++  version = "3.0.2";
+ 
+   src = fetchFromGitHub {
+     owner = "coal-library";
+     repo = "coal";
+     tag = "v${finalAttrs.version}";
+-    hash = "sha256-2X1chL4tYQXo50W/C5z+IVA1DGPcPdA378lh+7Bs2OE=";
++    hash = "sha256-7Ww1vAzKaCccBpBQU1hzI7Jk+oXw73zhnH594Xn9gbw=";
+   };
+ 
+   strictDeps = true;
+
+From c75703a51a18d78e205e3413fc9886d6895f6d86 Mon Sep 17 00:00:00 2001
+From: "R. Ryantm" <ryantm-bot@ryantm.com>
+Date: Mon, 29 Sep 2025 20:32:16 +0000
+Subject: [PATCH 04/23] example-robot-data: 4.3.0 -> 4.4.0
+
+---
+ pkgs/by-name/ex/example-robot-data/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/ex/example-robot-data/package.nix b/pkgs/by-name/ex/example-robot-data/package.nix
+index 20a2b2366b8f21..ffe2af1be919f4 100644
+--- a/pkgs/by-name/ex/example-robot-data/package.nix
++++ b/pkgs/by-name/ex/example-robot-data/package.nix
+@@ -12,13 +12,13 @@
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "example-robot-data";
+-  version = "4.3.0";
++  version = "4.4.0";
+ 
+   src = fetchFromGitHub {
+     owner = "Gepetto";
+     repo = "example-robot-data";
+     tag = "v${finalAttrs.version}";
+-    hash = "sha256-i5YU5lcbB3gm8/YrRRiE2NDcLEq7+eF7GtIrJ1DF1cU=";
++    hash = "sha256-HnI1EaTSqk7mbihwFTgnMxgPZxMSYnAwaCLEXS3LUbE=";
+   };
+ 
+   outputs = [
+
+From a67f291c259d56284a9199a54c20868f47230a96 Mon Sep 17 00:00:00 2001
+From: "R. Ryantm" <ryantm-bot@ryantm.com>
+Date: Thu, 18 Sep 2025 12:50:52 +0000
+Subject: [PATCH 05/23] pinocchio: 3.7.0 -> 3.8.0
+
+---
+ pkgs/by-name/pi/pinocchio/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/pi/pinocchio/package.nix b/pkgs/by-name/pi/pinocchio/package.nix
+index 3d58ce177cd80d..366f17d77374d3 100644
+--- a/pkgs/by-name/pi/pinocchio/package.nix
++++ b/pkgs/by-name/pi/pinocchio/package.nix
+@@ -21,13 +21,13 @@
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "pinocchio";
+-  version = "3.7.0";
++  version = "3.8.0";
+ 
+   src = fetchFromGitHub {
+     owner = "stack-of-tasks";
+     repo = "pinocchio";
+     rev = "v${finalAttrs.version}";
+-    hash = "sha256-MykHbHSXY/eJ1+8v0hptiXeVmglU9/wImimiuByw0tE=";
++    hash = "sha256-2oMP653fJ7Msk+IB8whRk2L8xkAmRdDeMLPJyyD99OQ=";
+   };
+ 
+   outputs = [
+
+From a68a3996b39b84cd05a09c70ae03570c5312e31f Mon Sep 17 00:00:00 2001
+From: "R. Ryantm" <ryantm-bot@ryantm.com>
+Date: Tue, 7 Oct 2025 01:39:43 +0000
+Subject: [PATCH 06/23] ndcurves: 2.0.0 -> 2.1.0
+
+---
+ pkgs/by-name/nd/ndcurves/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/nd/ndcurves/package.nix b/pkgs/by-name/nd/ndcurves/package.nix
+index 1e796003d29ca9..ba6732ab08e6d7 100644
+--- a/pkgs/by-name/nd/ndcurves/package.nix
++++ b/pkgs/by-name/nd/ndcurves/package.nix
+@@ -13,13 +13,13 @@
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "ndcurves";
+-  version = "2.0.0";
++  version = "2.1.0";
+ 
+   src = fetchFromGitHub {
+     owner = "loco-3d";
+     repo = "ndcurves";
+     rev = "v${finalAttrs.version}";
+-    hash = "sha256-dDH2XpnlBlhG5Q8N9Aljxvf/K9jFuiAx0lyBIcXNOZE=";
++    hash = "sha256-VHxGm6fzoS51PtTj/qeZumz58ZHtxy28ihbzbnoHvHg=";
+   };
+ 
+   outputs = [
+
+From 52ec1f4635724ba00cf1bf641381f8c7a4d54746 Mon Sep 17 00:00:00 2001
+From: "R. Ryantm" <ryantm-bot@ryantm.com>
+Date: Mon, 29 Sep 2025 18:48:02 +0000
+Subject: [PATCH 07/23] tsid: 1.8.0 -> 1.9.0
+
+---
+ pkgs/by-name/ts/tsid/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/ts/tsid/package.nix b/pkgs/by-name/ts/tsid/package.nix
+index bdc1bae1acd918..fc7457be1e3544 100644
+--- a/pkgs/by-name/ts/tsid/package.nix
++++ b/pkgs/by-name/ts/tsid/package.nix
+@@ -15,13 +15,13 @@
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "tsid";
+-  version = "1.8.0";
++  version = "1.9.0";
+ 
+   src = fetchFromGitHub {
+     owner = "stack-of-tasks";
+     repo = "tsid";
+     rev = "v${finalAttrs.version}";
+-    hash = "sha256-SS6JhU4fuZtTzv/EY31ixwwLOzmO/dN3H5HEMh/URTA=";
++    hash = "sha256-enSYneV/Av7lF8ADdLqU1Wj2z8/ePocgecFtOBXS0EY=";
+   };
+ 
+   cmakeFlags = [
+
+From 271a66406884bf1f2b2f270f553fb0a5c7560100 Mon Sep 17 00:00:00 2001
+From: "R. Ryantm" <ryantm-bot@ryantm.com>
+Date: Fri, 3 Oct 2025 14:55:52 +0000
+Subject: [PATCH 08/23] crocoddyl: 3.0.1 -> 3.1.0
+
+---
+ pkgs/by-name/cr/crocoddyl/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/cr/crocoddyl/package.nix b/pkgs/by-name/cr/crocoddyl/package.nix
+index 4962baa7287bac..98e3d79b12e3dc 100644
+--- a/pkgs/by-name/cr/crocoddyl/package.nix
++++ b/pkgs/by-name/cr/crocoddyl/package.nix
+@@ -16,13 +16,13 @@
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "crocoddyl";
+-  version = "3.0.1";
++  version = "3.1.0";
+ 
+   src = fetchFromGitHub {
+     owner = "loco-3d";
+     repo = "crocoddyl";
+     tag = "v${finalAttrs.version}";
+-    hash = "sha256-eUH9fMhuIUp5kuDKNo4B8iJ3JlMIqv7wX6meOpyPTJk=";
++    hash = "sha256-m7UiCa8ydjsAIhsFiShTi3/JaKgq2TCQ1XYAMyTNg1U=";
+   };
+ 
+   outputs = [
+
+From 8a09ddc4e2301883ee64cbe48b0b6f8b87c5a41c Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Tue, 14 Oct 2025 19:26:51 +0200
+Subject: [PATCH 09/23] crocoddyl: add missing include
+
+---
+ pkgs/by-name/cr/crocoddyl/package.nix | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/pkgs/by-name/cr/crocoddyl/package.nix b/pkgs/by-name/cr/crocoddyl/package.nix
+index 98e3d79b12e3dc..ccc05b0297f13f 100644
+--- a/pkgs/by-name/cr/crocoddyl/package.nix
++++ b/pkgs/by-name/cr/crocoddyl/package.nix
+@@ -4,6 +4,7 @@
+   doxygen,
+   example-robot-data,
+   fetchFromGitHub,
++  fetchpatch,
+   ipopt,
+   lapack,
+   lib,
+@@ -25,6 +26,15 @@ stdenv.mkDerivation (finalAttrs: {
+     hash = "sha256-m7UiCa8ydjsAIhsFiShTi3/JaKgq2TCQ1XYAMyTNg1U=";
+   };
+ 
++  patches = [
++    # ref. https://github.com/loco-3d/crocoddyl/pull/1440 merged upstream
++    (fetchpatch {
++      name = "add-missing-include.patch";
++      url = "https://github.com/loco-3d/crocoddyl/commit/6994bea7bb3ae6027f5b611ef1635768538150fd.patch";
++      hash = "sha256-XbQKRWpWm5Rk4figoA2swId4Pz2xKDpU4NFP46p8WO0=";
++    })
++  ];
++
+   outputs = [
+     "out"
+     "doc"
+
+From c57655b6a4b0c591f14b292d6ed7c3488d3ec9cc Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 15 Oct 2025 16:05:55 +0200
+Subject: [PATCH 10/23] aligator: 0.15.0 -> 0.16.0
+
+Diff: https://github.com/Simple-Robotics/aligator/compare/v0.15.0...v0.16.0
+
+Changelog: https://github.com/Simple-Robotics/aligator/blob/v0.16.0/CHANGELOG.md
+---
+ pkgs/by-name/al/aligator/package.nix | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/pkgs/by-name/al/aligator/package.nix b/pkgs/by-name/al/aligator/package.nix
+index 9b4057e582676b..5e09bc3f847d05 100644
+--- a/pkgs/by-name/al/aligator/package.nix
++++ b/pkgs/by-name/al/aligator/package.nix
+@@ -23,18 +23,19 @@
+   pinocchio,
+ 
+   # checkInputs
++  catch2_3,
+   gbenchmark,
+ }:
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "aligator";
+-  version = "0.15.0";
++  version = "0.16.0";
+ 
+   src = fetchFromGitHub {
+     owner = "Simple-Robotics";
+     repo = "aligator";
+     tag = "v${finalAttrs.version}";
+-    hash = "sha256-x9vOj5Dy2SaQOLBCM13wZ/4SxgBz+99K/UxJqhKTg3c=";
++    hash = "sha256-OyCJa2iTkCxVLooSKdVgBd0y7rHObo4vFcc56t48TSY=";
+   };
+ 
+   outputs = [
+@@ -73,11 +74,8 @@ stdenv.mkDerivation (finalAttrs: {
+     pinocchio
+   ];
+   checkInputs = [
++    catch2_3
+     gbenchmark
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.matplotlib
+-    python3Packages.pytest
+   ];
+ 
+   cmakeFlags = [
+
+From 9157d74c00cced82dca4fa0524f00dca745b421b Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 24 Sep 2025 23:31:31 +0200
+Subject: [PATCH 11/23] proxsuite: update for jrl-cmakemodules v1
+
+---
+ pkgs/by-name/pr/proxsuite/package.nix | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/pkgs/by-name/pr/proxsuite/package.nix b/pkgs/by-name/pr/proxsuite/package.nix
+index d1e5dca8dfce1b..fc56b8ef0e5d50 100644
+--- a/pkgs/by-name/pr/proxsuite/package.nix
++++ b/pkgs/by-name/pr/proxsuite/package.nix
+@@ -36,6 +36,13 @@ stdenv.mkDerivation (finalAttrs: {
+     hash = "sha256-1+a5tFOlEwzhGZtll35EMFceD0iUOOQCbwJd9NcFDlk=";
+   };
+ 
++  # ref. https://github.com/Simple-Robotics/proxsuite/pull/408 merged upstream
++  postPatch = ''
++    substituteInPlace CMakeLists.txt --replace-fail \
++      "cmake_minimum_required(VERSION 3.10)" \
++      "cmake_minimum_required(VERSION 3.22)"
++  '';
++
+   outputs = [
+     "doc"
+     "out"
+
+From 3b0f4e48b260cee51bb6969587ae3fe39e1bfed9 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Thu, 25 Sep 2025 02:24:49 +0200
+Subject: [PATCH 12/23] proxsuite-nlp: drop
+
+project is archived upstream:
+> This repository is archived. Development on nonlinear solvers for control (on Lie groups for robotics) continues on the aligator repository.
+
+and has a dumb config error.
+
+(yes, I'm part of the wrong decisions that lead to this dumb config
+error. Sorry for that.)
+---
+ pkgs/by-name/pr/proxsuite-nlp/package.nix | 79 -----------------------
+ pkgs/top-level/python-packages.nix        |  7 --
+ 2 files changed, 86 deletions(-)
+ delete mode 100644 pkgs/by-name/pr/proxsuite-nlp/package.nix
+
+diff --git a/pkgs/by-name/pr/proxsuite-nlp/package.nix b/pkgs/by-name/pr/proxsuite-nlp/package.nix
+deleted file mode 100644
+index 8ec4d08628f00d..00000000000000
+--- a/pkgs/by-name/pr/proxsuite-nlp/package.nix
++++ /dev/null
+@@ -1,79 +0,0 @@
+-{
+-  cmake,
+-  doxygen,
+-  eigenrand,
+-  example-robot-data,
+-  fetchFromGitHub,
+-  fmt,
+-  fontconfig,
+-  graphviz,
+-  lib,
+-  stdenv,
+-  pinocchio,
+-  pkg-config,
+-  proxsuite,
+-  python3Packages,
+-  pythonSupport ? false,
+-}:
+-
+-stdenv.mkDerivation (finalAttrs: {
+-  pname = "proxsuite-nlp";
+-  version = "0.11.0";
+-
+-  src = fetchFromGitHub {
+-    owner = "Simple-Robotics";
+-    repo = "proxsuite-nlp";
+-    rev = "v${finalAttrs.version}";
+-    hash = "sha256-ae8o0R+79qetAsc/KmvtBSVfH9695Cg4bcDBAEzKr6A=";
+-  };
+-
+-  outputs = [
+-    "out"
+-    "doc"
+-  ];
+-
+-  nativeBuildInputs = [
+-    cmake
+-    doxygen
+-    graphviz
+-    pkg-config
+-  ]
+-  ++ lib.optional pythonSupport python3Packages.pythonImportsCheckHook;
+-  checkInputs = [ eigenrand ] ++ lib.optional pythonSupport python3Packages.pytest;
+-  propagatedBuildInputs = [
+-    example-robot-data
+-    fmt
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.pinocchio
+-    python3Packages.proxsuite
+-  ]
+-  ++ lib.optionals (!pythonSupport) [
+-    pinocchio
+-    proxsuite
+-  ];
+-
+-  cmakeFlags = [
+-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+-    (lib.cmakeBool "BUILD_WITH_PINOCCHIO_SUPPORT" true)
+-    (lib.cmakeBool "BUILD_WITH_PROXSUITE_SUPPORT" true)
+-  ];
+-
+-  # Fontconfig error: Cannot load default config file: No such file: (null)
+-  env.FONTCONFIG_FILE = "${fontconfig.out}/etc/fonts/fonts.conf";
+-
+-  # Fontconfig error: No writable cache directories
+-  preBuild = "export XDG_CACHE_HOME=$(mktemp -d)";
+-
+-  doCheck = true;
+-  pythonImportsCheck = [ "proxsuite_nlp" ];
+-
+-  meta = {
+-    description = "Primal-dual augmented Lagrangian solver for nonlinear programming on manifolds";
+-    homepage = "https://github.com/Simple-Robotics/proxsuite-nlp";
+-    changelog = "https://github.com/Simple-Robotics/proxsuite-nlp/blob/v${finalAttrs.version}/CHANGELOG.md";
+-    license = lib.licenses.bsd2;
+-    maintainers = with lib.maintainers; [ nim65s ];
+-    platforms = lib.platforms.unix;
+-  };
+-})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 8eb2ed8fda8a5e..f5db5c011203a3 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -12304,13 +12304,6 @@ self: super: with self; {
+     }
+   );
+ 
+-  proxsuite-nlp = toPythonModule (
+-    pkgs.proxsuite-nlp.override {
+-      pythonSupport = true;
+-      python3Packages = self;
+-    }
+-  );
+-
+   proxy-db = callPackage ../development/python-modules/proxy-db { };
+ 
+   proxy-py = callPackage ../development/python-modules/proxy-py { };
+
+From 42d1ec4afbf3e69b35f9b77d5163e1ba53f2ca3e Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 24 Sep 2025 19:04:53 +0200
+Subject: [PATCH 13/23] python3Packages.eigenpy: clean
+
+---
+ .../development/python-modules/eigenpy/default.nix | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/pkgs/development/python-modules/eigenpy/default.nix b/pkgs/development/python-modules/eigenpy/default.nix
+index 6f74e193cfb3b2..f675729ef5022e 100644
+--- a/pkgs/development/python-modules/eigenpy/default.nix
++++ b/pkgs/development/python-modules/eigenpy/default.nix
+@@ -1,14 +1,16 @@
+ {
+   lib,
++
+   buildPythonPackage,
+   fetchFromGitHub,
+-
++  writableTmpDirAsHomeHook,
+   fontconfig,
+ 
+   # nativeBuildInputs
+   cmake,
+   doxygen,
+   graphviz,
++  pkg-config,
+   scipy,
+ 
+   # buildInputs
+@@ -18,7 +20,6 @@
+   eigen,
+   jrl-cmakemodules,
+   numpy,
+-
+ }:
+ 
+ buildPythonPackage rec {
+@@ -47,9 +48,6 @@ buildPythonPackage rec {
+ 
+   strictDeps = true;
+ 
+-  # Fontconfig error: No writable cache directories
+-  preBuild = "export XDG_CACHE_HOME=$(mktemp -d)";
+-
+   # Fontconfig error: Cannot load default config file: No such file: (null)
+   env.FONTCONFIG_FILE = "${fontconfig.out}/etc/fonts/fonts.conf";
+ 
+@@ -57,7 +55,9 @@ buildPythonPackage rec {
+     cmake
+     doxygen
+     graphviz
++    pkg-config
+     scipy
++    writableTmpDirAsHomeHook
+   ];
+ 
+   buildInputs = [ boost ];
+@@ -68,7 +68,9 @@ buildPythonPackage rec {
+     numpy
+   ];
+ 
+-  preInstallCheck = "make test";
++  preInstallCheck = ''
++    make test
++  '';
+ 
+   pythonImportsCheck = [ "eigenpy" ];
+ 
+
+From 1870b234c518361970fb0dc10102780abab6dd2f Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 24 Sep 2025 18:53:29 +0200
+Subject: [PATCH 14/23] python3Packages.coal: depend on pkgs.coal
+
+instead of rebuild, use the new BUILD_STANDALONE_PYTHON_INTERFACE
+feature.
+---
+ pkgs/by-name/co/coal/package.nix              | 20 ++-------
+ .../python-modules/coal/default.nix           | 44 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 +--
+ 3 files changed, 48 insertions(+), 23 deletions(-)
+ create mode 100644 pkgs/development/python-modules/coal/default.nix
+
+diff --git a/pkgs/by-name/co/coal/package.nix b/pkgs/by-name/co/coal/package.nix
+index a02726d8959603..c06b312e5ef9d5 100644
+--- a/pkgs/by-name/co/coal/package.nix
++++ b/pkgs/by-name/co/coal/package.nix
+@@ -9,9 +9,8 @@
+   jrl-cmakemodules,
+   assimp,
+   octomap,
++  pkg-config,
+   qhull,
+-  pythonSupport ? false,
+-  python3Packages,
+   zlib,
+ }:
+ 
+@@ -31,10 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
+   nativeBuildInputs = [
+     cmake
+     doxygen
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.numpy
+-    python3Packages.pythonImportsCheckHook
++    pkg-config
+   ];
+ 
+   propagatedBuildInputs = [
+@@ -43,28 +39,18 @@ stdenv.mkDerivation (finalAttrs: {
+     octomap
+     qhull
+     zlib
+-  ]
+-  ++ lib.optionals (!pythonSupport) [
+     boost
+     eigen
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.boost
+-    python3Packages.eigenpy
+   ];
+ 
+   cmakeFlags = [
+     (lib.cmakeBool "COAL_BACKWARD_COMPATIBILITY_WITH_HPP_FCL" true)
+     (lib.cmakeBool "COAL_HAS_QHULL" true)
+     (lib.cmakeBool "INSTALL_DOCUMENTATION" true)
+-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+   ];
+ 
+   doCheck = true;
+-  pythonImportsCheck = [
+-    "coal"
+-    "hppfcl"
+-  ];
+ 
+   outputs = [
+     "dev"
+diff --git a/pkgs/development/python-modules/coal/default.nix b/pkgs/development/python-modules/coal/default.nix
+new file mode 100644
+index 00000000000000..773de813e0dac7
+--- /dev/null
++++ b/pkgs/development/python-modules/coal/default.nix
+@@ -0,0 +1,44 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++
++  coal,
++
++  boost,
++  eigenpy,
++  pylatexenc,
++  numpy,
++}:
++toPythonModule (
++  coal.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++
++    # those are used by CMake at configure/build time
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      numpy
++      pylatexenc
++    ];
++
++    propagatedBuildInputs = super.propagatedBuildInputs ++ [
++      boost
++      coal
++      eigenpy
++    ];
++
++    nativeCheckInputs = [
++      pythonImportsCheckHook
++    ];
++
++    pythonImportsCheck = [
++      "coal"
++      "hppfcl"
++    ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index f5db5c011203a3..d2326c4fc879fc 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -2774,12 +2774,7 @@ self: super: with self; {
+ 
+   co2signal = callPackage ../development/python-modules/co2signal { };
+ 
+-  coal = toPythonModule (
+-    pkgs.coal.override {
+-      pythonSupport = true;
+-      python3Packages = self;
+-    }
+-  );
++  coal = callPackage ../development/python-modules/coal { inherit (pkgs) coal;};
+ 
+   coapthon3 = callPackage ../development/python-modules/coapthon3 { };
+ 
+
+From 42d63426798833fee1c7c67dabdf54cc163dd371 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 24 Sep 2025 21:16:37 +0200
+Subject: [PATCH 15/23] python3Packages.pinocchio: depend on pkgs.pinocchio
+
+instead of rebuild, use the new BUILD_STANDALONE_PYTHON_INTERFACE feature.
+---
+ pkgs/by-name/pi/pinocchio/package.nix         | 63 ++++++++-----------
+ .../python-modules/pinocchio/default.nix      | 45 +++++++++++++
+ pkgs/top-level/python-packages.nix            |  9 +--
+ 3 files changed, 72 insertions(+), 45 deletions(-)
+ create mode 100644 pkgs/development/python-modules/pinocchio/default.nix
+
+diff --git a/pkgs/by-name/pi/pinocchio/package.nix b/pkgs/by-name/pi/pinocchio/package.nix
+index 366f17d77374d3..b04e7a25491ac0 100644
+--- a/pkgs/by-name/pi/pinocchio/package.nix
++++ b/pkgs/by-name/pi/pinocchio/package.nix
+@@ -5,6 +5,7 @@
+   cmake,
+   collisionSupport ? true,
+   console-bridge,
++  ctestCheckHook,
+   doxygen,
+   eigen,
+   example-robot-data,
+@@ -13,8 +14,6 @@
+   jrl-cmakemodules,
+   lib,
+   pkg-config,
+-  pythonSupport ? false,
+-  python3Packages,
+   stdenv,
+   urdfdom,
+ }:
+@@ -35,18 +34,7 @@ stdenv.mkDerivation (finalAttrs: {
+     "doc"
+   ];
+ 
+-  # test failure, ref https://github.com/stack-of-tasks/pinocchio/issues/2277
+-  prePatch = lib.optionalString (stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isAarch64) ''
+-    substituteInPlace unittest/algorithm/utils/CMakeLists.txt \
+-      --replace-fail "add_pinocchio_unit_test(force)" ""
+-  '';
+-
+   postPatch = ''
+-    # example-robot-data models are used in checks.
+-    # Upstream provide them as git submodule, but we can use our own version instead.
+-    test -d models/example-robot-data && rmdir models/example-robot-data
+-    ln -s ${example-robot-data.src} models/example-robot-data
+-
+     # allow package:// uri use in examples
+     export ROS_PACKAGE_PATH=${example-robot-data}/share
+ 
+@@ -60,47 +48,46 @@ stdenv.mkDerivation (finalAttrs: {
+     cmake
+     doxygen
+     pkg-config
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.python
+-    python3Packages.pythonImportsCheckHook
+   ];
+ 
+   propagatedBuildInputs = [
++    boost
++    coal
+     console-bridge
++    eigen
+     jrl-cmakemodules
+     urdfdom
+   ]
+-  ++ lib.optionals (!pythonSupport) [
+-    boost
+-    eigen
+-  ]
+-  ++ lib.optionals (!pythonSupport && collisionSupport) [ coal ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.boost
+-    python3Packages.eigenpy
+-  ]
+-  ++ lib.optionals (pythonSupport && collisionSupport) [ python3Packages.coal ]
+-  ++ lib.optionals (!pythonSupport && casadiSupport) [ casadi ]
+-  ++ lib.optionals (pythonSupport && casadiSupport) [ python3Packages.casadi ];
++  ++ lib.optionals collisionSupport [ coal ]
++  ++ lib.optionals casadiSupport [ casadi ];
++
++  nativeCheckInputs = [
++    ctestCheckHook
++  ];
+ 
+-  checkInputs = lib.optionals (pythonSupport && casadiSupport) [ python3Packages.matplotlib ];
++  checkInputs = [
++    example-robot-data
++  ];
++
++  disabledTests =
++    lib.optionals stdenv.hostPlatform.isDarwin [
++      # Disable test that fails on darwin
++      # https://github.com/stack-of-tasks/pinocchio/blob/42306ed023b301aafef91e2e76cb070c5e9c3f7d/flake.nix#L24C1-L27C17
++      "pinocchio-example-py-casadi-quadrotor-ocp"
++    ]
++    ++ lib.optionals (stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isAarch64) [
++      # test failure, ref https://github.com/stack-of-tasks/pinocchio/issues/2277
++      "test-cpp-algorithm-utils-force"
++    ];
+ 
+   cmakeFlags = [
+-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+-    (lib.cmakeBool "BUILD_WITH_LIBPYTHON" pythonSupport)
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+     (lib.cmakeBool "BUILD_WITH_CASADI_SUPPORT" casadiSupport)
+     (lib.cmakeBool "BUILD_WITH_COLLISION_SUPPORT" collisionSupport)
+     (lib.cmakeBool "INSTALL_DOCUMENTATION" true)
+-    # Disable test that fails on darwin
+-    # https://github.com/stack-of-tasks/pinocchio/blob/42306ed023b301aafef91e2e76cb070c5e9c3f7d/flake.nix#L24C1-L27C17
+-  ]
+-  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+-    (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;pinocchio-example-py-casadi-quadrotor-ocp")
+   ];
+ 
+   doCheck = true;
+-  pythonImportsCheck = [ "pinocchio" ];
+ 
+   meta = {
+     description = "Fast and flexible implementation of Rigid Body Dynamics algorithms and their analytical derivatives";
+diff --git a/pkgs/development/python-modules/pinocchio/default.nix b/pkgs/development/python-modules/pinocchio/default.nix
+new file mode 100644
+index 00000000000000..d2f722d9ee5c6c
+--- /dev/null
++++ b/pkgs/development/python-modules/pinocchio/default.nix
+@@ -0,0 +1,45 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++
++  pinocchio,
++
++  coal,
++  casadi,
++  matplotlib,
++  python,
++}:
++toPythonModule (
++  pinocchio.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      python
++    ];
++
++    propagatedBuildInputs = super.propagatedBuildInputs ++ [
++      casadi
++      coal
++      pinocchio
++    ];
++
++    checkInputs = super.checkInputs ++ [
++      matplotlib
++    ];
++
++    nativeCheckInputs = super.nativeCheckInputs ++ [
++      pythonImportsCheckHook
++    ];
++
++    pythonImportsCheck = [
++      "pinocchio"
++    ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index d2326c4fc879fc..3b72dfba853fec 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -2774,7 +2774,7 @@ self: super: with self; {
+ 
+   co2signal = callPackage ../development/python-modules/co2signal { };
+ 
+-  coal = callPackage ../development/python-modules/coal { inherit (pkgs) coal;};
++  coal = callPackage ../development/python-modules/coal { inherit (pkgs) coal; };
+ 
+   coapthon3 = callPackage ../development/python-modules/coapthon3 { };
+ 
+@@ -11835,12 +11835,7 @@ self: super: with self; {
+ 
+   ping3 = callPackage ../development/python-modules/ping3 { };
+ 
+-  pinocchio = toPythonModule (
+-    pkgs.pinocchio.override {
+-      pythonSupport = true;
+-      python3Packages = self;
+-    }
+-  );
++  pinocchio = callPackage ../development/python-modules/pinocchio { inherit (pkgs) pinocchio; };
+ 
+   pins = callPackage ../development/python-modules/pins { };
+ 
+
+From 603a9133f73859586a6ec86421d7ccffbafbc985 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Sat, 27 Sep 2025 10:43:01 +0200
+Subject: [PATCH 16/23] python3Packages.pinocchio: fix viser example
+
+---
+ pkgs/by-name/pi/pinocchio/package.nix | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/pkgs/by-name/pi/pinocchio/package.nix b/pkgs/by-name/pi/pinocchio/package.nix
+index b04e7a25491ac0..54e35f5775bea0 100644
+--- a/pkgs/by-name/pi/pinocchio/package.nix
++++ b/pkgs/by-name/pi/pinocchio/package.nix
+@@ -10,6 +10,7 @@
+   eigen,
+   example-robot-data,
+   fetchFromGitHub,
++  fetchpatch,
+   coal,
+   jrl-cmakemodules,
+   lib,
+@@ -34,6 +35,15 @@ stdenv.mkDerivation (finalAttrs: {
+     "doc"
+   ];
+ 
++  patches = [
++    # ref. https://github.com/stack-of-tasks/pinocchio/pull/2771
++    (fetchpatch {
++      name = "fix-viser-path.patch";
++      url = "https://github.com/stack-of-tasks/pinocchio/commit/36a04bddb6980a7bcd28ebcc55d4e442f7920d87.patch";
++      hash = "sha256-9oENiMmRqJLU4ZiyGojm7suqdwTDGfk56aS2kcZiGaI=";
++    })
++  ];
++
+   postPatch = ''
+     # allow package:// uri use in examples
+     export ROS_PACKAGE_PATH=${example-robot-data}/share
+
+From da6f8bee2ac7ae1a1b016f4a4562c1fb782a3038 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 24 Sep 2025 23:31:06 +0200
+Subject: [PATCH 17/23] python3Packages.example-robot-data: depend on
+ pkgs.example-robot-data
+
+instead of rebuild, use the new BUILD_STANDALONE_PYTHON_INTERFACE feature.
+
+this also allow to break the circular depency and use:
+example-robot-data -> pinocchio -> python3Packages.pinocchio -> python3Packages.example-robot-data
+---
+ .../by-name/ex/example-robot-data/package.nix | 16 +------
+ .../example-robot-data/default.nix            | 43 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  9 ++--
+ 3 files changed, 48 insertions(+), 20 deletions(-)
+ create mode 100644 pkgs/development/python-modules/example-robot-data/default.nix
+
+diff --git a/pkgs/by-name/ex/example-robot-data/package.nix b/pkgs/by-name/ex/example-robot-data/package.nix
+index ffe2af1be919f4..321503b0cafe2c 100644
+--- a/pkgs/by-name/ex/example-robot-data/package.nix
++++ b/pkgs/by-name/ex/example-robot-data/package.nix
+@@ -5,8 +5,6 @@
+   lib,
+   jrl-cmakemodules,
+   pkg-config,
+-  pythonSupport ? false,
+-  python3Packages,
+   stdenv,
+ }:
+ 
+@@ -32,25 +30,15 @@ stdenv.mkDerivation (finalAttrs: {
+     cmake
+     doxygen
+     pkg-config
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.python
+-    python3Packages.pythonImportsCheckHook
+   ];
+ 
+   propagatedBuildInputs = [
+     jrl-cmakemodules
+-  ]
+-  ++ lib.optionals pythonSupport [ python3Packages.pinocchio ];
++  ];
+ 
+-  cmakeFlags = [ (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport) ];
++  cmakeFlags = [ (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false) ];
+ 
+   doCheck = true;
+-  # The package expect to find an `example-robot-data/robots` folder somewhere
+-  # either in install prefix or in the sources
+-  # where it can find the meshes for unit tests
+-  preCheck = "ln -s source ../../example-robot-data";
+-  pythonImportsCheck = [ "example_robot_data" ];
+ 
+   meta = with lib; {
+     description = "Set of robot URDFs for benchmarking and developed examples";
+diff --git a/pkgs/development/python-modules/example-robot-data/default.nix b/pkgs/development/python-modules/example-robot-data/default.nix
+new file mode 100644
+index 00000000000000..3a9bfc18b39dff
+--- /dev/null
++++ b/pkgs/development/python-modules/example-robot-data/default.nix
+@@ -0,0 +1,43 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++
++  example-robot-data,
++
++  python,
++  pinocchio,
++}:
++toPythonModule (
++  example-robot-data.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      python
++    ];
++
++    propagatedBuildInputs = super.propagatedBuildInputs ++ [
++      example-robot-data
++      pinocchio
++    ];
++
++    nativeCheckInputs = [
++      pythonImportsCheckHook
++    ];
++
++    # The package expect to find an `example-robot-data/robots` folder somewhere
++    # either in install prefix or in the sources
++    # where it can find the meshes for unit tests
++    preCheck = ''
++      ln -s source ../../example-robot-data
++    '';
++
++    pythonImportsCheck = [ "example_robot_data" ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 3b72dfba853fec..39ee4ccf621799 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -4898,12 +4898,9 @@ self: super: with self; {
+ 
+   ewmhlib = callPackage ../development/python-modules/ewmhlib { };
+ 
+-  example-robot-data = toPythonModule (
+-    pkgs.example-robot-data.override {
+-      pythonSupport = true;
+-      python3Packages = self;
+-    }
+-  );
++  example-robot-data = callPackage ../development/python-modules/example-robot-data {
++    inherit (pkgs) example-robot-data;
++  };
+ 
+   exceptiongroup = callPackage ../development/python-modules/exceptiongroup { };
+ 
+
+From 71bdd9a09f4f6ddab2417d6d31f237a5bc2600c4 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 24 Sep 2025 23:37:04 +0200
+Subject: [PATCH 18/23] python3Packages.crocoddyl: depend on pkgs.crocoddyl
+
+instead of rebuild, use the new BUILD_STANDALONE_PYTHON_INTERFACE feature.
+---
+ pkgs/by-name/cr/crocoddyl/package.nix         | 19 +------
+ .../python-modules/crocoddyl/default.nix      | 54 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 +--
+ 3 files changed, 57 insertions(+), 23 deletions(-)
+ create mode 100644 pkgs/development/python-modules/crocoddyl/default.nix
+
+diff --git a/pkgs/by-name/cr/crocoddyl/package.nix b/pkgs/by-name/cr/crocoddyl/package.nix
+index ccc05b0297f13f..87aa4b5894098c 100644
+--- a/pkgs/by-name/cr/crocoddyl/package.nix
++++ b/pkgs/by-name/cr/crocoddyl/package.nix
+@@ -10,8 +10,6 @@
+   lib,
+   pinocchio,
+   pkg-config,
+-  pythonSupport ? false,
+-  python3Packages,
+   stdenv,
+ }:
+ 
+@@ -46,31 +44,20 @@ stdenv.mkDerivation (finalAttrs: {
+     cmake
+     doxygen
+     pkg-config
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.python
+-    python3Packages.pythonImportsCheckHook
+   ];
+ 
+   propagatedBuildInputs = [
+     blas
+     ipopt
+     lapack
+-  ]
+-  ++ lib.optionals (!pythonSupport) [
+     example-robot-data
+     pinocchio
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.example-robot-data
+-    python3Packages.pinocchio
+-    python3Packages.scipy
+   ];
+ 
+   cmakeFlags = [
+     (lib.cmakeBool "INSTALL_DOCUMENTATION" true)
+-    (lib.cmakeBool "BUILD_EXAMPLES" pythonSupport)
+-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++    (lib.cmakeBool "BUILD_EXAMPLES" false)
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+   ];
+ 
+   prePatch = ''
+@@ -81,8 +68,6 @@ stdenv.mkDerivation (finalAttrs: {
+   '';
+ 
+   doCheck = true;
+-  pythonImportsCheck = [ "crocoddyl" ];
+-  checkInputs = lib.optionals pythonSupport [ python3Packages.scipy ];
+ 
+   meta = with lib; {
+     description = "Crocoddyl optimal control library";
+diff --git a/pkgs/development/python-modules/crocoddyl/default.nix b/pkgs/development/python-modules/crocoddyl/default.nix
+new file mode 100644
+index 00000000000000..5e5e449899f021
+--- /dev/null
++++ b/pkgs/development/python-modules/crocoddyl/default.nix
+@@ -0,0 +1,54 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++
++  crocoddyl,
++
++  example-robot-data,
++  ffmpeg,
++  matplotlib,
++  nbconvert,
++  nbformat,
++  ipykernel,
++  python,
++  scipy,
++}:
++toPythonModule (
++  crocoddyl.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++
++    # those are used by CMake at configure/build time
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      python
++    ];
++
++    propagatedBuildInputs = super.propagatedBuildInputs ++ [
++      crocoddyl
++      example-robot-data
++    ];
++
++    nativeCheckInputs = [
++      ffmpeg
++      pythonImportsCheckHook
++    ];
++
++    checkInputs = [
++      matplotlib
++      nbconvert
++      nbformat
++      ipykernel
++      scipy
++    ];
++
++    pythonImportsCheck = [
++      "crocoddyl"
++    ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 39ee4ccf621799..c77ad5075b6e3b 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -3108,12 +3108,7 @@ self: super: with self; {
+ 
+   crochet = callPackage ../development/python-modules/crochet { };
+ 
+-  crocoddyl = toPythonModule (
+-    pkgs.crocoddyl.override {
+-      pythonSupport = true;
+-      python3Packages = self;
+-    }
+-  );
++  crocoddyl = callPackage ../development/python-modules/crocoddyl { inherit (pkgs) crocoddyl; };
+ 
+   cron-converter = callPackage ../development/python-modules/cron-converter { };
+ 
+
+From c8b1b01d95eef1c061b44164dff94cf38ad175cd Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Thu, 25 Sep 2025 00:27:36 +0200
+Subject: [PATCH 19/23] python3Packages.tsid: depend on pkgs.tsid
+
+instead of rebuild, use the new BUILD_STANDALONE_PYTHON_INTERFACE feature.
+---
+ pkgs/by-name/ts/tsid/package.nix              | 14 ++-----
+ .../python-modules/tsid/default.nix           | 39 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 +---
+ 3 files changed, 43 insertions(+), 17 deletions(-)
+ create mode 100644 pkgs/development/python-modules/tsid/default.nix
+
+diff --git a/pkgs/by-name/ts/tsid/package.nix b/pkgs/by-name/ts/tsid/package.nix
+index fc7457be1e3544..d9d38e929fcd93 100644
+--- a/pkgs/by-name/ts/tsid/package.nix
++++ b/pkgs/by-name/ts/tsid/package.nix
+@@ -9,8 +9,6 @@
+   pinocchio,
+   proxsuite,
+   stdenv,
+-  pythonSupport ? false,
+-  python3Packages,
+ }:
+ 
+ stdenv.mkDerivation (finalAttrs: {
+@@ -25,7 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
+   };
+ 
+   cmakeFlags = [
+-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+     (lib.cmakeBool "BUILD_WITH_OSQP" true)
+     (lib.cmakeBool "BUILD_WITH_PROXQP" true)
+     (lib.cmakeBool "INSTALL_DOCUMENTATION" true)
+@@ -40,22 +38,16 @@ stdenv.mkDerivation (finalAttrs: {
+     doxygen
+     cmake
+     pkg-config
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.python
+-    python3Packages.pythonImportsCheckHook
+   ];
+ 
+   propagatedBuildInputs = [
+     eiquadprog
+     osqp-eigen
++    pinocchio
+     proxsuite
+-  ]
+-  ++ lib.optional (!pythonSupport) pinocchio
+-  ++ lib.optional pythonSupport python3Packages.pinocchio;
++  ];
+ 
+   doCheck = true;
+-  pythonImportsCheck = [ "tsid" ];
+ 
+   meta = {
+     description = "Efficient Task Space Inverse Dynamics (TSID) based on Pinocchio";
+diff --git a/pkgs/development/python-modules/tsid/default.nix b/pkgs/development/python-modules/tsid/default.nix
+new file mode 100644
+index 00000000000000..3894c80d28540e
+--- /dev/null
++++ b/pkgs/development/python-modules/tsid/default.nix
+@@ -0,0 +1,39 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++
++  tsid,
++
++  pinocchio,
++  python,
++}:
++toPythonModule (
++  tsid.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++
++    # those are used by CMake at configure/build time
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      python
++    ];
++
++    propagatedBuildInputs = super.propagatedBuildInputs ++ [
++      pinocchio
++      tsid
++    ];
++
++    nativeCheckInputs = [
++      pythonImportsCheckHook
++    ];
++
++    pythonImportsCheck = [
++      "tsid"
++    ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index c77ad5075b6e3b..7eedb93fbd2c96 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -18825,12 +18825,7 @@ self: super: with self; {
+ 
+   tsfresh = callPackage ../development/python-modules/tsfresh { };
+ 
+-  tsid = toPythonModule (
+-    pkgs.tsid.override {
+-      pythonSupport = true;
+-      python3Packages = self;
+-    }
+-  );
++  tsid = callPackage ../development/python-modules/tsid { inherit (pkgs) tsid; };
+ 
+   tskit = callPackage ../development/python-modules/tskit { };
+ 
+
+From 07ca2f3184712519b5668ac16d54aabf29874447 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 6 Oct 2025 15:43:16 +0200
+Subject: [PATCH 20/23] python3Packages.aligator: depend on pkgs.aligator
+
+---
+ pkgs/by-name/al/aligator/package.nix          | 25 ++-------
+ .../python-modules/aligator/default.nix       | 54 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 +--
+ 3 files changed, 60 insertions(+), 26 deletions(-)
+ create mode 100644 pkgs/development/python-modules/aligator/default.nix
+
+diff --git a/pkgs/by-name/al/aligator/package.nix b/pkgs/by-name/al/aligator/package.nix
+index 5e09bc3f847d05..0fdd49972d1c8b 100644
+--- a/pkgs/by-name/al/aligator/package.nix
++++ b/pkgs/by-name/al/aligator/package.nix
+@@ -4,8 +4,6 @@
+   fontconfig,
+   llvmPackages,
+   nix-update-script,
+-  python3Packages,
+-  pythonSupport ? false,
+   stdenv,
+ 
+   # nativeBuildInputs
+@@ -50,45 +48,33 @@ stdenv.mkDerivation (finalAttrs: {
+     cmake
+     graphviz
+     pkg-config
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.python
+-    python3Packages.pythonImportsCheckHook
+   ];
++
+   buildInputs = [
+     fmt
+   ]
+   ++ lib.optionals stdenv.hostPlatform.isDarwin [
+     llvmPackages.openmp
+   ];
++
+   propagatedBuildInputs = [
+-    suitesparse
+-  ]
+-  ++ lib.optionals pythonSupport [
+-    python3Packages.crocoddyl
+-    python3Packages.matplotlib
+-    python3Packages.pinocchio
+-  ]
+-  ++ lib.optionals (!pythonSupport) [
+     crocoddyl
+     pinocchio
++    suitesparse
+   ];
++
+   checkInputs = [
+     catch2_3
+     gbenchmark
+   ];
+ 
+   cmakeFlags = [
+-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+     (lib.cmakeBool "BUILD_WITH_PINOCCHIO_SUPPORT" true)
+     (lib.cmakeBool "BUILD_CROCODDYL_COMPAT" true)
+     (lib.cmakeBool "BUILD_WITH_OPENMP_SUPPORT" true)
+     (lib.cmakeBool "BUILD_WITH_CHOLMOD_SUPPORT" true)
+     (lib.cmakeBool "GENERATE_PYTHON_STUBS" false) # this need git at configure time
+-  ]
+-  ++ lib.optionals (stdenv.hostPlatform.isDarwin && pythonSupport) [
+-    # ignore one failing test for now
+-    (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'aligator-test-py-rollout|aligator-test-py-frames'")
+   ];
+ 
+   # Fontconfig error: Cannot load default config file: No such file: (null)
+@@ -103,7 +89,6 @@ stdenv.mkDerivation (finalAttrs: {
+   '';
+ 
+   doCheck = true;
+-  pythonImportsCheck = [ "aligator" ];
+ 
+   passthru.updateScript = nix-update-script { };
+ 
+diff --git a/pkgs/development/python-modules/aligator/default.nix b/pkgs/development/python-modules/aligator/default.nix
+new file mode 100644
+index 00000000000000..6ef954f53a0ee4
+--- /dev/null
++++ b/pkgs/development/python-modules/aligator/default.nix
+@@ -0,0 +1,54 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++  stdenv,
++
++  aligator,
++
++  crocoddyl,
++  pinocchio,
++  python,
++  matplotlib,
++  pytest,
++}:
++toPythonModule (
++  aligator.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++
++    # this is used by CMake at configure/build time
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      python
++    ];
++
++    propagatedBuildInputs = super.propagatedBuildInputs ++ [
++      aligator
++      crocoddyl
++      pinocchio
++    ];
++
++    nativeCheckInputs = [
++      pythonImportsCheckHook
++    ];
++
++    checkInputs = super.checkInputs ++ [
++      matplotlib
++      pytest
++    ];
++
++    disabledTests = lib.optionals stdenv.hostPlatform.isDarwin [
++      # SIGTRAP
++      "aligator-test-py-rollout"
++    ];
++
++    pythonImportsCheck = [
++      "aligator"
++    ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 7eedb93fbd2c96..78d92b94142368 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -594,12 +594,7 @@ self: super: with self; {
+ 
+   algebraic-data-types = callPackage ../development/python-modules/algebraic-data-types { };
+ 
+-  aligator = toPythonModule (
+-    pkgs.aligator.override {
+-      python3Packages = self;
+-      pythonSupport = true;
+-    }
+-  );
++  aligator = callPackage ../development/python-modules/aligator { inherit (pkgs) aligator; };
+ 
+   alive-progress = callPackage ../development/python-modules/alive-progress { };
+ 
+
+From e5179b5531da9abca731d9d962a3e6295ff176c6 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Tue, 14 Oct 2025 19:06:22 +0200
+Subject: [PATCH 21/23] python3Packages.mim-solvers: depend on pkgs.mim-solvers
+
+---
+ pkgs/by-name/mi/mim-solvers/package.nix       | 53 +++++++----------
+ .../python-modules/mim-solvers/default.nix    | 57 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 +--
+ 3 files changed, 79 insertions(+), 38 deletions(-)
+ create mode 100644 pkgs/development/python-modules/mim-solvers/default.nix
+
+diff --git a/pkgs/by-name/mi/mim-solvers/package.nix b/pkgs/by-name/mi/mim-solvers/package.nix
+index 2705a5e8f7fdad..216d7376640a40 100644
+--- a/pkgs/by-name/mi/mim-solvers/package.nix
++++ b/pkgs/by-name/mi/mim-solvers/package.nix
+@@ -3,12 +3,11 @@
+   crocoddyl,
+   ctestCheckHook,
+   fetchFromGitHub,
++  fetchpatch,
+   lib,
+   llvmPackages,
+   pkg-config,
+   proxsuite,
+-  python3Packages,
+-  pythonSupport ? false,
+   stdenv,
+   nix-update-script,
+ }:
+@@ -24,49 +23,41 @@ stdenv.mkDerivation (finalAttrs: {
+     hash = "sha256-1Mqu9Hfy65HUIOVG/gJBpSMlOwDWVcH+LrR8CaWz0BE=";
+   };
+ 
+-  # eigenpy is not used without python support
+-  postPatch = lib.optionalString (!pythonSupport) ''
+-    substituteInPlace CMakeLists.txt --replace-fail \
+-      "add_project_dependency(eigenpy 2.7.10 REQUIRED)" \
+-      ""
+-  '';
++  patches = [
++    # ref. https://github.com/machines-in-motion/mim_solvers/pull/71 merged upstream
++    (fetchpatch {
++      name = "build-standalone-python-interface.patch";
++      url = "https://github.com/machines-in-motion/mim_solvers/commit/796eecf05dd9165dd0795aa562ead17de4f19633.patch";
++      hash = "sha256-/OiMzyDVEbpC/Dr/HcguwAdhmbQNxnIRsHAVkX68xqA=";
++    })
++  ];
+ 
+   nativeBuildInputs = [
+     cmake
+     pkg-config
+-  ]
+-  ++ lib.optional pythonSupport python3Packages.pythonImportsCheckHook;
++  ];
++
+   buildInputs = lib.optional stdenv.hostPlatform.isDarwin llvmPackages.openmp;
+-  propagatedBuildInputs =
+-    lib.optionals pythonSupport [
+-      python3Packages.crocoddyl
+-      python3Packages.osqp
+-      python3Packages.proxsuite
+-      python3Packages.scipy
+-    ]
+-    ++ lib.optionals (!pythonSupport) [
+-      crocoddyl
+-      proxsuite
+-    ];
++
++  propagatedBuildInputs = [
++    crocoddyl
++    proxsuite
++  ];
+ 
+   cmakeFlags = [
+-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+     (lib.cmakeBool "BUILD_WITH_PROXSUITE" true)
+-  ]
+-  ++ lib.optional (stdenv.hostPlatform.isDarwin) (
+-    lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'py-test-clqr-osqp'"
+-  )
+-  ++ lib.optional (stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isAarch64) (
+-    lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'test_solvers'"
+-  );
++  ];
+ 
+   nativeCheckInputs = [
+     ctestCheckHook
+   ];
+   disabledTests = [
+     # Fails with osqp>=1.0.0
+-    # See https://github.com/machines-in-motion/mim_solvers/pull/66
++    # See https://github.com/machines-in-motion/mim_solvers/pull/67
+     "py-test-clqr-osqp"
++    # need removed ActuationModelMultiCopterBase in crocoddyl 3.1.0
++    "py-test-sqp-no-reg"
+   ]
+   ++ lib.optionals (stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isAarch64) [
+     # Several errors such as:
+@@ -78,8 +69,6 @@ stdenv.mkDerivation (finalAttrs: {
+   ];
+   doCheck = true;
+ 
+-  pythonImportsCheck = [ "mim_solvers" ];
+-
+   passthru.updateScript = nix-update-script { };
+ 
+   meta = {
+diff --git a/pkgs/development/python-modules/mim-solvers/default.nix b/pkgs/development/python-modules/mim-solvers/default.nix
+new file mode 100644
+index 00000000000000..ebb18af22dfdcf
+--- /dev/null
++++ b/pkgs/development/python-modules/mim-solvers/default.nix
+@@ -0,0 +1,57 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++
++  mim-solvers,
++
++  # nativeBuildInputs
++  python,
++
++  # propagatedBuildInputs
++  boost,
++  crocoddyl,
++  eigenpy,
++  osqp,
++  proxsuite,
++  scipy,
++
++  # nativeCheckInputs
++  pytest,
++}:
++toPythonModule (
++  mim-solvers.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++
++    # this is used by CMake at configure/build time
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      python
++    ];
++
++    propagatedBuildInputs = [
++      boost
++      crocoddyl
++      eigenpy
++      mim-solvers
++      osqp
++      proxsuite
++      scipy
++    ]
++    ++ super.propagatedBuildInputs;
++
++    nativeCheckInputs = super.nativeCheckInputs ++ [
++      pythonImportsCheckHook
++      pytest
++    ];
++
++    pythonImportsCheck = [
++      "mim_solvers"
++    ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 78d92b94142368..ec08c5af59cf3b 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -9354,12 +9354,7 @@ self: super: with self; {
+ 
+   millheater = callPackage ../development/python-modules/millheater { };
+ 
+-  mim-solvers = toPythonModule (
+-    pkgs.mim-solvers.override {
+-      python3Packages = self;
+-      pythonSupport = true;
+-    }
+-  );
++  mim-solvers = callPackage ../development/python-modules/mim-solvers { inherit (pkgs) mim-solvers; };
+ 
+   minari = callPackage ../development/python-modules/minari { };
+ 
+
+From 43f736f7babbb30da102e069e28969d5039eb7c7 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 15 Oct 2025 17:07:11 +0200
+Subject: [PATCH 22/23] python3Packages.ndcurves: depend on pkgs.ndcurves
+
+---
+ .../python-modules/ndcurves/default.nix       | 37 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 +---
+ 2 files changed, 38 insertions(+), 6 deletions(-)
+ create mode 100644 pkgs/development/python-modules/ndcurves/default.nix
+
+diff --git a/pkgs/development/python-modules/ndcurves/default.nix b/pkgs/development/python-modules/ndcurves/default.nix
+new file mode 100644
+index 00000000000000..885cfa64a0245c
+--- /dev/null
++++ b/pkgs/development/python-modules/ndcurves/default.nix
+@@ -0,0 +1,37 @@
++{
++  lib,
++
++  toPythonModule,
++  pythonImportsCheckHook,
++
++  ndcurves,
++
++  boost,
++  pinocchio,
++  python,
++}:
++toPythonModule (
++  ndcurves.overrideAttrs (super: {
++    pname = "py-${super.pname}";
++    cmakeFlags = super.cmakeFlags ++ [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++    ];
++    # those are used by CMake at configure/build time
++    nativeBuildInputs = super.nativeBuildInputs ++ [
++      python
++    ];
++    propagatedBuildInputs = [
++      boost
++      pinocchio
++      ndcurves
++    ]
++    ++ super.propagatedBuildInputs;
++    nativeCheckInputs = [
++      pythonImportsCheckHook
++    ];
++    pythonImportsCheck = [
++      "ndcurves"
++    ];
++  })
++)
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index ec08c5af59cf3b..81428981d1123e 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -10361,12 +10361,7 @@ self: super: with self; {
+ 
+   nclib = callPackage ../development/python-modules/nclib { };
+ 
+-  ndcurves = toPythonModule (
+-    pkgs.ndcurves.override {
+-      python3Packages = self;
+-      pythonSupport = true;
+-    }
+-  );
++  ndcurves = callPackage ../development/python-modules/ndcurves { inherit (pkgs) ndcurves; };
+ 
+   ndeflib = callPackage ../development/python-modules/ndeflib { };
+ 
+
+From 62397c873657bfa326a45f4ec0d1c9acd76f6054 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 15 Oct 2025 20:01:50 +0200
+Subject: [PATCH 23/23] mim-solvers: fix for crocoddyl 3.1.0
+
+---
+ .../mi/mim-solvers/fix-croco-310.patch        | 52 +++++++++++++++++++
+ pkgs/by-name/mi/mim-solvers/package.nix       |  3 ++
+ 2 files changed, 55 insertions(+)
+ create mode 100644 pkgs/by-name/mi/mim-solvers/fix-croco-310.patch
+
+diff --git a/pkgs/by-name/mi/mim-solvers/fix-croco-310.patch b/pkgs/by-name/mi/mim-solvers/fix-croco-310.patch
+new file mode 100644
+index 00000000000000..d6e39d068b7d08
+--- /dev/null
++++ b/pkgs/by-name/mi/mim-solvers/fix-croco-310.patch
+@@ -0,0 +1,52 @@
++From 1cb7fe38e3ec43117c646cae521eb8347145965a Mon Sep 17 00:00:00 2001
++From: Guilhem Saurel <guilhem.saurel@laas.fr>
++Date: Tue, 14 Oct 2025 19:37:16 +0200
++Subject: [PATCH] fix for crocoddyl v3.1.0 explicit template instanciation
++
++ref. https://github.com/loco-3d/crocoddyl/pull/1367
++
++Yes, that was a breaking change
++---
++ tests/factory/point-mass.hpp | 22 ++++++++++++++++++++++
++ 1 file changed, 22 insertions(+)
++
++diff --git a/tests/factory/point-mass.hpp b/tests/factory/point-mass.hpp
++index e82c977..c2e93af 100644
++--- a/tests/factory/point-mass.hpp
+++++ b/tests/factory/point-mass.hpp
++@@ -60,6 +60,17 @@ class DAMPointMass1D : public crocoddyl::DifferentialActionModelAbstract {
++   // Destructor
++   virtual ~DAMPointMass1D();
++ 
+++  // Explicit template instanciation
+++  std::shared_ptr<crocoddyl::DifferentialActionModelBase> cloneAsDouble()
+++      const override {
+++    return std::make_shared<DAMPointMass1D>(*this);
+++  }
+++
+++  std::shared_ptr<crocoddyl::DifferentialActionModelBase> cloneAsFloat()
+++      const override {
+++    return std::make_shared<DAMPointMass1D>(*this);
+++  }
+++
++   // Cost & dynamics
++   void calc(const std::shared_ptr<DifferentialActionDataAbstract>& data,
++             const Eigen::Ref<const VectorXd>& x,
++@@ -135,6 +146,17 @@ class DAMPointMass2D : public crocoddyl::DifferentialActionModelAbstract {
++   // Destructor
++   virtual ~DAMPointMass2D();
++ 
+++  // Explicit template instanciation
+++  std::shared_ptr<crocoddyl::DifferentialActionModelBase> cloneAsDouble()
+++      const override {
+++    return std::make_shared<DAMPointMass2D>(*this);
+++  }
+++
+++  std::shared_ptr<crocoddyl::DifferentialActionModelBase> cloneAsFloat()
+++      const override {
+++    return std::make_shared<DAMPointMass2D>(*this);
+++  }
+++
++   // Cost & dynamics
++   void calc(const std::shared_ptr<DifferentialActionDataAbstract>& data,
++             const Eigen::Ref<const VectorXd>& x,
+diff --git a/pkgs/by-name/mi/mim-solvers/package.nix b/pkgs/by-name/mi/mim-solvers/package.nix
+index 216d7376640a40..44483056d44a55 100644
+--- a/pkgs/by-name/mi/mim-solvers/package.nix
++++ b/pkgs/by-name/mi/mim-solvers/package.nix
+@@ -30,6 +30,9 @@ stdenv.mkDerivation (finalAttrs: {
+       url = "https://github.com/machines-in-motion/mim_solvers/commit/796eecf05dd9165dd0795aa562ead17de4f19633.patch";
+       hash = "sha256-/OiMzyDVEbpC/Dr/HcguwAdhmbQNxnIRsHAVkX68xqA=";
+     })
++    # Fix for crocoddyl 3.1.0
++    # ref. https://github.com/machines-in-motion/mim_solvers/pull/72
++    ./fix-croco-310.patch
+   ];
+ 
+   nativeBuildInputs = [

@@ -5,10 +5,10 @@
 
   src-agimus-controller,
 
-  # nativeBuildInputs
-  pythonImportsCheckHook,
+  # build-system,
+  setuptools,
 
-  # propagatedBuildInputs
+  # dependencies
   agimus-controller,
   hpp-corbaserver,
   hpp-gepetto-viewer,
@@ -24,16 +24,13 @@
 buildPythonPackage {
   pname = "agimus-controller-examples";
   version = "0-unstable-2025-04-08";
+  pyproject = true;
 
   src = src-agimus-controller;
   sourceRoot = "source/agimus_controller_examples";
 
-  nativeBuildInputs = [
-    # franka-description
-    # xacro
-    pythonImportsCheckHook
-  ];
-  propagatedBuildInputs = [
+  build-system = [ setuptools ];
+  dependencies = [
     agimus-controller
     hpp-corbaserver
     hpp-gepetto-viewer

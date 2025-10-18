@@ -27,6 +27,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-4sZPcFV/vDtWDnjaBcGzCpS9SWYa3S0LzgUYdrT9vzM=";
   };
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-warn \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
+  '';
+
   outputs = [
     "out"
     "doc"
@@ -38,7 +44,8 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     doxygen
     pkg-config
-  ] ++ lib.optional pythonSupport python3Packages.python;
+  ]
+  ++ lib.optional pythonSupport python3Packages.python;
   propagatedBuildInputs = [
     jrl-cmakemodules
     example-robot-data

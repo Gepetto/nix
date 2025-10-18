@@ -33,6 +33,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-DfxIyz7lylh+z38BrJhRwyBYQ9nvBW/3CI7dieJ/g+o=";
   };
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-warn \
+      "cmake_minimum_required(VERSION 3.10)" \
+      "cmake_minimum_required(VERSION 3.22)"
+  '';
+
   outputs = [
     "out"
     "doc"
@@ -40,31 +46,29 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs =
-    [
-      cmake
-      doxygen
-      pkg-config
-    ]
-    ++ lib.optionals pythonSupport [
-      python3Packages.python
-      python3Packages.pythonImportsCheckHook
-    ];
+  nativeBuildInputs = [
+    cmake
+    doxygen
+    pkg-config
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.python
+    python3Packages.pythonImportsCheckHook
+  ];
   buildInputs = [
     cddlib
     clp
     qpoases
   ];
-  propagatedBuildInputs =
-    [
-      eigen
-      jrl-cmakemodules
-    ]
-    ++ lib.optionals pythonSupport [
-      python3Packages.boost
-      python3Packages.eigenpy
-    ]
-    ++ lib.optional (!pythonSupport) boost;
+  propagatedBuildInputs = [
+    eigen
+    jrl-cmakemodules
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.boost
+    python3Packages.eigenpy
+  ]
+  ++ lib.optional (!pythonSupport) boost;
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)

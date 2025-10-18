@@ -11,35 +11,19 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
-    crocoddyl = prev.crocoddyl.overrideAttrs (super: {
-      # ref. https://github.com/loco-3d/crocoddyl/pull/1369
-      patches = (super.patches or [ ]) ++ [
-        (final.fetchpatch {
-          url = "https://github.com/loco-3d/crocoddyl/commit/ace3245a1ddaa27824a2678dd82573fef7716f44.patch";
-          hash = "sha256-PfHWBMGLZRBUitml/64eESRSXQrDQMDGHTUOjEmG+lw=";
-        })
-      ];
-    });
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
-    jrl-cmakemodules = prev.jrl-cmakemodules.overrideAttrs {
-      # ref. https://github.com/jrl-umi3218/jrl-cmakemodules/pull/783
-      patches = [
-        (final.fetchpatch {
-          name = "fix-permissions.patch";
-          url = "https://github.com/jrl-umi3218/jrl-cmakemodules/commit/defed70c8a7c5e4bd5b26006bef26e3fb22c3b26.patch";
-          hash = "sha256-muO6DwQhNPCv6DPmnHnEHjsh/FSj0ljgNCb+ZowLRaY=";
-        })
-      ];
+    gepetto-viewer-corba = prev.gepetto-viewer-corba.overrideAttrs {
       postPatch = ''
-        substituteInPlace CMakeLists.txt --replace-fail "./flake." "#./flake."
+        substituteInPlace CMakeLists.txt --replace-fail \
+          "cmake_minimum_required(VERSION 3.10)" \
+          "cmake_minimum_required(VERSION 3.22)"
       '';
     };
     # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
     openscenegraph = prev.openscenegraph.override {
       colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
-      opencollada = final.collada-dom;
     };
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
@@ -51,6 +35,15 @@
             src-agimus-controller
             # keep-sorted end
             ;
+          aligator = python-prev.aligator.overrideAttrs (super: {
+            nativeCheckInputs = (super.nativeBuildInputs or [ ]) ++ [ final.ctestCheckHook ];
+            disabledTests =
+              (super.disabledTests or [ ])
+              ++ final.lib.optionals final.stdenv.hostPlatform.isDarwin [
+                # SIGTRAP on GHA
+                "aligator-test-py-mpc"
+              ];
+          });
           brax = python-prev.brax.overrideAttrs {
             # depends on mujoco
             # which is broken on darwin
@@ -74,21 +67,6 @@
       )
     ];
     rosPackages = prev.rosPackages // {
-      noetic = prev.rosPackages.noetic.overrideScope (
-        _noetic-final: noetic-prev: {
-          # https://github.com/lopsided98/nix-ros-overlay/blob/develop/distros/noetic/overrides.nix#L206
-          # has https://github.com/ros/rosconsole/pull/58.patch
-          # but github somehow raises HTTP 429
-          rosconsole = noetic-prev.rosconsole.overrideAttrs {
-            patches = [ ./patches/ros/rosconsole/58_compatibility-fix-for-liblog4cxx-v011-013.patch ];
-          };
-          # drop fixed patch
-          # ref. https://github.com/lopsided98/nix-ros-overlay/pull/636
-          rosgraph = noetic-prev.rosgraph.overrideAttrs {
-            patches = [ ];
-          };
-        }
-      );
       humble = prev.rosPackages.humble.overrideScope (
         humble-final: humble-prev:
         {

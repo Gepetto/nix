@@ -96,126 +96,129 @@
           }:
           {
 
-            devShells = {
-              default = pkgs.mkShell {
-                name = "Gepetto Main Dev Shell";
-                packages = [
-                  # keep-sorted start
-                  pkgs.colcon
-                  self'.packages.python
-                  self'.packages.ros
-                  # keep-sorted end
-                ];
-              };
-              hpp = pkgs.mkShell {
-                name = "dev shell for HPP";
-                CMAKE_C_COMPILER_LAUNCHER = "ccache";
-                CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
-                CMAKE_GENERATOR = "Unix Makefiles";
-                ROS_PACKAGE_PATH = "${pkgs.example-robot-data}/share";
-                shellHook = ''
-                  export DEVEL_HPP_DIR=$(pwd -P)
-                  mkdir -p $DEVEL_HPP_DIR/{src,install}
-                  export INSTALL_HPP_DIR=$DEVEL_HPP_DIR/install
-                  export PATH=$INSTALL_HPP_DIR/bin:$PATH
-                  export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
-                  export PYTHONPATH=$INSTALL_HPP_DIR/${pkgs.python3.sitePackages}
-                  export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
-                  export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
-                '';
-                packages =
-                  with pkgs;
-                  [
-                    assimp
-                    ccache
-                    cddlib
-                    clp
-                    cmake
-                    console-bridge
-                    doxygen
-                    eigen
-                    glpk
-                    graphviz
-                    libGL
-                    libsForQt5.full
-                    octomap
-                    openscenegraph
-                    osgqt
-                    pkg-config
-                    (python3.withPackages (
-                      p: with p; [
-                        lxml
-                        numpy
-                        omniorb
-                        omniorbpy
-                        python-qt
-                        scipy
-                        (toPythonModule rosPackages.rolling.xacro)
-                        viser
-                      ]
-                    ))
-                    python3Packages.boost
-                    qhull
-                    qpoases
-                    tinyxml-2
-                    urdfdom
-                    zlib
-                  ]
-                  ++ lib.optionals stdenv.isLinux [
-                    psmisc
-                  ];
-              };
-              hpp-bin = pkgs.mkShell {
-                packages = [
-                  (pkgs.python3.withPackages (p: [
-                    p.gepetto-gui
-                    p.hpp-corba
-                  ]))
-                ];
-              };
-              gs = pkgs.mkShell {
-                name = "Dev Shell for Guilhem";
-                packages = [
-                  (pkgs.rosPackages.jazzy.python3.withPackages (p: [
-                    p.bloom
-                    p.rosdep
-                  ]))
-                ];
-              };
-              ms = pkgs.mkShell {
-                name = "Dev Shell for Maxime";
-                inputsFrom = [ pkgs.python3Packages.crocoddyl ];
-                packages = [
-                  (pkgs.python3.withPackages (p: [
-                    # keep-sorted start
-                    p.example-parallel-robots
-                    p.fatrop
-                    p.gepetto-gui
-                    p.ipython
-                    p.matplotlib
-                    p.mim-solvers
-                    p.opencv4
-                    p.pandas
-                    p.proxsuite
-                    p.quadprog
-                    p.scikit-learn
-                    p.seaborn
-                    # keep-sorted end
-                  ]))
-                ];
-                shellHook = ''
-                  export PYTHONPATH=${
-                    lib.concatStringsSep ":" [
-                      "$PWD/src/cobotmpc"
-                      "$PWD/install/${pkgs.python3.sitePackages}"
-                      "$PYTHONPATH"
-                    ]
-                  }
-                '';
-              };
-            };
+            devShells = lib.mapAttrs' (n: v: lib.nameValuePair (lib.removePrefix "dev-shell-" n) v) (
+              lib.filterAttrs (n: _v: lib.hasPrefix "dev-shell-" n) self'.packages
+            );
             packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
-              {
+              lib.mapAttrs' (n: lib.nameValuePair "dev-shell-${n}") {
+                default = pkgs.mkShell {
+                  name = "Gepetto Main Dev Shell";
+                  packages = [
+                    # keep-sorted start
+                    pkgs.colcon
+                    self'.packages.python
+                    self'.packages.ros
+                    # keep-sorted end
+                  ];
+                };
+                hpp = pkgs.mkShell {
+                  name = "dev shell for HPP";
+                  CMAKE_C_COMPILER_LAUNCHER = "ccache";
+                  CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
+                  CMAKE_GENERATOR = "Unix Makefiles";
+                  ROS_PACKAGE_PATH = "${pkgs.example-robot-data}/share";
+                  shellHook = ''
+                    export DEVEL_HPP_DIR=$(pwd -P)
+                    mkdir -p $DEVEL_HPP_DIR/{src,install}
+                    export INSTALL_HPP_DIR=$DEVEL_HPP_DIR/install
+                    export PATH=$INSTALL_HPP_DIR/bin:$PATH
+                    export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
+                    export PYTHONPATH=$INSTALL_HPP_DIR/${pkgs.python3.sitePackages}
+                    export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
+                    export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
+                  '';
+                  packages =
+                    with pkgs;
+                    [
+                      assimp
+                      ccache
+                      cddlib
+                      clp
+                      cmake
+                      console-bridge
+                      doxygen
+                      eigen
+                      glpk
+                      graphviz
+                      libGL
+                      libsForQt5.full
+                      octomap
+                      openscenegraph
+                      osgqt
+                      pkg-config
+                      (python3.withPackages (
+                        p: with p; [
+                          lxml
+                          numpy
+                          omniorb
+                          omniorbpy
+                          python-qt
+                          scipy
+                          (toPythonModule rosPackages.rolling.xacro)
+                          viser
+                        ]
+                      ))
+                      python3Packages.boost
+                      qhull
+                      qpoases
+                      tinyxml-2
+                      urdfdom
+                      zlib
+                    ]
+                    ++ lib.optionals stdenv.isLinux [
+                      psmisc
+                    ];
+                };
+                hpp-bin = pkgs.mkShell {
+                  packages = [
+                    (pkgs.python3.withPackages (p: [
+                      p.gepetto-gui
+                      p.hpp-corba
+                    ]))
+                  ];
+                };
+                gs = pkgs.mkShell {
+                  name = "Dev Shell for Guilhem";
+                  packages = [
+                    (pkgs.rosPackages.jazzy.python3.withPackages (p: [
+                      p.bloom
+                      p.rosdep
+                    ]))
+                  ];
+                };
+                ms = pkgs.mkShell {
+                  name = "Dev Shell for Maxime";
+                  inputsFrom = [ pkgs.python3Packages.crocoddyl ];
+                  packages = [
+                    (pkgs.python3.withPackages (p: [
+                      # keep-sorted start
+                      p.example-parallel-robots
+                      p.fatrop
+                      p.gepetto-gui
+                      p.ipython
+                      p.matplotlib
+                      p.mim-solvers
+                      p.opencv4
+                      p.pandas
+                      p.proxsuite
+                      p.quadprog
+                      p.scikit-learn
+                      p.seaborn
+                      # keep-sorted end
+                    ]))
+                  ];
+                  shellHook = ''
+                    export PYTHONPATH=${
+                      lib.concatStringsSep ":" [
+                        "$PWD/src/cobotmpc"
+                        "$PWD/install/${pkgs.python3.sitePackages}"
+                        "$PYTHONPATH"
+                      ]
+                    }
+                  '';
+                };
+              }
+              // {
                 python = pkgs.python3.withPackages (p: [
                   # keep-sorted start
                   p.agimus-controller
@@ -298,6 +301,8 @@
                   example-robot-data
                   flex-joints
                   gepetto-gui
+                  gepetto-viewer
+                  gepetto-viewer-corba
                   hpp-affordance-corba
                   hpp-corba
                   hpp-corbaserver
@@ -319,19 +324,10 @@
                   platypus
                   sensitivity
                   toolbox-parallel-robots
+                  tsid
                   # keep-sorted end
                   ;
               }
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-noetic-${n}") (
-                lib.optionalAttrs (system == "x86_64-linux") {
-                  inherit (pkgs.rosPackages.noetic)
-                    # keep-sorted start
-                    rosbag
-                    rospy
-                    # keep-sorted end
-                    ;
-                }
-              )
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
                 inherit (pkgs.rosPackages.humble)
                   # keep-sorted start

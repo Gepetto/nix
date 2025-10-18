@@ -34,21 +34,20 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
   ];
 
-  propagatedBuildInputs =
-    [
-      eigen
-      jrl-cmakemodules
-    ]
-    ++ lib.optionals (!pythonSupport) [
-      boost
-    ]
-    ++ lib.optionals pythonSupport [
-      python3Packages.boost
-      python3Packages.eigenpy
-      python3Packages.example-robot-data
-      python3Packages.pinocchio
-      python3Packages.pythonImportsCheckHook
-    ];
+  propagatedBuildInputs = [
+    eigen
+    jrl-cmakemodules
+  ]
+  ++ lib.optionals (!pythonSupport) [
+    boost
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.boost
+    python3Packages.eigenpy
+    python3Packages.example-robot-data
+    python3Packages.pinocchio
+    python3Packages.pythonImportsCheckHook
+  ];
 
   checkInputs = [
     doctest
