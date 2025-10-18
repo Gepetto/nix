@@ -1,8 +1,7 @@
 pull_request_rules:
-  - name: merge automatically when CI passes and PR is approved
+  - name: merge [bot] PRs when CI pass
     conditions:
-      - check-success = "Nix build on macos"
-      - check-success = "Nix build on ubuntu"
+      - check-success = "check-macos-linux-nix"
       - check-success = "pre-commit.ci - pr"
       - or:
           - author = dependabot[bot]
