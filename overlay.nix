@@ -35,6 +35,15 @@
             src-agimus-controller
             # keep-sorted end
             ;
+          aligator = python-prev.aligator.overrideAttrs (super: {
+            nativeCheckInputs = (super.nativeBuildInputs or [ ]) ++ [ final.ctestCheckHook ];
+            disabledTests =
+              (super.disabledTests or [ ])
+              ++ final.lib.optionals final.stdenv.hostPlatform.isDarwin [
+                # SIGTRAP on GHA
+                "aligator-test-py-mpc"
+              ];
+          });
           brax = python-prev.brax.overrideAttrs {
             # depends on mujoco
             # which is broken on darwin
