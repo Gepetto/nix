@@ -11,11 +11,16 @@ on:
 jobs:
   pieces:
     name: "Nix build ${{ matrix.build }} on ${{ matrix.os }}"
-    runs-on: "${{ matrix.os }}-latest"
+    runs-on: "${{ matrix.os }}"
     strategy:
       matrix:
-        os: [macos, ubuntu]
+        os: [macos-15, ubuntu-24.04]
         build: ["pinocchio", "py-aligator", "gepetto-viewer", "dev-shell-hpp", "dev-shell-hpp-bin", "python", "ros"]
+        include:
+          - os: macos-15-intel
+            build: py-aligator
+          - os: ubuntu-24.04-arm
+            build: py-aligator
     steps:
       - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
