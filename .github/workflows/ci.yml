@@ -18,9 +18,9 @@ jobs:
         build: ["pinocchio", "py-aligator", "gepetto-viewer", "dev-shell-hpp", "dev-shell-hpp-bin", "python", "ros"]
         include:
           - os: macos-15-intel
-            build: py-aligator
+            build: pinocchio
           - os: ubuntu-24.04-arm
-            build: py-aligator
+            build: pinocchio
     steps:
       - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
