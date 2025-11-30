@@ -43,6 +43,7 @@
               (import ./overlay.nix { inherit (localFlake) inputs; })
             ]
             ++ config.gepetto-pkgs.overlays;
+            config.allowUnfree = true;
           };
         checks =
           let
