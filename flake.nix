@@ -283,6 +283,7 @@
                   crocoddyl
                   example-robot-data
                   flex-joints
+                  force-feedback-mpc
                   gepetto-viewer
                   hpp-affordance
                   hpp-affordance-corba
