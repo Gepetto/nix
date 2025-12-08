@@ -40,10 +40,9 @@ stdenv.mkDerivation (finalAttrs: {
   propagatedBuildInputs = [
     eigen
     jrl-cmakemodules
-    llvmPackages.openmp
     pinocchio
     crocoddyl
-  ];
+  ] ++ lib.optional stdenv.cc.isClang llvmPackages.openmp;
 
   checkInputs = [
     boost
