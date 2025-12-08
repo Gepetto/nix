@@ -23,7 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
   version = "0.0.0-unstable-2025-12-01";
 
   src = /home/mnaveau/devel/workspace_gepetto_nix/force_feedback_mpc;
-  
+
   # src = fetchFromGitHub {
   #   owner = "machines-in-motion";
   #   repo = "force_feedback_mpc";
