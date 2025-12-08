@@ -25,9 +25,7 @@ toPythonModule (
       (lib.cmakeBool "INSTALL_PYTHON_INTERFACE_ONLY" standalone)
     ];
 
-    propagatedBuildInputs =
-      (super.propagatedBuildInputs or [ ])
-      ++ [
+    propagatedBuildInputs = [
         boost
         eigenpy
         pinocchio
