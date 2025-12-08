@@ -6,30 +6,34 @@
 
   # nativeBuildInputs
   cmake,
+  pkg-config,
 
   # propagatedBuildInputs
   eigen,
   jrl-cmakemodules,
   python3Packages,
-
-  # checkInputs
-  doctest,
-
-  pythonSupport ? false,
+  llvmPackages,
+  pinocchio,
+  crocoddyl,
+  boost,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "force-feedback-mpc";
   version = "0.0.0-unstable-2025-12-01";
 
-  src = fetchFromGitHub {
-    owner = "machines-in-motion";
-    repo = "force_feedback_mpc";
-    rev = "04bd43213bc47facd0b752f987fbbdfd3aa5a165";
-    hash = lib.fakeHash;
-  };
+  src = /home/mnaveau/devel/workspace_gepetto_nix/force_feedback_mpc;
+  
+  # src = fetchFromGitHub {
+  #   owner = "machines-in-motion";
+  #   repo = "force_feedback_mpc";
+  #   rev = "69a554f824002474490668c8620cf8414a34d8b4";
+  #   # hash = lib.fakeHash;
+  #   hash = "sha256-fOINGdngTqGcE1CiymUvXT/QyRnAE9tydM7b1dN+kBk=";
+  # };
 
   nativeBuildInputs = [
+    pkg-config
     cmake
   ];
 
@@ -37,30 +41,19 @@ stdenv.mkDerivation (finalAttrs: {
     eigen
     jrl-cmakemodules
     llvmPackages.openmp
-  ]
-  ++ lib.optionals !pythonSupport [
-    
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.boost
-    python3Packages.eigenpy
-    python3Packages.pinocchio
-    python3Packages.crocoddyl
-    python3Packages.pythonImportsCheckHook
+    pinocchio
+    crocoddyl
   ];
 
-  checkInputs = [ ]
-  ++ lib.optionals !pythonSupport [
-    ctest
+  checkInputs = [
     boost
   ];
 
   cmakeFlags = [
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
   ];
 
   doCheck = true;
-  pythonImportsCheck = [ "machines-in-motion" ];
 
   meta = {
     description = "Optimal control tools to achieve force feedback in MPC.";
