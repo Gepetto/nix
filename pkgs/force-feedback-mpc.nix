@@ -22,15 +22,14 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "force-feedback-mpc";
   version = "0.0.0-unstable-2025-12-01";
 
-  src = /home/mnaveau/devel/workspace_gepetto_nix/force_feedback_mpc;
-
-  # src = fetchFromGitHub {
-  #   owner = "machines-in-motion";
-  #   repo = "force_feedback_mpc";
-  #   rev = "69a554f824002474490668c8620cf8414a34d8b4";
-  #   # hash = lib.fakeHash;
-  #   hash = "sha256-fOINGdngTqGcE1CiymUvXT/QyRnAE9tydM7b1dN+kBk=";
-  # };
+  src = fetchFromGitHub {
+    # Until https://github.com/machines-in-motion/force_feedback_mpc/pull/5 is merged
+    # owner = "machines-in-motion";
+    owner = "MaximilienNaveau";
+    repo = "force_feedback_mpc";
+    rev = "d94e280b204755589192d6c184a231eb0579ca1a";
+    hash = "sha256-hcULNgLIfkCabFdEmfqF1genEfQzIJY6nsx5WxqOeFA=";
+  };
 
   nativeBuildInputs = [
     pkg-config
