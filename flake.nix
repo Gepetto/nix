@@ -335,6 +335,7 @@
                   example-parallel-robots
                   example-robot-data
                   flex-joints
+                  force-feedback-mpc
                   gepetto-gui
                   gepetto-viewer
                   gepetto-viewer-corba
