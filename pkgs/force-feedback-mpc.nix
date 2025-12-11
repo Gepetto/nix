@@ -23,12 +23,10 @@ stdenv.mkDerivation (finalAttrs: {
   version = "0.0.0-unstable-2025-12-01";
 
   src = fetchFromGitHub {
-    # Until https://github.com/machines-in-motion/force_feedback_mpc/pull/5 is merged
-    # owner = "machines-in-motion";
-    owner = "MaximilienNaveau";
+    owner = "machines-in-motion";
     repo = "force_feedback_mpc";
-    rev = "d94e280b204755589192d6c184a231eb0579ca1a";
-    hash = "sha256-hcULNgLIfkCabFdEmfqF1genEfQzIJY6nsx5WxqOeFA=";
+    rev = "c458fcdc86bf944aca53ab677e7964b85ac5fd40";
+    hash = "sha256-w5mW33EfD0H1euhG9k0PHAcL0yu8qS1grQJVUTkY6Bw=";
   };
 
   nativeBuildInputs = [
