@@ -11,7 +11,6 @@
   # propagatedBuildInputs
   boost,
   eigenpy,
-  example-robot-data,
   pinocchio,
   crocoddyl,
 }:
@@ -26,14 +25,14 @@ toPythonModule (
     ];
 
     propagatedBuildInputs = [
-        boost
-        eigenpy
-        pinocchio
-        crocoddyl
-      ]
-      ++ lib.optional standalone pkgs.force-feedback-mpc;
+      boost
+      eigenpy
+      pinocchio
+      crocoddyl
+    ]
+    ++ lib.optional standalone pkgs.force-feedback-mpc;
 
-    checkInputs = [];
+    checkInputs = [ ];
 
     nativeCheckInputs = (super.nativeCheckInputs or [ ]) ++ [
       pythonImportsCheckHook
