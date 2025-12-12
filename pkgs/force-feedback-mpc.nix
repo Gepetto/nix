@@ -11,14 +11,13 @@
   # propagatedBuildInputs
   eigen,
   jrl-cmakemodules,
-  python3Packages,
   llvmPackages,
   pinocchio,
   crocoddyl,
   boost,
 }:
 
-stdenv.mkDerivation (finalAttrs: {
+stdenv.mkDerivation (_finalAttrs: {
   pname = "force-feedback-mpc";
   version = "0.0.0-unstable-2025-12-01";
 
@@ -39,7 +38,8 @@ stdenv.mkDerivation (finalAttrs: {
     jrl-cmakemodules
     pinocchio
     crocoddyl
-  ] ++ lib.optional stdenv.cc.isClang llvmPackages.openmp;
+  ]
+  ++ lib.optional stdenv.cc.isClang llvmPackages.openmp;
 
   checkInputs = [
     boost
