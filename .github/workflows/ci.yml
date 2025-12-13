@@ -38,7 +38,7 @@ jobs:
           extraPullNames: ros
       - run: nix build -L ".#${{ matrix.build }}" --cores 4
   complete:
-    needs: pieces
+    needs: populate-cache
     name: "Nix build on ${{ matrix.os }}"
     runs-on: "${{ matrix.os }}-latest"
     continue-on-error: true
