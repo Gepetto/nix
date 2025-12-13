@@ -9,7 +9,7 @@ Diff: https://github.com/gepetto/gepetto-viewer/compare/v6.0.0...v6.1.0
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/pkgs/by-name/ge/gepetto-viewer/package.nix b/pkgs/by-name/ge/gepetto-viewer/package.nix
-index ed7eb146f06f7a..1cdb2f9834daf3 100644
+index ed7eb146f06f7a527639db6709a289ff8290507e..1cdb2f9834daf3f01d9501a77c1f90586826f4ab 100644
 --- a/pkgs/by-name/ge/gepetto-viewer/package.nix
 +++ b/pkgs/by-name/ge/gepetto-viewer/package.nix
 @@ -20,13 +20,13 @@
@@ -40,7 +40,7 @@ Diff: https://github.com/gepetto/gepetto-viewer-corba/compare/v6.0.0...v6.1.0
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/pkgs/by-name/ge/gepetto-viewer-corba/package.nix b/pkgs/by-name/ge/gepetto-viewer-corba/package.nix
-index 89b8d003812317..c941bb97311e66 100644
+index 89b8d003812317b27287c68f6dc452f40326a453..c941bb97311e66815ed28035f2a3dbb4727d3f73 100644
 --- a/pkgs/by-name/ge/gepetto-viewer-corba/package.nix
 +++ b/pkgs/by-name/ge/gepetto-viewer-corba/package.nix
 @@ -14,13 +14,13 @@
@@ -70,7 +70,7 @@ Subject: [PATCH 3/4] gepetto-viewer: use finalPackage
  1 file changed, 91 insertions(+), 94 deletions(-)
 
 diff --git a/pkgs/by-name/ge/gepetto-viewer/package.nix b/pkgs/by-name/ge/gepetto-viewer/package.nix
-index 1cdb2f9834daf3..2aec1cd3b7520b 100644
+index 1cdb2f9834daf3f01d9501a77c1f90586826f4ab..2aec1cd3b7520bb4a4f9929949af8562483a8e6d 100644
 --- a/pkgs/by-name/ge/gepetto-viewer/package.nix
 +++ b/pkgs/by-name/ge/gepetto-viewer/package.nix
 @@ -17,111 +17,108 @@
@@ -287,7 +287,7 @@ Subject: [PATCH 4/4] gepetto-viewer-corba: clean
  1 file changed, 2 deletions(-)
 
 diff --git a/pkgs/by-name/ge/gepetto-viewer-corba/package.nix b/pkgs/by-name/ge/gepetto-viewer-corba/package.nix
-index c941bb97311e66..b73f3914488505 100644
+index c941bb97311e66815ed28035f2a3dbb4727d3f73..b73f391448850530432f8b73ee5729b528f4e73d 100644
 --- a/pkgs/by-name/ge/gepetto-viewer-corba/package.nix
 +++ b/pkgs/by-name/ge/gepetto-viewer-corba/package.nix
 @@ -1,10 +1,8 @@

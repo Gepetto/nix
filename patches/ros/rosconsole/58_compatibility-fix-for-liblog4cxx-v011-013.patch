@@ -21,7 +21,7 @@ instead of `.get()` to make the code compile with both versions of
  3 files changed, 54 insertions(+), 52 deletions(-)
 
 diff --git a/src/rosconsole/impl/rosconsole_log4cxx.cpp b/src/rosconsole/impl/rosconsole_log4cxx.cpp
-index 901831265..4c3b26eab 100644
+index 9018312651c4b202bbd12e8704107c129c1a11ad..4c3b26eab70765d6ee794af9a34891db8083e875 100644
 --- a/src/rosconsole/impl/rosconsole_log4cxx.cpp
 +++ b/src/rosconsole/impl/rosconsole_log4cxx.cpp
 @@ -166,7 +166,7 @@ void initialize()
@@ -96,7 +96,7 @@ index 901831265..4c3b26eab 100644
  
  } // namespace impl
 diff --git a/test/thread_test.cpp b/test/thread_test.cpp
-index 908edaef7..a7ac0375e 100644
+index 908edaef72faad5fb8fd7b31899264984812db9e..a7ac0375ea5af7efcd2f0467e415558898d3e2b4 100644
 --- a/test/thread_test.cpp
 +++ b/test/thread_test.cpp
 @@ -83,6 +83,7 @@ class TestAppender : public log4cxx::AppenderSkeleton
@@ -117,7 +117,7 @@ index 908edaef7..a7ac0375e 100644
  
    boost::thread_group tg;
 diff --git a/test/utest.cpp b/test/utest.cpp
-index 0357a8a3f..7ac8f7090 100644
+index 0357a8a3f730f5cfa4dca6b65de55bd7c630d944..7ac8f709094b1b71492a6820239922d974707bb5 100644
 --- a/test/utest.cpp
 +++ b/test/utest.cpp
 @@ -85,6 +85,7 @@ class TestAppender : public log4cxx::AppenderSkeleton
@@ -524,7 +524,7 @@ Signed-off-by: Andrey Vukolov <andrey.vukolov@elettra.eu>
  1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/src/rosconsole/impl/rosconsole_log4cxx.cpp b/src/rosconsole/impl/rosconsole_log4cxx.cpp
-index 4c3b26eab..d1b6c4952 100644
+index 4c3b26eab70765d6ee794af9a34891db8083e875..d1b6c49528ecca84a1dfd703713d0747c87c5bf6 100644
 --- a/src/rosconsole/impl/rosconsole_log4cxx.cpp
 +++ b/src/rosconsole/impl/rosconsole_log4cxx.cpp
 @@ -181,10 +181,12 @@ void initialize()
@@ -582,7 +582,7 @@ Signed-off-by: Andrey Vukolov <andrey.vukolov@elettra.eu>
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/src/rosconsole/impl/rosconsole_log4cxx.cpp b/src/rosconsole/impl/rosconsole_log4cxx.cpp
-index d1b6c4952..70504b928 100644
+index d1b6c49528ecca84a1dfd703713d0747c87c5bf6..70504b928ff8d936c0427efc957b6fd888714a44 100644
 --- a/src/rosconsole/impl/rosconsole_log4cxx.cpp
 +++ b/src/rosconsole/impl/rosconsole_log4cxx.cpp
 @@ -181,12 +181,18 @@ void initialize()
@@ -616,7 +616,7 @@ Subject: [PATCH 4/4] Fixed compilation condition for Ubuntu LTS 22.04
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/rosconsole/impl/rosconsole_log4cxx.cpp b/src/rosconsole/impl/rosconsole_log4cxx.cpp
-index 70504b928..89403594d 100644
+index 70504b928ff8d936c0427efc957b6fd888714a44..89403594d400c4c87c329a5175568b0b70d23f61 100644
 --- a/src/rosconsole/impl/rosconsole_log4cxx.cpp
 +++ b/src/rosconsole/impl/rosconsole_log4cxx.cpp
 @@ -182,7 +182,7 @@ void initialize()
