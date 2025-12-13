@@ -6,7 +6,7 @@
   toPythonModule,
   pythonImportsCheckHook,
 
-  standalone ? true,
+  buildStandalone ? true,
 
   boost,
   eigenpy,
@@ -19,8 +19,7 @@ toPythonModule (
 
     cmakeFlags = (super.cmakeFlags or [ ]) ++ [
       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
-      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" standalone)
-      (lib.cmakeBool "INSTALL_PYTHON_INTERFACE_ONLY" standalone)
+      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" buildStandalone)
     ];
 
     propagatedBuildInputs =
@@ -31,7 +30,7 @@ toPythonModule (
         example-robot-data
         pinocchio
       ]
-      ++ lib.optional standalone pkgs.aig;
+      ++ lib.optional buildStandalone pkgs.aig;
 
     nativeCheckInputs = (super.nativeCheckInputs or [ ]) ++ [
       pythonImportsCheckHook

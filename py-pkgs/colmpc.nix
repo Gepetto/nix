@@ -6,7 +6,7 @@
   toPythonModule,
   pythonImportsCheckHook,
 
-  standalone ? true,
+  buildStandalone ? true,
 
   crocoddyl,
   mim-solvers,
@@ -18,7 +18,7 @@ toPythonModule (
 
     cmakeFlags = (super.cmakeFlags or [ ]) ++ [
       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
-      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" standalone)
+      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" buildStandalone)
     ];
 
     propagatedBuildInputs =
@@ -26,7 +26,7 @@ toPythonModule (
       ++ [
         crocoddyl
       ]
-      ++ lib.optional standalone pkgs.colmpc;
+      ++ lib.optional buildStandalone pkgs.colmpc;
 
     nativeCheckInputs = (super.nativeCheckInputs or [ ]) ++ [
       pythonImportsCheckHook
