@@ -6,7 +6,7 @@
   toPythonModule,
   pythonImportsCheckHook,
 
-  standalone ? true,
+  buildStandalone ? true,
 
   boost,
   eigenpy,
@@ -20,7 +20,7 @@ toPythonModule (
 
     cmakeFlags = (super.cmakeFlags or [ ]) ++ [
       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
-      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" standalone)
+      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" buildStandalone)
     ];
 
     propagatedBuildInputs =
@@ -32,7 +32,7 @@ toPythonModule (
         ndcurves
         pinocchio
       ]
-      ++ lib.optional standalone pkgs.multicontact-api;
+      ++ lib.optional buildStandalone pkgs.multicontact-api;
 
     nativeCheckInputs = (super.nativeCheckInputs or [ ]) ++ [
       pythonImportsCheckHook
