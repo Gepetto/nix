@@ -309,11 +309,11 @@
         "userborn": "userborn"
       },
       "locked": {
-        "lastModified": 1770140667,
-        "narHash": "sha256-kD5a77+3nTOKUhTHtUeCrxvML6l1AJo4KjijMEP/35s=",
+        "lastModified": 1770297931,
+        "narHash": "sha256-QutjZQDX2TxiHmrFHso/jL9bU+iDE4yXxNfiWPXr+ws=",
         "owner": "numtide",
         "repo": "system-manager",
-        "rev": "fa89982a1997b50d78cd23faa8562e2d5a0f8367",
+        "rev": "8884ee30ad9d12e7147471eb67b0738cbb2d00c1",
         "type": "github"
       },
       "original": {
@@ -384,16 +384,16 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1769903681,
-        "narHash": "sha256-mXXakR75Iz6AFf/TYgIHE8SxOri2HyReYUYTT3lCEPA=",
-        "owner": "nikstur",
+        "lastModified": 1770243776,
+        "narHash": "sha256-Nc7V8fmtW4but0LU0tEwjokRirDFuX6fmnmivmAvMZ8=",
+        "owner": "jfroche",
         "repo": "userborn",
-        "rev": "88666e2d8931c7252411498c5b82feb9a8a4d8d4",
+        "rev": "9252a66ae12fff9f6e992310203a7aa763ba89ef",
         "type": "github"
       },
       "original": {
-        "owner": "nikstur",
-        "ref": "0.5.0",
+        "owner": "jfroche",
+        "ref": "fix-existing-groups-members",
         "repo": "userborn",
         "type": "github"
       }
