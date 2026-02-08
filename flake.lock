@@ -254,11 +254,11 @@
     "src-franka-description": {
       "flake": false,
       "locked": {
-        "lastModified": 1765937047,
-        "narHash": "sha256-mTIQJnQLZN3UMyPq7Btu6SYWv8JuXMSjdkzXbRdGEh4=",
+        "lastModified": 1770385506,
+        "narHash": "sha256-A+UFglPEHA2deOI06EyG+NF1+ejMRRAOEUj4yldDo/o=",
         "owner": "agimus-project",
         "repo": "franka_description",
-        "rev": "2bdc8da187040d2e85da9d5d302698ff30de3d11",
+        "rev": "535aa51107bf990abd92404d2517b09e4b6417a3",
         "type": "github"
       },
       "original": {
