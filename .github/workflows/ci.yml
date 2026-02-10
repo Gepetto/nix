@@ -3,11 +3,9 @@ on:
   push:
     branches:
       - main
-      - module
   pull_request:
     branches:
       - main
-      - module
 jobs:
   populate-cache:
     name: "${{ matrix.build }} on ${{ matrix.os }}"
