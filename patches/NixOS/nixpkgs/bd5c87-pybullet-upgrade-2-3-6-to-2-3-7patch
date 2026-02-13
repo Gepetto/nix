@@ -1,0 +1,29 @@
+From bd5c878b125313cff14add5437ecde9fac6d7ed5 Mon Sep 17 00:00:00 2001
+From: Martin Weinelt <hexa@darmstadt.ccc.de>
+Date: Tue, 1 Apr 2025 07:14:28 +0200
+Subject: [PATCH] python3Packages.pybullet: 3.2.6 -> 3.2.7
+
+This commit was automatically generated using update-python-libraries.
+---
+ pkgs/development/python-modules/pybullet/default.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/development/python-modules/pybullet/default.nix b/pkgs/development/python-modules/pybullet/default.nix
+index 95dbed9a924c47..48922b7990a247 100644
+--- a/pkgs/development/python-modules/pybullet/default.nix
++++ b/pkgs/development/python-modules/pybullet/default.nix
+@@ -11,12 +11,12 @@
+ 
+ buildPythonPackage rec {
+   pname = "pybullet";
+-  version = "3.2.6";
++  version = "3.2.7";
+   pyproject = true;
+ 
+   src = fetchPypi {
+     inherit pname version;
+-    hash = "sha256-2idSVDPIhpjcn9i8IPpK5NB3OLRlZjNlnr2CwtKITgg=";
++    hash = "sha256-BCh5240QGsdZDe5HX8at7VCLhf4Sc/27/eHYi9IA4U8=";
+   };
+ 
+   nativeBuildInputs = [ setuptools ];
