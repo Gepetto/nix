@@ -238,11 +238,11 @@
     "src-agimus-msgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1770623573,
-        "narHash": "sha256-gOTxAqOKx7B+tpaDrhEOf+0afWUBQj3RVXeIDZb0+nE=",
+        "lastModified": 1770858001,
+        "narHash": "sha256-p6VlN6g+Fw+wfh2YX5vesN9wvF2oymFosE1x8vzukgs=",
         "owner": "agimus-project",
         "repo": "agimus_msgs",
-        "rev": "241d82d5bcffac00de83397c29347ab5bce45088",
+        "rev": "ff368e6466034cf1a75d816a76960b580752d45d",
         "type": "github"
       },
       "original": {
