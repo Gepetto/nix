@@ -1,36 +1,22 @@
 {
   inputs = {
-    flake-parts.url = "github:hercules-ci/flake-parts";
-    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
+    gazebros2nix.url = "github:gepetto/gazebros2nix";
+    flake-parts.follows = "gazebros2nix/flake-parts";
+    nixpkgs.follows = "gazebros2nix/nixpkgs";
+    nix-ros-overlay.follows = "gazebros2nix/nix-ros-overlay";
+    systems.follows = "gazebros2nix/systems";
+    treefmt-nix.follows = "gazebros2nix/treefmt-nix";
+
     nix-system-graphics = {
       url = "github:soupglasses/nix-system-graphics";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.follows = "nix-ros-overlay/nixpkgs";
     system-manager = {
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    systems.follows = "nix-ros-overlay/flake-utils/systems";
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     # keep-sorted start block=yes
 
-    src-agimus-controller = {
-      url = "github:agimus-project/agimus_controller";
-      flake = false;
-    };
-    src-agimus-msgs = {
-      url = "github:agimus-project/agimus_msgs";
-      flake = false;
-    };
-    src-franka-description = {
-      url = "github:agimus-project/franka_description";
-      flake = false;
-    };
     src-odri-control-interface = {
       # TODO url = "github:open-dynamic-robot-initiative/odri_control_interface"; see https://github.com/open-dynamic-robot-initiative/odri_control_interface/pull/26
       url = "github:gwennlbh/odri_control_interface/nix";
@@ -225,8 +211,6 @@
               // {
                 python = pkgs.python3.withPackages (p: [
                   # keep-sorted start
-                  p.agimus-controller
-                  p.agimus-controller-examples
                   p.crocoddyl
                   p.gepetto-gui
                   p.hpp-corba
@@ -363,27 +347,6 @@
                   sensitivity
                   toolbox-parallel-robots
                   tsid
-                  # keep-sorted end
-                  ;
-              }
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
-                inherit (pkgs.rosPackages.humble)
-                  # keep-sorted start
-                  agimus-controller-ros
-                  agimus-msgs
-                  franka-description
-                  linear-feedback-controller
-                  linear-feedback-controller-msgs
-                  # keep-sorted end
-                  ;
-              }
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
-                inherit (pkgs.rosPackages.jazzy)
-                  # keep-sorted start
-                  agimus-controller-ros
-                  agimus-msgs
-                  linear-feedback-controller
-                  linear-feedback-controller-msgs
                   # keep-sorted end
                   ;
               }
