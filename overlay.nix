@@ -20,11 +20,6 @@
       (
         python-final: python-prev:
         {
-          inherit (inputs)
-            # keep-sorted start
-            src-agimus-controller
-            # keep-sorted end
-            ;
           aligator = python-prev.aligator.overrideAttrs (super: {
             nativeCheckInputs = (super.nativeBuildInputs or [ ]) ++ [ final.ctestCheckHook ];
             disabledTests =
@@ -50,43 +45,6 @@
         }
       )
     ];
-    rosPackages = prev.rosPackages // {
-      humble = prev.rosPackages.humble.overrideScope (
-        humble-final: humble-prev:
-        {
-          inherit (inputs)
-            # keep-sorted start
-            src-agimus-controller
-            src-agimus-msgs
-            # keep-sorted end
-            ;
-          franka-description = humble-prev.franka-description.overrideAttrs {
-            src = inputs.src-franka-description;
-            # depends on pyside2 which is broken on darwin
-            meta.broken = final.stdenv.hostPlatform.isDarwin;
-          };
-        }
-        // final.lib.filesystem.packagesFromDirectoryRecursive {
-          inherit (humble-final) callPackage;
-          directory = ./humble-pkgs;
-        }
-      );
-      jazzy = prev.rosPackages.jazzy.overrideScope (
-        jazzy-final: _jazzy-prev:
-        {
-          inherit (inputs)
-            # keep-sorted start
-            src-agimus-controller
-            src-agimus-msgs
-            # keep-sorted end
-            ;
-        }
-        // final.lib.filesystem.packagesFromDirectoryRecursive {
-          inherit (jazzy-final) callPackage;
-          directory = ./jazzy-pkgs;
-        }
-      );
-    };
   }
   // prev.lib.filesystem.packagesFromDirectoryRecursive {
     inherit (final) callPackage;
