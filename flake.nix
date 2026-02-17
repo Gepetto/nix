@@ -140,6 +140,7 @@
                           numpy
                           omniorb
                           omniorbpy
+                          pinocchio
                           pybind11
                           python-qt
                           scipy
