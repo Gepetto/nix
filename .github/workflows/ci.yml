@@ -56,7 +56,7 @@ jobs:
           name: gepetto
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: ros
-      - run: nix flake check -L --cores 4
+      - run: nix flake check -L -j 2 --cores 4
   system:
     runs-on: "ubuntu-latest"
     steps:
