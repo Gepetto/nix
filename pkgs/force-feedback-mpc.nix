@@ -14,15 +14,15 @@
   boost,
 }:
 
-stdenv.mkDerivation (_finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "force-feedback-mpc";
-  version = "0.0.0-unstable-2025-12-01";
+  version = "1.0.1";
 
   src = fetchFromGitHub {
     owner = "machines-in-motion";
     repo = "force_feedback_mpc";
-    rev = "c458fcdc86bf944aca53ab677e7964b85ac5fd40";
-    hash = "sha256-w5mW33EfD0H1euhG9k0PHAcL0yu8qS1grQJVUTkY6Bw=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-J1LBENg/AbxR8+TEe1TzQ2rbIx8ojyQPGSeatosYAkU=";
   };
 
   nativeBuildInputs = [
