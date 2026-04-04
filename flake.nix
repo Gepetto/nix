@@ -18,27 +18,13 @@
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # keep-sorted start block=yes
-
-    src-odri-control-interface = {
-      # TODO url = "github:open-dynamic-robot-initiative/odri_control_interface"; see https://github.com/open-dynamic-robot-initiative/odri_control_interface/pull/26
-      url = "github:gwennlbh/odri_control_interface/nix";
-      flake = false;
-    };
-    src-odri-masterboard-sdk = {
-      url = "github:gwennlbh/master-board/nix";
-      flake = false;
-      # TODO: sparse checkout
-    };
-
-    # keep-sorted end
   };
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
-      { self, lib, ... }:
+      { lib, ... }:
       let
-        flakeModule = inputs.flake-parts.lib.importApply ./module.nix { localFlake = self; };
+        flakeModule = inputs.flake-parts.lib.importApply ./module.nix;
       in
       {
         systems = import inputs.systems;

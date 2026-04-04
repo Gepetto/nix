@@ -1,7 +1,6 @@
 {
-  src-odri-control-interface,
-
   lib,
+  fetchFromGitHub,
   stdenv,
   cmake,
   eigen,
@@ -15,7 +14,12 @@ stdenv.mkDerivation {
   # replaced by version from package.xml in the repository's flake
   version = "1.0.1";
 
-  src = src-odri-control-interface;
+  src = fetchFromGitHub {
+    owner = "gwennlbh";
+    repo = "odri_control_interface";
+    rev = "nix";
+    hash = "sha256-+x+1NxiTwyg5Pwd1oBUMG3Z+eIj+VtVIRFvdPpXStU8=";
+  };
 
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace-warn \

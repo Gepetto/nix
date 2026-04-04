@@ -278,8 +278,6 @@
           "gazebros2nix",
           "nixpkgs"
         ],
-        "src-odri-control-interface": "src-odri-control-interface",
-        "src-odri-masterboard-sdk": "src-odri-masterboard-sdk",
         "system-manager": "system-manager",
         "systems": [
           "gazebros2nix",
@@ -289,40 +287,6 @@
           "gazebros2nix",
           "treefmt-nix"
         ]
-      }
-    },
-    "src-odri-control-interface": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1749138911,
-        "narHash": "sha256-+x+1NxiTwyg5Pwd1oBUMG3Z+eIj+VtVIRFvdPpXStU8=",
-        "owner": "gwennlbh",
-        "repo": "odri_control_interface",
-        "rev": "1137873714fd326fd3ab86cc5632bae72f965866",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gwennlbh",
-        "ref": "nix",
-        "repo": "odri_control_interface",
-        "type": "github"
-      }
-    },
-    "src-odri-masterboard-sdk": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1749026399,
-        "narHash": "sha256-0VhxOdC2cQwAJfAdHfeHovXrj9jrWb56F35rPN/u+eA=",
-        "owner": "gwennlbh",
-        "repo": "master-board",
-        "rev": "facc7f954294523a0f4b8389ac89fabad4c536db",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gwennlbh",
-        "ref": "nix",
-        "repo": "master-board",
-        "type": "github"
       }
     },
     "system-manager": {

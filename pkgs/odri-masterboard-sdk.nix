@@ -1,7 +1,6 @@
 {
-  src-odri-masterboard-sdk,
-
   lib,
+  fetchFromGitHub,
   stdenv,
   cmake,
   doxygen,
@@ -15,7 +14,12 @@ stdenv.mkDerivation {
   # replaced by version from package.xml in the repository's flake
   version = "1.0.7";
 
-  src = src-odri-masterboard-sdk;
+  src = fetchFromGitHub {
+    owner = "gwennlbh";
+    repo = "master-board";
+    rev = "nix";
+    hash = "sha256-0VhxOdC2cQwAJfAdHfeHovXrj9jrWb56F35rPN/u+eA=";
+  };
 
   # TODO sourceRoot = "${src.name}/sdk/master_board_sdk"; when we'll switch to fetchFromGitHub
   preConfigure = ''
