@@ -310,6 +310,7 @@
                   hpp-statistics
                   hpp-template-corba
                   hpp-tools
+                  hpp-toppra
                   hpp-tutorial
                   hpp-universal-robot
                   hpp-util
@@ -321,6 +322,7 @@
                   odri-masterboard-sdk
                   pinocchio
                   proxsuite
+                  toppra
                   tsid
                   # keep-sorted end
                   ;
