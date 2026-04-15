@@ -13,9 +13,12 @@
   jrl-cmakemodules,
   python3Packages,
   toppra,
+
+  # checkInputs
+  catch2_3,
 }:
 
-stdenv.mkDerivation (_finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-toppra";
   version = "0-unstable-2026-03-19";
 
@@ -41,6 +44,16 @@ stdenv.mkDerivation (_finalAttrs: {
     python3Packages.hpp-python
     toppra
   ];
+
+  checkInputs = [
+    catch2_3
+  ];
+
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  doCheck = true;
 
   meta = {
     description = "Integration of TOPPRA algorithm in HPP";
