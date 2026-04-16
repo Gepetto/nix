@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch,
   stdenv,
 
   # nativeBuildInputs
@@ -17,23 +16,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-constraints";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-constraints";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-cGX+TLhp9h8su1Pj1nDsKf5/ABQdZhrXr/tI97n5wBs=";
+    hash = "sha256-C0F1S620jOY2vhhKCzeLs4u4rG5FHm4BVOSB5uzKfco=";
   };
-
-  patches = [
-    # https://github.com/humanoid-path-planner/hpp-constraints/pull/278 merged
-    (fetchpatch {
-      name = "latex-fixes.patch";
-      url = "https://github.com/humanoid-path-planner/hpp-constraints/commit/0b15d57c77621576fb7a299feccbf3cd20e9fd0a.patch?full_index=1";
-      hash = "sha256-MM6yJfqnFHaelWKkv1emrZ6s2tkhMGo2fcsz0dIpm9Y=";
-    })
-  ];
 
   outputs = [
     "out"

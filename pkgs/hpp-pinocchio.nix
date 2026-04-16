@@ -20,13 +20,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-pinocchio";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-pinocchio";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Qkd4tUSQN9BhHXi6t19B8pbfDjueC2yghrCrIzsISjQ=";
+    hash = "sha256-24S1Gg2LYWz3c6XeOK0WClIsqRfcp6Q1to3dy1Zu2i0=";
   };
 
   outputs = [

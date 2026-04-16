@@ -14,13 +14,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-universal-robot";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-universal-robot";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-GMfw+kGX+kRrrx5OMUqaS9ABBWvrp0Sf0shn6EVSlHU=";
+    hash = "sha256-0NdOt6N4gNAVyTDi4+ibfH047iEsDJfiDjpmCuWGhI8=";
   };
 
   outputs = [

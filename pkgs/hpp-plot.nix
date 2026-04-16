@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch,
   stdenv,
   cmake,
   doxygen,
@@ -14,21 +13,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-plot";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-plot";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-VTiKJQaTcyVZn9vF5tzRb2Y1gPch/ma3bclKqXEUWHc=";
+    hash = "sha256-jpGZjvfTM5N/4oFir6Hvq6/V4owSwlsdfYH04hOshE0=";
   };
-
-  patches = [
-    (fetchpatch {
-      url = "https://github.com/nim65s/hpp-plot/commit/51d354a82039f05161973c1adb3c2949818d0aec.patch?full_index=1";
-      hash = "sha256-npFQvwqcHMB6pEI8CGD71HCMilX91jSTSBCbbMYL5Aw=";
-    })
-  ];
 
   outputs = [
     "out"

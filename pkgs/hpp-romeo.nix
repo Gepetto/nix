@@ -18,13 +18,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-romeo";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
-    repo = "hpp_romeo";
+    repo = "hpp-romeo";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-8VLfLWHELAusb9sj1zprIXPNRHEXRvtupjp2sjlLu9M=";
+    hash = "sha256-3v9BuUV1Ze8tlENQFH2appkWn/9oaFezIt8QxLRNN5g=";
   };
 
   outputs = [
