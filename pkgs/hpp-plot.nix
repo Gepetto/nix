@@ -13,14 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-plot";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-plot";
-    # tag = "v${finalAttrs.version}";
-    rev = "release/8.0.0";
-    hash = "sha256-8IeMx1tCeQrBBshM5SC4wbrJ5tvTTp0QM6lAHp4iIeo=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-jpGZjvfTM5N/4oFir6Hvq6/V4owSwlsdfYH04hOshE0=";
   };
 
   outputs = [

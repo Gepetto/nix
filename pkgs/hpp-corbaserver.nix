@@ -22,14 +22,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-corbaserver";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-corbaserver";
-    # tag = "v${finalAttrs.version}";
-    rev = "release/8.0.0";
-    hash = "sha256-Le18OWCHS2M+pxAUVXr185Y/cTUgljF6WQqUBIlUDj0=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-e0yivzXnY1rovtAYv0jfOCqgYWYhUEh0aOQMeo+24Lw=";
   };
 
   prePatch = ''

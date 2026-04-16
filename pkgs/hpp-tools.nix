@@ -10,14 +10,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-tools";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-tools";
-    # tag = "v${finalAttrs.version}";
-    rev = "release/8.0.0";
-    hash = "sha256-n4Y+H7kPrssm4DwNhV7nkvucNqYHPEzoczTP3D5WlOo=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-exaAcIrDXpiWQXquOh9zy0sVnxgxa+NQlln/j0UJqKE=";
   };
 
   outputs = [

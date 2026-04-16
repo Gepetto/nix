@@ -13,14 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gui";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gui";
-    # tag = "v${finalAttrs.version}";
-    rev = "release/8.0.0";
-    hash = "sha256-5mWTC4OqWR13pMsPtafoF1ZbffWH5Y9DZucJ4j+tmuE=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-cYUaSlj7S9BZf7ZSqxApb2IldWMd4DxoJ9okPAQlnU4=";
   };
 
   outputs = [

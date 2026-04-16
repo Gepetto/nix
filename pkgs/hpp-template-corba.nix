@@ -13,14 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-template-corba";
-  version = "7.0.0";
+  version = "8.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-template-corba";
-    # tag = "v${finalAttrs.version}";
-    rev = "release/8.0.0";
-    hash = "sha256-4wDMAOJ9h+HDtgz1euDi1ktl9mn1Gg/zhDwYSKpZM+c=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-8c+KFVjWaC1rQ+95P0jDajQA0ekovpPJlFMK1/JkTTA=";
   };
 
   outputs = [

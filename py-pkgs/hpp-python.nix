@@ -32,15 +32,14 @@
 
 buildPythonPackage rec {
   pname = "hpp-python";
-  version = "7.0.0";
+  version = "8.0.0";
   pyproject = false; # built with CMake
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-python";
-    # tag = "v${version}";
-    rev = "release/8.0.0";
-    hash = "sha256-ScxIKdOHu1qBzZo+seTF8IKe8ha1gYKU1lMBj+7KFyo=";
+    tag = "v${version}";
+    hash = "sha256-eVatSGqTINzDZQCv7GDsfYTZKHCw7voEZGFev70scvI=";
   };
 
   prePatch = ''
