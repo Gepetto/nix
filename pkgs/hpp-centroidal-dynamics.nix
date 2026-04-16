@@ -28,8 +28,9 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-centroidal-dynamics";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-6dmcgjbgiJizgGD4nHZOTRehQXlwc/VEuED1qUb1qnQ=";
+    # tag = "v${finalAttrs.version}";
+    rev = "release/8.0.0";
+    hash = "sha256-pb/camu4DqvcpsZIAA22oonKbLJcTf2pNZNlfZFCbnY=";
   };
 
   outputs = [

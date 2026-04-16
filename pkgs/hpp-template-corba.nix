@@ -18,8 +18,9 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-template-corba";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-x7PM5gUdf2QYxTTAiMq0v84F/t+ZyTJc+Ln1Tx/LzhM=";
+    # tag = "v${finalAttrs.version}";
+    rev = "release/8.0.0";
+    hash = "sha256-4wDMAOJ9h+HDtgz1euDi1ktl9mn1Gg/zhDwYSKpZM+c=";
   };
 
   outputs = [

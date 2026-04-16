@@ -22,8 +22,9 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-baxter";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-hwVb+DU+cbLIFFa5xINAv5Q+/jMDmbVtKrFpYoyOo2c=";
+    # tag = "v${finalAttrs.version}";
+    rev = "release/8.0.0";
+    hash = "sha256-CMUNoaSBipH8I0eQGYs5Q03a6Ln9fLOse2YXPjHsuh0=";
   };
 
   outputs = [

@@ -20,15 +20,10 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-core";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-62Aon05GmGk36o3CRHY2l8phSZA3QkIMOHH6wGzdlVo=";
+    # tag = "v${finalAttrs.version}";
+    rev = "release/8.0.0";
+    hash = "sha256-T+aUnyZ5rtXy+ZULARtMgwTvqMn0i6iJG8+r0aQkWso=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-fail \
-      "DESTINATION $""{CMAKE_INSTALL_DATAROOTDIR}/doc/$""{PROJECT_NAME}/doxygen-html)" \
-      "DESTINATION $""{CMAKE_INSTALL_FULL_DOCDIR}/doxygen-html)"
-  '';
 
   outputs = [
     "out"

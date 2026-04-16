@@ -20,8 +20,9 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-aazirNK8IUAHY+Qsrg05jGWkXLAGwtpUrRkmiZvG9Vk=";
+    # tag = "v${finalAttrs.version}";
+    rev = "release/8.0.0";
+    hash = "sha256-gGLd7GV6hkLMwbCrU7web9NHmwKNFoETb1IM3ynD8/4=";
   };
 
   outputs = [

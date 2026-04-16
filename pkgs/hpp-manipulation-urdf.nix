@@ -22,8 +22,9 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation-urdf";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-Q2dhYqGAU940c7uP24qBfS2/bLLjLEqqoPE8xIt/IwY=";
+    # tag = "v${finalAttrs.version}";
+    rev = "release/8.0.0";
+    hash = "sha256-mZAYO30rrUmH/yYKAqbU+CyGxOQILBEmb5K79JDpCxE=";
   };
 
   outputs = [
