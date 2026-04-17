@@ -1,6 +1,9 @@
 { lib, ... }:
 final: prev:
 {
+  aligator = prev.aligator.overrideAttrs (super: {
+    buildInputs = super.buildInputs ++ [ final.mimalloc ];
+  });
   eiquadprog = prev.eiquadprog.overrideAttrs {
     # TODO: nixpkgs has it in propagatedBuildInputs, which does not end up in devShell correctly
     buildInputs = [ final.jrl-cmakemodules ];
