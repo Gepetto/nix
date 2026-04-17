@@ -15,7 +15,7 @@ jobs:
       matrix:
         # os: TODO [macos-15, ubuntu-24.04]
         os: [ubuntu-24.04]
-        build: ["pinocchio", "py-aligator", "gepetto-viewer", "devShells.x86_64-linux.hpp", "devShells.x86_64-linux.hpp-bin", "python"]
+        build: ["pinocchio", "py-aligator", "gepetto-viewer", "devShells.x86_64-linux.hpp", "devShells.x86_64-linux.hpp-bin", "python", "ros-humble"]
         # include:
         #   - os: macos-15-intel
         #     build: py-aligator
