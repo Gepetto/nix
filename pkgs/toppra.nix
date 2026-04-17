@@ -38,6 +38,14 @@ stdenv.mkDerivation (finalAttrs: {
     substituteInPlace bindings/CMakeLists.txt --replace-fail \
       "LIBRARY_OUTPUT_DIRECTORY $""{TOPPRA_PYTHON_SOURCE_DIR}" \
       "LIBRARY_OUTPUT_DIRECTORY $""{CMAKE_CURRENT_BINARY_DIR}"
+
+    substituteInPlace CMakeLists.txt --replace-fail \
+      "set(CMAKE_CXX_STANDARD 14)" \
+      ""
+
+    substituteInPlace tests/test_constraints.cpp --replace-fail \
+      "pinocchio/parsers/sample-models.hpp" \
+      "pinocchio/multibody/sample-models.hpp"
   '';
 
   nativeBuildInputs = [
