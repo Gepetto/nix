@@ -248,6 +248,14 @@
                   p.matplotlib
                   # keep-sorted end
                 ]);
+                ros-humble = pkgs.rosPackages.humble.buildEnv {
+                  name = "ros-humble";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "humble";
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-humble-" n) self'.packages) ++ [
+                    pkgs.qt5.qtgraphicaleffects
+                    pkgs.qt5.wrapQtAppsHook
+                  ];
+                };
                 vscode =
                   let
                     # This contain coreutils and a 'id' binary not configured for LDAP,
@@ -371,6 +379,11 @@
                   toppra
                   tsid
                   # keep-sorted end
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
+                inherit (pkgs.rosPackages.humble)
+                  agimus-demo-03-mpc-dummy-traj
                   ;
               }
             );
