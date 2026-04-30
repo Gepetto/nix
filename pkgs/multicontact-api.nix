@@ -13,13 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "multicontact-api";
-  version = "4.2.0";
+  version = "4.2.1";
 
   src = fetchFromGitHub {
     owner = "loco-3d";
     repo = "multicontact-api";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-ZPDm3LteIEW/JASUJwRNhA7Kk3WD+s+EPusUQoG5Ya0=";
+    hash = "sha256-ICcS/jmtH/DjBsYMGrOZxyxbrxOYSR+uxc6SeycP2o4=";
   };
 
   outputs = [
