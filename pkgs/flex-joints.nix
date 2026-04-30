@@ -50,6 +50,7 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = true;
 
   meta = {
+    changelog = "https://github.com/Gepetto/flex-joints/blob/${finalAttrs.src.tag}/CHANGELOG.md";
     description = "Adaptation for rigid control on flexible devices ";
     homepage = "https://github.com/Gepetto/flex-joints";
     license = lib.licenses.bsd2;

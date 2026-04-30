@@ -84,7 +84,7 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Robotic motion planning library";
     homepage = "https://github.com/hungpham2511/toppra";
-    changlog = "https://github.com/hungpham2511/toppra/blob/develop/HISTORY.md";
+    changelog = "https://github.com/hungpham2511/toppra/blob/${finalAttrs.src.tag}/HISTORY.md";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [ nim65s ];
     platforms = lib.platforms.all;
