@@ -18,13 +18,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "flex-joints";
-  version = "1.2.0";
+  version = "1.3.0";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "flex-joints";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-juzCWOSGP4DcrqGk0KCo18CNw8jb4xoTh5WPNqFJNHw=";
+    hash = "sha256-0+pwVLRoP1rS4MKQwqRIyFmi24ykUbyDslcLnmS+kPw=";
   };
 
   outputs = [
