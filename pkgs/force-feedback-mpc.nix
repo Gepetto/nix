@@ -51,6 +51,7 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = true;
 
   meta = {
+    changelog = "https://github.com/machines-in-motion/force_feedback_mpc/blob/${finalAttrs.src.tag}/CHANGELOG.md";
     description = "Optimal control tools to achieve force feedback in MPC.";
     homepage = "https://github.com/machines-in-motion/force_feedback_mpc/";
     license = lib.licenses.bsd2;
