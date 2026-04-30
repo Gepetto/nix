@@ -11,12 +11,9 @@
   # propagatedBuildInputs
   eigen,
   jrl-cmakemodules,
-  python3Packages,
 
   # checkInputs
   doctest,
-
-  pythonSupport ? false,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -35,6 +32,8 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
+  strictDeps = true;
+
   nativeBuildInputs = [
     cmake
     doxygen
@@ -42,23 +41,13 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [ jrl-cmakemodules ];
 
-  propagatedBuildInputs = [
-    eigen
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.boost
-    python3Packages.eigenpy
-    python3Packages.pythonImportsCheckHook
-  ];
+  propagatedBuildInputs = [ eigen ];
 
   checkInputs = [ doctest ];
 
-  cmakeFlags = [
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
-  ];
+  cmakeFlags = [ (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false) ];
 
   doCheck = true;
-  pythonImportsCheck = [ "flex_joints" ];
 
   meta = {
     description = "Adaptation for rigid control on flexible devices ";
