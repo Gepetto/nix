@@ -46,6 +46,7 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = true;
 
   meta = {
+    changelog = "https://github.com/loco-3d/multicontact-api/blob/${finalAttrs.src.tag}/CHANGELOG.md";
     description = "define, store and use ContactSequence objects";
     homepage = "https://github.com/loco-3d/multicontact-api";
     license = lib.licenses.bsd2;
