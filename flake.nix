@@ -404,6 +404,11 @@
               // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
                 inherit (pkgs.rosPackages.jazzy)
                   tiago-pro-gazebo
+                  # TODO : those 4 are required for tiago_pro_gazebo tiago_pro_gazebo.launch.py, this should not be the case
+                  br2-gazebo-worlds
+                  ros2launch
+                  ros-gz-bridge
+                  ros-gz-image
                   ;
               }
             );
