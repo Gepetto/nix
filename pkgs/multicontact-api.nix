@@ -13,13 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "multicontact-api";
-  version = "4.1.0";
+  version = "4.2.1";
 
   src = fetchFromGitHub {
     owner = "loco-3d";
     repo = "multicontact-api";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-eCDC1InnDFZ1GdTLtZeuGJYOExTxaEJ/ekD0Ilnir9w=";
+    hash = "sha256-ICcS/jmtH/DjBsYMGrOZxyxbrxOYSR+uxc6SeycP2o4=";
   };
 
   outputs = [
@@ -46,6 +46,7 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = true;
 
   meta = {
+    changelog = "https://github.com/loco-3d/multicontact-api/blob/${finalAttrs.src.tag}/CHANGELOG.md";
     description = "define, store and use ContactSequence objects";
     homepage = "https://github.com/loco-3d/multicontact-api";
     license = lib.licenses.bsd2;
