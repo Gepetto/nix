@@ -1,6 +1,5 @@
 queue_rules:
   - name: default
-    autoqueue: true
     merge_method: rebase
     update_method: rebase
     queue_conditions:
@@ -13,3 +12,5 @@ queue_rules:
           - author = github-actions[bot]
           - author = hrp2-14
           - author = pre-commit-ci[bot]
+merge_protections_settings:
+  auto_merge_conditions: true
