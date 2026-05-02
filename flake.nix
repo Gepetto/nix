@@ -121,12 +121,14 @@
                   # keep-sorted end
                 ];
               };
+
               vscode = pkgs.mkShell {
                 packages = [
                   self'.packages.vscode
                 ]
                 ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.cudaPackages.cudatoolkit;
               };
+
               hpp = pkgs.mkShell {
                 name = "dev shell for HPP";
                 CMAKE_C_COMPILER_LAUNCHER = "ccache";
@@ -188,6 +190,7 @@
                     psmisc
                   ];
               };
+
               hpp-bin = pkgs.mkShell {
                 ROS_PACKAGE_PATH = lib.makeSearchPathOutput "out" "share" [
                   pkgs.example-robot-data
@@ -202,6 +205,7 @@
                   ]))
                 ];
               };
+
               ms = pkgs.mkShell {
                 name = "Dev Shell for Maxime";
                 inputsFrom = [ pkgs.python3Packages.crocoddyl ];
@@ -234,6 +238,7 @@
                 '';
               };
             };
+
             packages = {
               inherit (inputs'.home-manager.packages) home-manager;
             }
@@ -256,6 +261,15 @@
                     pkgs.qt5.wrapQtAppsHook
                   ];
                 };
+
+                ros-jazzy = pkgs.rosPackages.jazzy.buildEnv {
+                  name = "ros-jazzy";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "jazzy";
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-jazzy-" n) self'.packages) ++ [
+                    pkgs.qt5.wrapQtAppsHook
+                  ];
+                };
+
                 vscode =
                   let
                     # This contain coreutils and a 'id' binary not configured for LDAP,
@@ -278,6 +292,7 @@
                       remote-containers
                     ];
                   };
+
               }
               // lib.optionalAttrs (system == "x86_64-linux") {
                 system-manager = inputs'.system-manager.packages.default;
@@ -384,6 +399,16 @@
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
                 inherit (pkgs.rosPackages.humble)
                   agimus-demo-03-mpc-dummy-traj
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
+                inherit (pkgs.rosPackages.jazzy)
+                  tiago-pro-gazebo
+                  # TODO : those 4 are required for tiago_pro_gazebo tiago_pro_gazebo.launch.py, this should not be the case
+                  br2-gazebo-worlds
+                  ros2launch
+                  ros-gz-bridge
+                  ros-gz-image
                   ;
               }
             );
