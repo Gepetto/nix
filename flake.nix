@@ -256,6 +256,13 @@
                     pkgs.qt5.wrapQtAppsHook
                   ];
                 };
+                ros-jazzy = pkgs.rosPackages.jazzy.buildEnv {
+                  name = "ros-jazzy";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "jazzy";
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-jazzy-" n) self'.packages) ++ [
+                    pkgs.qt5.wrapQtAppsHook
+                  ];
+                };
                 vscode =
                   let
                     # This contain coreutils and a 'id' binary not configured for LDAP,
@@ -384,6 +391,11 @@
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
                 inherit (pkgs.rosPackages.humble)
                   agimus-demo-03-mpc-dummy-traj
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
+                inherit (pkgs.rosPackages.jazzy)
+                  tiago-pro-gazebo
                   ;
               }
             );
