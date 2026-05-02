@@ -121,12 +121,14 @@
                   # keep-sorted end
                 ];
               };
+
               vscode = pkgs.mkShell {
                 packages = [
                   self'.packages.vscode
                 ]
                 ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.cudaPackages.cudatoolkit;
               };
+
               hpp = pkgs.mkShell {
                 name = "dev shell for HPP";
                 CMAKE_C_COMPILER_LAUNCHER = "ccache";
@@ -188,6 +190,7 @@
                     psmisc
                   ];
               };
+
               hpp-bin = pkgs.mkShell {
                 ROS_PACKAGE_PATH = lib.makeSearchPathOutput "out" "share" [
                   pkgs.example-robot-data
@@ -202,6 +205,7 @@
                   ]))
                 ];
               };
+
               ms = pkgs.mkShell {
                 name = "Dev Shell for Maxime";
                 inputsFrom = [ pkgs.python3Packages.crocoddyl ];
@@ -234,6 +238,7 @@
                 '';
               };
             };
+
             packages = {
               inherit (inputs'.home-manager.packages) home-manager;
             }
@@ -256,6 +261,7 @@
                     pkgs.qt5.wrapQtAppsHook
                   ];
                 };
+
                 ros-jazzy = pkgs.rosPackages.jazzy.buildEnv {
                   name = "ros-jazzy";
                   postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "jazzy";
@@ -263,6 +269,7 @@
                     pkgs.qt5.wrapQtAppsHook
                   ];
                 };
+
                 vscode =
                   let
                     # This contain coreutils and a 'id' binary not configured for LDAP,
@@ -285,6 +292,7 @@
                       remote-containers
                     ];
                   };
+
               }
               // lib.optionalAttrs (system == "x86_64-linux") {
                 system-manager = inputs'.system-manager.packages.default;
