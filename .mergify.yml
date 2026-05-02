@@ -14,3 +14,4 @@ queue_rules:
           - author = pre-commit-ci[bot]
 merge_protections_settings:
   auto_merge_conditions: true
+  reporting_method: check-runs
