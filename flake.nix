@@ -65,6 +65,12 @@
                 ./modules/system-manager/nvidia-570-169.nix
               ];
             };
+            kurai = inputs.system-manager.lib.makeSystemConfig {
+              modules = [
+                inputs.nix-system-graphics.systemModules.default
+                ./modules/system-manager/nvidia-590-48.nix
+              ];
+            };
             miyanoura = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
