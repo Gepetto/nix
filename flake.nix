@@ -353,6 +353,7 @@
                   proxsuite
                   toppra
                   tsid
+                  unitree-sdk2
                   # keep-sorted end
                   ;
               }
@@ -399,6 +400,7 @@
                   toolbox-parallel-robots
                   toppra
                   tsid
+                  unitree-sdk2-python
                   # keep-sorted end
                   ;
               }
