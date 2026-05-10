@@ -20,13 +20,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "toppra";
-  version = "0.6.7";
+  version = "0.6.8";
 
   src = fetchFromGitHub {
     owner = "hungpham2511";
     repo = "toppra";
     tag = finalAttrs.version;
-    hash = "sha256-37FHQmcAlSiavaJdJrsWfMaxU7I06f+MNQA8hvtQ0mw=";
+    hash = "sha256-bCCKEDzJclKbX7w27Icgtasxue04+NVvn3PlzaZvvWs=";
   };
 
   sourceRoot = "source/cpp";
@@ -38,14 +38,6 @@ stdenv.mkDerivation (finalAttrs: {
     substituteInPlace bindings/CMakeLists.txt --replace-fail \
       "LIBRARY_OUTPUT_DIRECTORY $""{TOPPRA_PYTHON_SOURCE_DIR}" \
       "LIBRARY_OUTPUT_DIRECTORY $""{CMAKE_CURRENT_BINARY_DIR}"
-
-    substituteInPlace CMakeLists.txt --replace-fail \
-      "set(CMAKE_CXX_STANDARD 14)" \
-      ""
-
-    substituteInPlace tests/test_constraints.cpp --replace-fail \
-      "pinocchio/parsers/sample-models.hpp" \
-      "pinocchio/multibody/sample-models.hpp"
   '';
 
   nativeBuildInputs = [
