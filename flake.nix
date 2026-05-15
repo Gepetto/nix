@@ -353,6 +353,7 @@
                   proxsuite
                   toppra
                   tsid
+                  unitree-sdk2
                   # keep-sorted end
                   ;
               }
@@ -389,6 +390,7 @@
                   hpp-toppra
                   hpp-tutorial
                   hpp-universal-robot
+                  inspire-hand-sdk
                   mim-solvers
                   multicontact-api
                   ndcurves
@@ -399,6 +401,7 @@
                   toolbox-parallel-robots
                   toppra
                   tsid
+                  unitree-sdk2-python
                   # keep-sorted end
                   ;
               }
