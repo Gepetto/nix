@@ -1,4 +1,4 @@
-# required by inspire-hand-ws
+# required by inspire-hand-sdk
 {
   pymodbus,
   fetchFromGitHub,

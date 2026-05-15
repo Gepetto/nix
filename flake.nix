@@ -390,6 +390,7 @@
                   hpp-toppra
                   hpp-tutorial
                   hpp-universal-robot
+                  inspire-hand-sdk
                   mim-solvers
                   multicontact-api
                   ndcurves
