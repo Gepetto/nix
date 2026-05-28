@@ -13,13 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "example-adder";
-  version = "4.0.2";
+  version = "4.1.1";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "example-adder";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-JXfSpx1NEBep/Rkc2ExdJpqGMTKUHetk44OAT+Y5juY=";
+    hash = "sha256-rhkMS0J9QzD7C16jLi0kbhV07JY/uScFCma6yKHZ2Kw=";
   };
 
   nativeBuildInputs = [
@@ -38,9 +38,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   checkInputs = lib.optional (!pythonSupport) boost;
 
-  cmakeFlags = [
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
-  ];
+  cmakeFlags = [ (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport) ];
 
   outputs = [
     "dev"
