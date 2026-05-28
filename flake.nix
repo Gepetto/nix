@@ -319,6 +319,7 @@
                   coal
                   colmpc
                   crocoddyl
+                  example-adder
                   example-robot-data
                   flex-joints
                   force-feedback-mpc
@@ -374,6 +375,7 @@
                   coal
                   colmpc
                   crocoddyl
+                  example-adder
                   example-parallel-robots
                   example-robot-data
                   flex-joints
