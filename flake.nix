@@ -267,7 +267,7 @@
                 ]);
                 ros-humble = pkgs.rosPackages.humble.buildEnv {
                   name = "ros-humble";
-                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "humble";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "humble" { };
                   paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-humble-" n) self'.packages) ++ [
                     pkgs.qt5.qtgraphicaleffects
                     pkgs.qt5.wrapQtAppsHook
@@ -276,7 +276,7 @@
 
                 ros-jazzy = pkgs.rosPackages.jazzy.buildEnv {
                   name = "ros-jazzy";
-                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "jazzy";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "jazzy" { };
                   paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-jazzy-" n) self'.packages) ++ [
                     pkgs.qt5.wrapQtAppsHook
                   ];
