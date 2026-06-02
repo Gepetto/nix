@@ -8,7 +8,7 @@
     homeDirectory = "/home/cpene";
     stateVersion = "25.11";
     packages = [
-      pkgs.vcstool
+      pkgs.vcs2l
     ];
   };
 
