@@ -10,51 +10,51 @@ final: prev:
     };
     postPatch = "";
   });
-  pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
-    (_python-final: python-prev: {
-      aerosandbox = python-prev.aerosandbox.overrideAttrs {
-        pythonRemoveDeps = [
-          # infinite recursion
-          "neuralfoil"
-          # not pypa-installed, so no metadata
-          # good candidate for https://github.com/NixOS/nixpkgs/pull/518530
-          "casadi"
-        ];
-      };
-      daqp = python-prev.daqp.overrideAttrs (
-        finalAttrs: prevAttrs: {
-          version = "0.8.4";
-          src = final.fetchFromGitHub {
-            inherit (prevAttrs.src) owner repo;
-            tag = "v${finalAttrs.version}";
-            hash = "sha256-UakuHHsz4LXDfI7+VT5TO+jg90gpgu3lTJL8RGhtODQ=";
-          };
-          sourceRoot = "${finalAttrs.src.name}/interfaces/daqp-python";
-          postPatch = ''
-            substituteInPlace setup.py --replace-fail \
-            "if src_path.exists():" \
-            "if False:"
-          '';
-        }
-      );
-      qpsolvers = python-prev.qpsolvers.overrideAttrs (
-        finalAttrs: prevAttrs: {
-          version = "4.12.0";
-          src = final.fetchFromGitHub {
-            inherit (prevAttrs.src) owner repo;
-            tag = "v${finalAttrs.version}";
-            hash = "sha256-KUaDas2PIkTuy+Yi94vKm1P/n6QLPDcUXm8KjOq6JzI=";
-          };
-        }
-      );
-    })
-  ];
 }
 // {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (
-      python-final: _python-prev:
+      python-final: python-prev:
       {
+        # https://github.com/NixOS/nixpkgs/pull/519501
+        aerosandbox = python-prev.aerosandbox.overrideAttrs {
+          pythonRemoveDeps = [
+            # infinite recursion
+            "neuralfoil"
+            # not pypa-installed, so no metadata
+            # good candidate for https://github.com/NixOS/nixpkgs/pull/518530
+            "casadi"
+          ];
+        };
+        daqp = python-prev.daqp.overrideAttrs (
+          finalAttrs: prevAttrs: {
+            version = "0.8.4";
+            src = final.fetchFromGitHub {
+              inherit (prevAttrs.src) owner repo;
+              tag = "v${finalAttrs.version}";
+              hash = "sha256-UakuHHsz4LXDfI7+VT5TO+jg90gpgu3lTJL8RGhtODQ=";
+            };
+            sourceRoot = "${finalAttrs.src.name}/interfaces/daqp-python";
+            postPatch = ''
+              substituteInPlace setup.py --replace-fail \
+              "if src_path.exists():" \
+              "if False:"
+            '';
+          }
+        );
+        qpsolvers = python-prev.qpsolvers.overrideAttrs (
+          finalAttrs: prevAttrs: {
+            version = "4.12.0";
+            src = final.fetchFromGitHub {
+              inherit (prevAttrs.src) owner repo;
+              tag = "v${finalAttrs.version}";
+              hash = "sha256-KUaDas2PIkTuy+Yi94vKm1P/n6QLPDcUXm8KjOq6JzI=";
+            };
+          }
+        );
+
+      }
+      // {
         python-qt = python-final.toPythonModule (
           final.python-qt.override { python3 = python-final.python; }
         );
