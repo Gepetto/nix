@@ -1,6 +1,7 @@
 {
   lib,
   fetchFromGitHub,
+  fetchpatch2,
   stdenv,
 
   cmake,
@@ -21,6 +22,14 @@ stdenv.mkDerivation (finalAttrs: {
     tag = "v${finalAttrs.version}";
     hash = "sha256-cYUaSlj7S9BZf7ZSqxApb2IldWMd4DxoJ9okPAQlnU4=";
   };
+
+  # https://github.com/humanoid-path-planner/hpp-gui/pull/147
+  patches = [
+    (fetchpatch2 {
+      url = "https://github.com/humanoid-path-planner/hpp-gui/pull/147.patch?full_index=1";
+      hash = "sha256-m6D3TInfhfOoT/BzOqUkflUQV/r7tLbxsVfeuCvjtG0=";
+    })
+  ];
 
   outputs = [
     "out"
