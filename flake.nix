@@ -416,6 +416,7 @@
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
                 inherit (pkgs.rosPackages.humble)
                   agimus-demo-03-mpc-dummy-traj
+                  quest-control
                   ;
               }
               // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
