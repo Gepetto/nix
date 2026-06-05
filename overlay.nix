@@ -3,7 +3,7 @@ final: prev:
 {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (
-      python-final: python-prev:
+      python-final: _python-prev:
       {
         python-qt = python-final.toPythonModule (
           final.python-qt.override { python3 = python-final.python; }
