@@ -140,11 +140,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1780693541,
-        "narHash": "sha256-3sqQzsvlKwd2Xsl7VK+zzqP2kVN2zWeazrlD7tad6zQ=",
+        "lastModified": 1780752087,
+        "narHash": "sha256-VHXM0jPFSScSI15+lYpxPR8f2jqtQOQ13PqVI6UkRmY=",
         "owner": "gepetto",
         "repo": "gazebros2nix",
-        "rev": "f0e38aa6ee59b8914c79cee197aeb89a8f56797c",
+        "rev": "8eb92db826f038627698a0f9ba4a3aca0a8a18d0",
         "type": "github"
       },
       "original": {
@@ -510,11 +510,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1780358675,
-        "narHash": "sha256-n4jX4svZwmoWpzhz3If9wkvEYKv3WuDvprE8vi57MRY=",
+        "lastModified": 1780418295,
+        "narHash": "sha256-yZVQNvmDx1SFjvlwevywsXWJnieSRqmQr7/fCTMyyd0=",
         "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "rev": "3a557a9e78cc5b11bc9a610f27da4bdd5599edfe",
+        "rev": "0497ccef038da091002be7c05263a7f27820974f",
         "type": "github"
       },
       "original": {
