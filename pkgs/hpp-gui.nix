@@ -26,7 +26,7 @@ stdenv.mkDerivation (finalAttrs: {
   # https://github.com/humanoid-path-planner/hpp-gui/pull/147
   patches = [
     (fetchpatch2 {
-      url = "https://github.com/humanoid-path-planner/hpp-gui/pull/147.patch?full_index=1";
+      url = "https://github.com/humanoid-path-planner/hpp-gui/commit/fb765498a060616fbb0a27c7c4d0deaca824d9ae.patch?full_index=1";
       hash = "sha256-m6D3TInfhfOoT/BzOqUkflUQV/r7tLbxsVfeuCvjtG0=";
     })
   ];
