@@ -168,6 +168,7 @@
                     console-bridge
                     doxygen
                     eigen
+                    example-robot-data
                     glpk
                     graphviz
                     libGL
@@ -176,9 +177,11 @@
                     octomap
                     openscenegraph
                     osgqt
+                    pinocchio
                     pkg-config
                     (python3.withPackages (
                       p: with p; [
+                        example-robot-data
                         lxml
                         numpy
                         omniorb
