@@ -175,6 +175,7 @@
                     libGL
                     libsForQt5.qtbase
                     libsForQt5.qttools
+                    nodejs_24
                     octomap
                     openscenegraph
                     osgqt
