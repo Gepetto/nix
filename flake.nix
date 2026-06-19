@@ -196,6 +196,7 @@
                       ]
                     ))
                     python3Packages.boost
+                    qgv
                     qhull
                     qpoases
                     tinyxml-2
