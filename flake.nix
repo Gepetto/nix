@@ -160,7 +160,9 @@
                 packages =
                   with pkgs;
                   [
+                    python3Packages.boost
                     assimp
+                    catch2_3
                     ccache
                     cddlib
                     clp
@@ -174,6 +176,7 @@
                     libGL
                     libsForQt5.qtbase
                     libsForQt5.qttools
+                    nodejs_24
                     octomap
                     openscenegraph
                     osgqt
@@ -195,7 +198,7 @@
                         viser
                       ]
                     ))
-                    python3Packages.boost
+                    qgv
                     qhull
                     qpoases
                     tinyxml-2
