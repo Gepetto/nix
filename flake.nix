@@ -160,6 +160,7 @@
                 packages =
                   with pkgs;
                   [
+                    python3Packages.boost
                     assimp
                     ccache
                     cddlib
@@ -195,7 +196,6 @@
                         viser
                       ]
                     ))
-                    python3Packages.boost
                     qgv
                     qhull
                     qpoases
