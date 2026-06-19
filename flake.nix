@@ -162,6 +162,7 @@
                   [
                     python3Packages.boost
                     assimp
+                    catch2_3
                     ccache
                     cddlib
                     clp
