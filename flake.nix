@@ -62,13 +62,13 @@
             hako = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-570-169.nix
+                ./modules/system-manager/nvidia-595-71-05.nix
               ];
             };
             kurai = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-590-48.nix
+                ./modules/system-manager/nvidia-595-71-05.nix
               ];
             };
             miyanoura = inputs.system-manager.lib.makeSystemConfig {
@@ -80,7 +80,7 @@
             osasa = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-590-48.nix
+                ./modules/system-manager/nvidia-595-71-05.nix
               ];
             };
             shunbetsu = inputs.system-manager.lib.makeSystemConfig {
@@ -92,7 +92,7 @@
             tomuraushi = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-580-126.nix
+                ./modules/system-manager/nvidia-580-159-03.nix
               ];
             };
             yamizoyama = inputs.system-manager.lib.makeSystemConfig {

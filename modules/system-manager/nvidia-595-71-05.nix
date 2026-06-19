@@ -4,8 +4,8 @@
 
   system-graphics.package =
     (pkgs.linuxPackages.nvidiaPackages.mkDriver {
-      version = "580.126.09";
-      sha256_64bit = "sha256-TKxT5I+K3/Zh1HyHiO0kBZokjJ/YCYzq/QiKSYmG7CY=";
+      version = "595.71.05";
+      sha256_64bit = "sha256-NiA7iWC35JyKQva6H1hjzeNKBek9KyS3mK8G3YRva4I=";
       sha256_aarch64 = "";
       openSha256 = "";
       settingsSha256 = "";

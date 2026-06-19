@@ -14,6 +14,5 @@
     }).override
       {
         libsOnly = true;
-        kernel = null;
       };
 }
