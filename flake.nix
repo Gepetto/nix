@@ -395,6 +395,7 @@
                   hpp-corbaserver
                   hpp-doc
                   hpp-environments
+                  hpp-exec
                   hpp-gepetto-viewer
                   hpp-gui
                   hpp-manipulation-corba
