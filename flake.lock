@@ -140,11 +140,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1782062174,
-        "narHash": "sha256-1TXHJO7W3Uv24ePq3oggHLH2IqjJi+uZNKYfncx6ztE=",
+        "lastModified": 1782117876,
+        "narHash": "sha256-vY5MKSHZV+yMDBm+m4U/6UBiNa/R4dOjvSJduyTnLKs=",
         "owner": "gepetto",
         "repo": "gazebros2nix",
-        "rev": "b47815ce236a4881353215e5c64a115ad8e15d87",
+        "rev": "acc630ada42cee71c0db38b85ba3840b77f8d316",
         "type": "github"
       },
       "original": {
