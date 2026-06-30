@@ -59,6 +59,13 @@
                 ./modules/system-manager/shared.nix
               ];
             };
+            # keep-sorted start block=yes
+            dainishi = inputs.system-manager.lib.makeSystemConfig {
+              modules = [
+                inputs.nix-system-graphics.systemModules.default
+                ./modules/system-manager/nvidia-595-71-05.nix
+              ];
+            };
             hako = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
@@ -101,6 +108,7 @@
                 ./modules/system-manager/nvidia-590-48.nix
               ];
             };
+            # keep-sorted end
           };
           templates = {
             default = {
