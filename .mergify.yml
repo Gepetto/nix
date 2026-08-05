@@ -1,8 +1,6 @@
-queue_rules:
-  - name: default
-    merge_method: rebase
-    update_method: rebase
-    queue_conditions:
+pull_request_rules:
+  - name: merge [bot] PRs when CI pass
+    conditions:
       - check-success = "check-macos-linux-nix"
       - check-success = "pre-commit.ci - pr"
       - or:
@@ -12,8 +10,7 @@ queue_rules:
           - author = github-actions[bot]
           - author = hrp2-14
           - author = pre-commit-ci[bot]
-merge_protections_settings:
-  auto_merge_conditions: true
-  reporting_method: check-runs
+    actions:
+      merge:
 merge_queue:
   queue_controls_comment: false
