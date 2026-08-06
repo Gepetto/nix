@@ -10,7 +10,7 @@
 }:
 
 buildPythonPackage (finalAttrs: {
-  pname = "cyclonedds-python_10";
+  pname = "cyclonedds";
   version = "0.10.2";
   pyproject = true;
 
@@ -25,6 +25,10 @@ buildPythonPackage (finalAttrs: {
     substituteInPlace clayer/pysertype.c \
         --replace-fail "_Py_IsFinalizing()" "Py_IsFinalizing()"
   '';
+
+  patches = [
+    ../patches/cyclonedds-python_10-py314.patch
+  ];
 
   build-system = [ setuptools ];
 

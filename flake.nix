@@ -435,6 +435,7 @@
                   coal
                   colmpc
                   crocoddyl
+                  cyclonedds-python_10
                   example-adder
                   example-parallel-robots
                   example-robot-data
