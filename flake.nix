@@ -461,6 +461,7 @@
                   mim-solvers
                   multicontact-api
                   ndcurves
+                  pin-pink
                   pinocchio
                   platypus
                   proxsuite
