@@ -13,20 +13,15 @@
 }:
 
 stdenv.mkDerivation (finalAttrs: {
-  pname = "hpp-tutorial";
+  pname = "hpp-exec";
   version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
-    repo = "hpp-tutorial";
+    repo = "hpp-exec";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-LD+2e1vLY74i5u5sn0XUA0iyGTuRRLaYSa5q1m+Hc6Q=";
+    hash = "sha256-zLNZaCO5t1rIIwRRNs9yrjpHfrN+9wiPGld3ub4Z9Co=";
   };
-
-  outputs = [
-    "out"
-    "doc"
-  ];
 
   nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.python
@@ -34,11 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     jrl-cmakemodules
-  ];
-
-  propagatedBuildInputs = [
-    python3Packages.hpp-gepetto-viewer
-    python3Packages.hpp-manipulation-corba
   ];
 
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
@@ -53,11 +43,11 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.updateScript = nix-update-script { };
 
   meta = {
-    description = "Tutorial for humanoid path planner platform";
-    homepage = "https://github.com/humanoid-path-planner/hpp-tutorial";
-    changelog = "https://github.com/humanoid-path-planner/hpp-tutorial/releases/tag/${finalAttrs.src.tag}";
+    description = "ROS2 execution utilities for HPP-generated trajectories";
+    homepage = "https://github.com/humanoid-path-planner/hpp-exec";
+    changelog = "https://github.com/humanoid-path-planner/hpp-exec/releases/tag/${finalAttrs.src.tag}";
     license = lib.licenses.bsd2;
-    maintainers = [ lib.maintainers.nim65s ];
-    platforms = lib.platforms.unix;
+    maintainers = with lib.maintainers; [ nim65s ];
+    platforms = lib.platforms.all;
   };
 })

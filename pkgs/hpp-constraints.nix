@@ -3,26 +3,29 @@
   fetchFromGitHub,
   stdenv,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   hpp-pinocchio,
   hpp-statistics,
-  jrl-cmakemodules,
   qpoases,
+
+  # nativeCheckInputs
+  ctestCheckHook,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-constraints";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-constraints";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-/Vh9eYKqGLyldWD6+G86BwMn+NnRgaxKB01eN3CRwO4=";
+    hash = "sha256-dEnbNDo5OeJDHM3bpfAeXcLTsfPQbag5iLOAXh7rTFQ=";
   };
 
   outputs = [
@@ -30,13 +33,11 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
-  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     hpp-pinocchio
@@ -44,9 +45,28 @@ stdenv.mkDerivation (finalAttrs: {
     qpoases
   ];
 
+  nativeCheckInputs = [
+    ctestCheckHook
+  ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
 
-  cmakeFlags = lib.optional stdenv.hostPlatform.isDarwin "-DCMAKE_CTEST_ARGUMENTS=--exclude-regex;'test-jacobians|solver-by-substitution'";
+  disabledTests = [
+    # numerical issue
+    "test-jacobians"
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    "solver-by-substitution'"
+  ];
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Definition of basic geometric constraints for motion planning";

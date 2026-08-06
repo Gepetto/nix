@@ -2,29 +2,31 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  jrl-cmakemodules,
 
   pythonSupport ? false,
   python3Packages,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  pkg-config,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   hpp-corbaserver,
+
+  # checkInputs
+  example-robot-data,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-romeo";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-romeo";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Hb34vn39eTkfUYcuW8MuK7oYKLAcNUqjaBQ7nAQfzIc=";
+    hash = "sha256-ku75cAlEEOdsAFWv/Xrl0zmQvDYuzPOAfVeO2oHaIc0=";
   };
 
   outputs = [
@@ -32,26 +34,33 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs =
+    jrl-cmakemodules.docsNativeBuildInputs ++ lib.optional pythonSupport python3Packages.python;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    pkg-config
-  ]
-  ++ lib.optional pythonSupport python3Packages.python;
-
-  buildInputs = [ jrl-cmakemodules ];
+  buildInputs = [
+    jrl-cmakemodules
+  ];
 
   propagatedBuildInputs =
     lib.optional pythonSupport python3Packages.hpp-corbaserver
     ++ lib.optional (!pythonSupport) hpp-corbaserver;
 
-  cmakeFlags = [
+  checkInputs = [
+    example-robot-data
+  ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+    (lib.cmakeBool "USE_CORBA" true)
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Python and ros launch files for Romeo robot in hpp";

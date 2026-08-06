@@ -4,8 +4,6 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  cmake,
-  pkg-config,
   hpp-core,
   hpp-manipulation,
 
@@ -16,22 +14,28 @@
 
   # checkInputs
   catch2_3,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-toppra";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-toppra";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-cge+OuTUscc0+2Sj8kB8c/gTqIphD6Auetf1hbMNBPQ=";
+    hash = "sha256-ecWv5LOXZcP+VUl11gR3nI+jV2jDoNknORJREJOAGJw=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
+  outputs = [
+    "out"
+    "doc"
+  ];
+
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
+    python3Packages.python
   ];
 
   buildInputs = [
@@ -49,11 +53,16 @@ stdenv.mkDerivation (finalAttrs: {
     catch2_3
   ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Integration of TOPPRA algorithm in HPP";

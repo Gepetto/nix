@@ -6,26 +6,24 @@
   python3Packages,
   pythonSupport ? false,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-
   # propagatedBuildInputs
   boost,
   example-robot-data,
   jrl-cmakemodules,
   pinocchio,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-environments";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-environments";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-KBOCA1jD/CKKgg7IHEt+6hhRZJ+HONI6+DHewOsRwU4=";
+    hash = "sha256-U/OWs5XHA03GNZTpUxuuQ5qbe6LEFV+PKhfyBEDFVCc=";
   };
 
   outputs = [
@@ -33,15 +31,12 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs =
+    jrl-cmakemodules.docsNativeBuildInputs ++ lib.optional pythonSupport python3Packages.python;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-  ]
-  ++ lib.optional pythonSupport python3Packages.python;
-
-  buildInputs = [ jrl-cmakemodules ];
+  buildInputs = [
+    jrl-cmakemodules
+  ];
 
   propagatedBuildInputs =
     lib.optionals pythonSupport [
@@ -56,11 +51,17 @@ stdenv.mkDerivation (finalAttrs: {
       example-robot-data
     ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Environments and robot descriptions for HPP";

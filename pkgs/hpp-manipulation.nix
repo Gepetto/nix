@@ -2,26 +2,26 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  jrl-cmakemodules,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   hpp-core,
   hpp-universal-robot,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-FlrRubXCDjCYbr3roU1gDswgdHEPaMmVVrHFIsI/F5c=";
+    hash = "sha256-aljpqMqEJ7ZnwkbuDGkortYxeRZ3vcPquJp7MR6kXc0=";
   };
 
   outputs = [
@@ -29,21 +29,27 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
-
-  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     hpp-core
     hpp-universal-robot
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Classes for manipulation planning";

@@ -3,25 +3,25 @@
   fetchFromGitHub,
   stdenv,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   hpp-constraints,
-  jrl-cmakemodules,
   proxsuite,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-core";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-core";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-s8Itq+u5fNJqjERVAH/T3IHEgwMPghCyeQsV8Ft/HHA=";
+    hash = "sha256-iNEpNfjvAPiQv4cS1MDZ/WMsGL55H863EbcMnoUZgD4=";
   };
 
   outputs = [
@@ -29,21 +29,27 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
-
-  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     hpp-constraints
     proxsuite
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "The core algorithms of the Humanoid Path Planner framework";

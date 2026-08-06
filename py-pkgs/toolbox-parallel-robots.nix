@@ -1,57 +1,67 @@
 {
   lib,
-
-  buildPythonPackage,
   fetchFromGitHub,
+  stdenv,
   python,
+  toPythonModule,
 
   # nativeBuildInputs
-  cmake,
-  pkg-config,
   pythonImportsCheckHook,
+
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   pinocchio,
   qpsolvers,
   scipy,
+
+  nix-update-script,
 }:
 
-buildPythonPackage rec {
-  pname = "toolbox-parallel-robots";
-  version = "1.2.0";
-  pyproject = false;
+toPythonModule (
+  stdenv.mkDerivation (finalAttrs: {
+    pname = "toolbox-parallel-robots";
+    version = "1.2.0";
 
-  src = fetchFromGitHub {
-    owner = "gepetto";
-    repo = "toolbox-parallel-robots";
-    tag = "v${version}";
-    hash = "sha256-tFMKVhBhA3zXEt4Yb8btI0LYc84SndpgfMsJSUlLL48=";
-  };
+    src = fetchFromGitHub {
+      owner = "gepetto";
+      repo = "toolbox-parallel-robots";
+      tag = "v${finalAttrs.version}";
+      hash = "sha256-tFMKVhBhA3zXEt4Yb8btI0LYc84SndpgfMsJSUlLL48=";
+    };
 
-  cmakeFlags = [
-    # Not sure why jrl-cmakemodule fail to set this here
-    (lib.cmakeFeature "PYTHON_SITELIB" python.sitePackages)
-  ];
+    nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
+      pythonImportsCheckHook
+    ];
 
-  nativeBuildInputs = [
-    cmake
-    pkg-config
-    pythonImportsCheckHook
-  ];
-  propagatedBuildInputs = [
-    pinocchio
-    qpsolvers
-    scipy
-  ];
+    buildInputs = [
+      jrl-cmakemodules
+    ];
 
-  doCheck = true;
-  pythonImportsCheck = [ "toolbox_parallel_robots" ];
+    propagatedBuildInputs = [
+      pinocchio
+      qpsolvers
+      scipy
+    ];
 
-  meta = {
-    description = "Set of tools to work with robots with bilateral constraints";
-    homepage = "https://github.com/gepetto/toolbox-parallel-robots";
-    license = lib.licenses.bsd3;
-    maintainers = with lib.maintainers; [ nim65s ];
-    platforms = lib.platforms.unix;
-  };
-}
+    cmakeFlags = jrl-cmakemodules.docsNativeBuildInputs ++ [
+      (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+      # Not sure why jrl-cmakemodules fail to set this here
+      (lib.cmakeFeature "PYTHON_SITELIB" python.sitePackages)
+    ];
+
+    doCheck = true;
+    pythonImportsCheck = [ "toolbox_parallel_robots" ];
+
+    passthru.updateScript = nix-update-script { };
+
+    meta = {
+      description = "Set of tools to work with robots with bilateral constraints";
+      homepage = "https://github.com/gepetto/toolbox-parallel-robots";
+      license = lib.licenses.bsd3;
+      maintainers = with lib.maintainers; [ nim65s ];
+      platforms = lib.platforms.unix;
+    };
+  })
+)

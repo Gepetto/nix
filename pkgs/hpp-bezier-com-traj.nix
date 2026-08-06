@@ -6,29 +6,32 @@
   pythonSupport ? false,
   python3Packages,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   cddlib,
   clp,
   glpk,
   hpp-centroidal-dynamics,
-  jrl-cmakemodules,
   ndcurves,
   qpoases,
+
+  # nativeCheckInputs
+  ctestCheckHook,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-bezier-com-traj";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-bezier-com-traj";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-8J1SK9Zx8WDBirZQjQs3SyOKaIIq32lNxW8Ir5NeB7g=";
+    hash = "sha256-G/ZhCUmrMqKXiNJ9fti9wdRLbFK1cCvr5/S3w7WgTsA=";
   };
 
   outputs = [
@@ -36,18 +39,15 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs =
+    jrl-cmakemodules.docsNativeBuildInputs
+    ++ lib.optionals pythonSupport [
+      python3Packages.python
+    ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.python
-    python3Packages.pythonImportsCheckHook
+  buildInputs = [
+    jrl-cmakemodules
   ];
-
-  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     cddlib
@@ -64,17 +64,31 @@ stdenv.mkDerivation (finalAttrs: {
     ndcurves
   ];
 
-  cmakeFlags = [
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
-    (lib.cmakeBool "USE_GLPK" true)
+  nativeCheckInputs = [
+    ctestCheckHook
   ]
-  ++ lib.optionals stdenv.targetPlatform.isDarwin [
-    (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
+  ++ lib.optionals pythonSupport [
+    python3Packages.pythonImportsCheckHook
+  ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+    (lib.cmakeBool "USE_GLPK" true)
+  ];
+
+  disabledTests = lib.optionals stdenv.targetPlatform.isDarwin [
+    "transition"
   ];
 
   doCheck = true;
 
   pythonImportsCheck = [ "hpp_bezier_com_traj" ];
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Multi contact trajectory generation for the COM using Bezier curves";

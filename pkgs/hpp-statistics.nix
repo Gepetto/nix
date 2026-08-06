@@ -2,25 +2,25 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  jrl-cmakemodules,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   hpp-util,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-statistics";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-statistics";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-8hh/jLQzNaZ+JGn4w9Rmkgb3CAcEMWABLTvjuAJs0t4=";
+    hash = "sha256-IEb3VCNb7J/mvKsaZUI+bJf4GlJQcCRrysbyOovMdX8=";
   };
 
   outputs = [
@@ -28,17 +28,26 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
-  buildInputs = [ jrl-cmakemodules ];
 
-  propagatedBuildInputs = [ hpp-util ];
+  propagatedBuildInputs = [
+    hpp-util
+  ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Classes for doing statistics";

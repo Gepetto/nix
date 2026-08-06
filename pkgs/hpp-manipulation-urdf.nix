@@ -2,28 +2,28 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  jrl-cmakemodules,
-
-  # nativeBuildInputs
-  cmake,
-  doxygen,
 
   # propagatedBuildInputs
   hpp-manipulation,
 
+  # buildInputs
+  jrl-cmakemodules,
+
   # checkInputs
   example-robot-data,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation-urdf";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation-urdf";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-6ZmqQ2q2WG6aNEyTKA0TjHXlGeA6hAKYF5I/7mLuNqg=";
+    hash = "sha256-GZT5CnOnT90gLNXnjqk7wOIiV623d3dTqxY+8T6m9SA=";
   };
 
   outputs = [
@@ -31,20 +31,30 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
 
-  buildInputs = [ jrl-cmakemodules ];
+  propagatedBuildInputs = [
+    hpp-manipulation
+  ];
 
-  propagatedBuildInputs = [ hpp-manipulation ];
+  checkInputs = [
+    example-robot-data
+  ];
 
-  checkInputs = [ example-robot-data ];
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Implementation of a parser for hpp-manipulation";

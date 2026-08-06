@@ -2,28 +2,29 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  cmake,
-  doxygen,
-  jrl-cmakemodules,
 
-  libsForQt5,
-  pkg-config,
-  python3Packages,
-
+  # nativeBuildInputs
   fetchNpmDeps,
+  libsForQt5,
   nodejs,
   npmHooks,
+  python3Packages,
+
+  # buildInputs
+  jrl-cmakemodules,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-plot";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-plot";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-RS0n4mUbnxjTqJmk/PwIVfSnnaYmk3DrhnvLBK5mDpA=";
+    hash = "sha256-LSneHIYHwFT0DYFY/mS8AulXAPzlWn5csH+AWM7podA=";
   };
 
   outputs = [
@@ -31,13 +32,8 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     libsForQt5.wrapQtAppsHook
-    pkg-config
     python3Packages.python
     npmHooks.npmConfigHook
     nodejs
@@ -54,8 +50,11 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.hpp-manipulation-corba
   ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+    (lib.cmakeBool "USE_CORBA" true)
     (lib.cmakeBool "USE_JS" false) # build from nix not cmake
+    (lib.cmakeBool "USE_QT" true)
   ];
 
   postPatch = ''
@@ -70,7 +69,7 @@ stdenv.mkDerivation (finalAttrs: {
   npmDeps = fetchNpmDeps {
     name = "${finalAttrs.pname}-${finalAttrs.version}-npm-deps";
     src = finalAttrs.src + "/src/web_app/";
-    hash = "sha256-B8s+hhTn7CG3q8bx490SM8fKFAEGOmHX7u8JN/7qI94=";
+    hash = "sha256-GAYdugZFMygk0MXyXxf2wSsWRvn/aW4YeFH2v62IZjI=";
   };
   preBuild = ''
     cd ../src/web_app
@@ -82,6 +81,11 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Graphical utilities for constraint graphs in hpp-manipulation";

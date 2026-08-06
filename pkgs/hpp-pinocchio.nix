@@ -2,11 +2,9 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  jrl-cmakemodules,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   example-robot-data,
@@ -14,19 +12,21 @@
   hpp-util,
   pinocchio,
 
-  # doc
-  coal,
+  # nativeCheckInputs
+  ctestCheckHook,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-pinocchio";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-pinocchio";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-xueowBazrB0pQgBqO7YZj3tdQoMrHJ+GWhI99JIK3OA=";
+    hash = "sha256-tsRw3AFH8Jn3xYGY/g63DxdCbgFaQaNnTuJLRmFgTWM=";
   };
 
   outputs = [
@@ -34,14 +34,11 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
 
-  buildInputs = [ jrl-cmakemodules ];
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
   propagatedBuildInputs = [
     example-robot-data
@@ -50,12 +47,25 @@ stdenv.mkDerivation (finalAttrs: {
     pinocchio
   ];
 
-  doxytagsDeps = [
-    coal.doc
-    pinocchio.doc
+  nativeCheckInputs = [
+    ctestCheckHook
+  ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  disabledTests = [
+    # boost serialization issue
+    "device"
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Wrapping of Pinocchio library into HPP";

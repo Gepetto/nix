@@ -2,28 +2,30 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  cmake,
-  doxygen,
+
+  # buildInputs
   jrl-cmakemodules,
 
+  # propagatedBuildInputs
   boost,
   tinyxml-2,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-util";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-util";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-f7PGFMFPsmK+61im52NMeaeDlFrH5SGoJh146mshAG0=";
+    hash = "sha256-+lHDypQIqNPYzfpMVTrj/A553Igo5CEOzuid7Segl0I=";
   };
 
   prePatch = ''
-    substituteInPlace tests/run_debug.sh.in \
-      --replace-fail /bin/bash ${stdenv.shell}
+    patchShebangs --build tests/run_debug.sh.in
   '';
 
   outputs = [
@@ -31,20 +33,27 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
-  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     boost
     tinyxml-2
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Debugging tools for the HPP project";

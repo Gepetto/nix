@@ -3,29 +3,28 @@
   fetchFromGitHub,
   stdenv,
 
-  cmake,
-  doxygen,
-  libsForQt5,
-  jrl-cmakemodules,
-  pkg-config,
+  # nativeBuildInputs
   python3Packages,
+
+  # buildInputs
+  jrl-cmakemodules,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-doc";
-  version = "8.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-doc";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Qm9972PGZa3hqbsLyXJYJx1sdTrGQ9+4m2BOzmPje/A=";
+    hash = "sha256-wP+f4n98cXuCUDfLdj3r9EfNKsWdkhklyCAiQyHJ0vg=";
   };
 
   prePatch = ''
-    substituteInPlace scripts/packageDep --replace-fail \
-      "/usr/bin/env python3" \
-      ${python3Packages.python.interpreter}
+    patchShebangs --build scripts/packageDep
   '';
 
   outputs = [
@@ -33,19 +32,12 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    libsForQt5.wrapQtAppsHook
-    pkg-config
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.python
   ];
 
   buildInputs = [
     jrl-cmakemodules
-    libsForQt5.qtbase
   ];
 
   propagatedBuildInputs = [
@@ -53,7 +45,16 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.hpp-tutorial
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Documentation for project Humanoid Path Planner";

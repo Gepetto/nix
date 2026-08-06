@@ -392,6 +392,7 @@
                   hpp-core
                   hpp-doc
                   hpp-environments
+                  hpp-exec
                   hpp-gepetto-viewer
                   hpp-gui
                   hpp-manipulation
@@ -400,6 +401,7 @@
                   hpp-pinocchio
                   hpp-plot
                   hpp-practicals
+                  hpp-python
                   hpp-romeo
                   hpp-statistics
                   hpp-template-corba
@@ -428,11 +430,12 @@
                   aig
                   aligator
                   biped-stabilizer
-                  brax
+                  # brax TODO https://github.com/tensorflow/tensorflow/issues/102890
                   casadi
                   coal
                   colmpc
                   crocoddyl
+                  cyclonedds-python_10
                   example-adder
                   example-parallel-robots
                   example-robot-data
@@ -469,6 +472,7 @@
                   toppra
                   tsid
                   unitree-sdk2-python
+                  viser
                   # keep-sorted end
                   ;
               }

@@ -3,23 +3,25 @@
   fetchFromGitHub,
   stdenv,
 
-  cmake,
-  doxygen,
-  jrl-cmakemodules,
+  # nativeBuildInputs
   libsForQt5,
-  pkg-config,
   python3Packages,
+
+  # buildInputs
+  jrl-cmakemodules,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gepetto-viewer";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gepetto-viewer";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-J8IeqTIlc0+7hrueLzP4QKMrt8/zKxVvR44H4ETNmKI=";
+    hash = "sha256-Ml7ehrhUYtC7yvAF4+a0+dgpSXIZW86SnshovJ1XvRU=";
   };
 
   outputs = [
@@ -27,13 +29,8 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     libsForQt5.wrapQtAppsHook
-    pkg-config
     python3Packages.python
   ];
 
@@ -43,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   propagatedBuildInputs = [
+    python3Packages.boost
     python3Packages.gepetto-viewer-corba
     python3Packages.hpp-corbaserver
     python3Packages.hpp-python
@@ -51,7 +49,16 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.viser
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Display of hpp robots and obstacles in gepetto-viewer";

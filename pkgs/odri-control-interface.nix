@@ -2,16 +2,23 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  cmake,
-  eigen,
-  python3Packages,
-  yaml-cpp,
+
+  # nativeBuildInputs
   odri-masterboard-sdk,
+  python3Packages,
+
+  # buildInputs
+  jrl-cmakemodules,
+  eigen,
+
+  # propagatedBuildInputs
+  yaml-cpp,
+
+  nix-update-script,
 }:
 
-stdenv.mkDerivation {
-  pname = "odri_control_interface";
-  # replaced by version from package.xml in the repository's flake
+stdenv.mkDerivation (finalAttrs: {
+  pname = "odri-control-interface";
   version = "1.0.1";
 
   src = fetchFromGitHub {
@@ -27,16 +34,29 @@ stdenv.mkDerivation {
       "cmake_minimum_required(VERSION 3.22)"
   '';
 
-  nativeBuildInputs = [
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     odri-masterboard-sdk
-    cmake
     eigen
     python3Packages.eigenpy
     python3Packages.boost
     python3Packages.python
   ];
 
-  propagatedBuildInputs = [ yaml-cpp ];
+  buildInputs = [
+    jrl-cmakemodules
+  ];
+
+  propagatedBuildInputs = [
+    yaml-cpp
+  ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  doCheck = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Low level control interface";
@@ -49,4 +69,4 @@ stdenv.mkDerivation {
     mainProgram = "odri-control-interface";
     platforms = lib.platforms.unix;
   };
-}
+})

@@ -2,34 +2,32 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  jrl-cmakemodules,
 
   pythonSupport ? false,
   python3Packages,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-
   # buildInputs
   cddlib,
   clp,
+  jrl-cmakemodules,
   qpoases,
 
   # propagatedBuildInputs
   boost,
   eigen,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-centroidal-dynamics";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-centroidal-dynamics";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-gh5Z9LSgKyM8Iu6Tesr48CbK7z6VBRlchUhmGl3LsFg=";
+    hash = "sha256-evmvgfZpW6OHFzhQPfRZ8rmGLBsfgJ0j4oOsnfZDge0=";
   };
 
   outputs = [
@@ -37,16 +35,11 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.python
-    python3Packages.pythonImportsCheckHook
-  ];
+  nativeBuildInputs =
+    jrl-cmakemodules.docsNativeBuildInputs
+    ++ lib.optionals pythonSupport [
+      python3Packages.python
+    ];
 
   buildInputs = [
     cddlib
@@ -64,14 +57,24 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optional (!pythonSupport) boost;
 
-  cmakeFlags = [
+  nativeCheckInputs = lib.optionals pythonSupport [
+    python3Packages.pythonImportsCheckHook
+  ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
     (lib.cmakeBool "BUILD_WITH_CLP" true)
   ];
 
   doCheck = true;
 
   pythonImportsCheck = [ "hpp_centroidal_dynamics" ];
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Utility classes to check the (robust) equilibrium of a system in contact with the environment.";

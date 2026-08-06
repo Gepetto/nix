@@ -3,24 +3,24 @@
   fetchFromGitHub,
   stdenv,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
+  # buildInputs
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   coal,
-  jrl-cmakemodules,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-affordance";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-affordance";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-VfLy4/ZwAXhCIeN5mUjrzr0KTiEj60+OLLWjG0nm9WM=";
+    hash = "sha256-gh1ko4WprJsr/fYt/H5xvIYUVND0QgF5Y6YignIAmCM=";
   };
 
   outputs = [
@@ -28,19 +28,26 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
   ];
-
-  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     coal
   ];
-  doxytagsDeps = [ coal.doc ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Implements affordance extraction for multi-contact planning";
