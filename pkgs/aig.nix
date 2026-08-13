@@ -16,13 +16,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "aig";
-  version = "2.0.0";
+  version = "2.0.1";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "aig";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-9ZKPpL80IOk2xDg+ORta5xZqZq5QbRFvSom861xjPfk=";
+    hash = "sha256-x9aWO08dQ5piIVijWZd75l4ZjaPPX4W7BDe0nqoBnsE=";
   };
 
   outputs = [
