@@ -12,7 +12,7 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "acados";
-  version = "0.5.5";
+  version = "0.6.0";
   __structuredAttrs = true;
   strictDeps = true;
 
@@ -20,7 +20,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "acados";
     repo = "acados";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-SZZVh5Ht/a8/ijvZ7l69Wu2SFboNYWhUCHAyXA02Ddw=";
+    hash = "sha256-NGwiANC50eqLZgmwzP85vse0Q+gjncFNdJOVvVfi41k=";
     fetchSubmodules = true; # TODO they fork every dependency :(
   };
 
