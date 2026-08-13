@@ -11,13 +11,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "example-adder";
-  version = "4.1.1";
+  version = "4.2.0";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "example-adder";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-rhkMS0J9QzD7C16jLi0kbhV07JY/uScFCma6yKHZ2Kw=";
+    hash = "sha256-zwHvjDxisiwUgaAgasHgk4LCzqGCxbtBOehcedH1Kw8=";
   };
 
   outputs = [
