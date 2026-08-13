@@ -4,14 +4,12 @@
   fetchFromGitHub,
   jrl-cmakemodules,
 
-  cmake,
-  doxygen,
   eigen,
   llvmPackages,
   pinocchio,
-  pkg-config,
   crocoddyl,
   boost,
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -25,11 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-J1LBENg/AbxR8+TEe1TzQ2rbIx8ojyQPGSeatosYAkU=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    pkg-config
-  ];
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -44,11 +38,17 @@ stdenv.mkDerivation (finalAttrs: {
     boost
   ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     changelog = "https://github.com/machines-in-motion/force_feedback_mpc/blob/${finalAttrs.src.tag}/CHANGELOG.md";

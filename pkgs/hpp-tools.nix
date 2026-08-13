@@ -2,11 +2,12 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  cmake,
-  doxygen,
+
   jrl-cmakemodules,
 
   python3Packages,
+
+  nix-update-script,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-tools";
@@ -24,9 +25,7 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.python
   ];
 
@@ -35,6 +34,17 @@ stdenv.mkDerivation (finalAttrs: {
   propagatedBuildInputs = [
     python3Packages.numpy
   ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Various tools for hpp";

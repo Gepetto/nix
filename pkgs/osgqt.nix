@@ -19,14 +19,18 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-iUeIqRDlcAHdKXWAi4WhEaOCxa7ZivQw0K5E7ccEKnM=";
   };
 
-  buildInputs = [ libsForQt5.qtbase ];
+  buildInputs = [
+    libsForQt5.qtbase
+  ];
 
   nativeBuildInputs = [
     cmake
     libsForQt5.wrapQtAppsHook
   ];
 
-  propagatedBuildInputs = [ openscenegraph ];
+  propagatedBuildInputs = [
+    openscenegraph
+  ];
 
   cmakeFlags = [
     "-DDESIRED_QT_VERSION=5"

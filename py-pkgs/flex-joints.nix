@@ -27,7 +27,6 @@ toPythonModule (
       eigenpy
       pythonImportsCheckHook
     ]
-    ++ super.propagatedBuildInputs
     ++ lib.optional buildStandalone pkgs.flex-joints;
 
     pythonImportsCheck = [ "flex_joints" ];

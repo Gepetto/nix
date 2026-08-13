@@ -2,13 +2,11 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  cmake,
   boost,
-  doxygen,
   jrl-cmakemodules,
-  pkg-config,
   python3Packages,
   pythonSupport ? false,
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -22,11 +20,14 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-rhkMS0J9QzD7C16jLi0kbhV07JY/uScFCma6yKHZ2Kw=";
   };
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    pkg-config
+  outputs = [
+    "dev"
+    "doc"
+    "out"
   ];
+
+  nativeBuildInputs =
+    jrl-cmakemodules.docsNativeBuildInputs ++ lib.optional pythonSupport python3Packages.python;
 
   buildInputs = [
     jrl-cmakemodules
@@ -38,15 +39,17 @@ stdenv.mkDerivation (finalAttrs: {
 
   checkInputs = lib.optional (!pythonSupport) boost;
 
-  cmakeFlags = [ (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport) ];
-
-  outputs = [
-    "dev"
-    "doc"
-    "out"
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "This is an example project, to show how to use Gepetto's tools";

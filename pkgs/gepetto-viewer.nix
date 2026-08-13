@@ -1,7 +1,5 @@
 {
-  cmake,
   darwin,
-  doxygen,
   fetchFromGitHub,
   fontconfig,
   lib,
@@ -10,11 +8,11 @@
   makeWrapper,
   openscenegraph,
   osgqt,
-  pkg-config,
   python3Packages,
   qgv,
   stdenv,
   runCommand,
+  nix-update-script,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "gepetto-viewer";
@@ -26,11 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
     rev = "v${finalAttrs.version}";
     hash = "sha256-wEwGRTNx9t/bQE8APLFvldwMkx4R/2eoIolAxkJR2dw=";
   };
-
-  cmakeFlags = [
-    (lib.cmakeBool "BUILD_PY_QCUSTOM_PLOT" (!stdenv.hostPlatform.isDarwin))
-    (lib.cmakeBool "BUILD_PY_QGV" (!stdenv.hostPlatform.isDarwin))
-  ];
 
   outputs = [
     "out"
@@ -45,16 +38,15 @@ stdenv.mkDerivation (finalAttrs: {
     libsForQt5.qtbase
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    libsForQt5.wrapQtAppsHook
-    pkg-config
-    python3Packages.python
-  ]
-  ++ lib.optionals (stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isAarch64) [
-    darwin.autoSignDarwinBinariesHook
-  ];
+  nativeBuildInputs =
+    jrl-cmakemodules.docsNativeBuildInputs
+    ++ [
+      libsForQt5.wrapQtAppsHook
+      python3Packages.python
+    ]
+    ++ lib.optionals (stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isAarch64) [
+      darwin.autoSignDarwinBinariesHook
+    ];
 
   propagatedBuildInputs = [
     jrl-cmakemodules
@@ -62,8 +54,6 @@ stdenv.mkDerivation (finalAttrs: {
     osgqt
     qgv
   ];
-
-  doCheck = true;
 
   # wrapQtAppsHook uses isMachO, which fails to detect binaries without this
   # ref. https://github.com/NixOS/nixpkgs/pull/138334
@@ -111,6 +101,19 @@ stdenv.mkDerivation (finalAttrs: {
         makeWrapper ${lib.getExe finalAttrs.finalPackage} $out/bin/gepetto-gui \
           --set GEPETTO_GUI_PLUGIN_DIRS ${lib.makeLibraryPath plugins}
       '';
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_PY_QCUSTOM_PLOT" (!stdenv.hostPlatform.isDarwin))
+    (lib.cmakeBool "BUILD_PY_QGV" (!stdenv.hostPlatform.isDarwin))
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Graphical Interface for Pinocchio and HPP";

@@ -5,14 +5,13 @@
   jrl-cmakemodules,
 
   # nativeBuildInputs
-  cmake,
-  doxygen,
   omniorb,
-  pkg-config,
   python3Packages,
 
   # propagatedBuildInputs
   hpp-manipulation-urdf,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -31,17 +30,14 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     omniorb
-    pkg-config
     python3Packages.python
   ];
 
-  buildInputs = [ jrl-cmakemodules ];
+  buildInputs = [
+    jrl-cmakemodules
+  ];
 
   propagatedBuildInputs = [
     hpp-manipulation-urdf
@@ -51,7 +47,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   enableParallelBuilding = false;
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Corba server for manipulation planning";

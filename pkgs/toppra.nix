@@ -16,6 +16,8 @@
 
   # checkInputs
   gtest,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -72,6 +74,11 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Robotic motion planning library";

@@ -4,11 +4,10 @@
   stdenv,
   jrl-cmakemodules,
 
-  cmake,
-  doxygen,
   omniorb,
-  pkg-config,
   hpp-util,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -27,13 +26,8 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     omniorb
-    pkg-config
   ];
 
   buildInputs = [ jrl-cmakemodules ];
@@ -43,7 +37,16 @@ stdenv.mkDerivation (finalAttrs: {
     omniorb
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "This package is intended to ease construction of CORBA servers by templating actions that are common to all servers";

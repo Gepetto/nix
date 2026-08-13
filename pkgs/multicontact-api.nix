@@ -2,13 +2,13 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  cmake,
-  doxygen,
   jrl-cmakemodules,
 
   boost,
   ndcurves,
   pinocchio,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -27,11 +27,11 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
+
+  buildInputs = [
+    jrl-cmakemodules
   ];
-  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     boost
@@ -39,11 +39,17 @@ stdenv.mkDerivation (finalAttrs: {
     pinocchio
   ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     changelog = "https://github.com/loco-3d/multicontact-api/blob/${finalAttrs.src.tag}/CHANGELOG.md";

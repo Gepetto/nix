@@ -4,14 +4,12 @@
   stdenv,
 
   # nativeBuildInputs
-  cmake,
-  doxygen,
-  pkg-config,
   python3Packages,
 
   # propagatedBuildInputs
   hpp-affordance,
   jrl-cmakemodules,
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -30,12 +28,7 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    pkg-config
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.omniorb
     python3Packages.python
   ];
@@ -53,7 +46,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   enableParallelBuilding = false;
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "corbaserver to provide affordance utilities in python";
