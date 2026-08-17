@@ -4,25 +4,23 @@
   stdenv,
 
   # nativeBuildInputs
-  cmake,
-  doxygen,
-  pkg-config,
   python3Packages,
 
   # propagatedBuildInputs
   hpp-affordance,
   jrl-cmakemodules,
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-affordance-corba";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-affordance-corba";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-d/50P/Mt2RTDuXaE7aiYbSfpjFnI8xEf8KuB7a9zt/o=";
+    hash = "sha256-yT75bp4D6PccGw3IA2+/fsp6J2ljvTTHlm8fVHa9T0k=";
   };
 
   outputs = [
@@ -30,12 +28,7 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    pkg-config
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.omniorb
     python3Packages.python
   ];
@@ -53,7 +46,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   enableParallelBuilding = false;
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "corbaserver to provide affordance utilities in python";

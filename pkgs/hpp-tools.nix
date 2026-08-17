@@ -2,21 +2,22 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  cmake,
-  doxygen,
+
   jrl-cmakemodules,
 
   python3Packages,
+
+  nix-update-script,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-tools";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-tools";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-tTZszs4iqoGvTO3+hZ8ivBHV+box5VQyZ7Zrr3De9EY=";
+    hash = "sha256-ounj3pfavT6lD2UCecHZE1LY01TlDajoQ5i4I2KTuP8=";
   };
 
   outputs = [
@@ -24,9 +25,7 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.python
   ];
 
@@ -35,6 +34,17 @@ stdenv.mkDerivation (finalAttrs: {
   propagatedBuildInputs = [
     python3Packages.numpy
   ];
+
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
+  doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Various tools for hpp";

@@ -4,16 +4,14 @@
   fetchFromGitHub,
   jrl-cmakemodules,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-
   # propagatedBuildInputs
   boost,
   eigen,
 
   # checkInputs,
   doctest,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -32,10 +30,7 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-  ];
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -48,11 +43,17 @@ stdenv.mkDerivation (finalAttrs: {
     doctest
   ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
   ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Stabilizer for Biped Locomotion";

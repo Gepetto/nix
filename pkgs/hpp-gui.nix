@@ -3,23 +3,22 @@
   fetchFromGitHub,
   stdenv,
 
-  cmake,
-  doxygen,
   jrl-cmakemodules,
   libsForQt5,
-  pkg-config,
   python3Packages,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gui";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gui";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-kfMUjLdk+8ZX4wTsbsKmWc7Ot+L5Bn/OkTp1QVUoB7c=";
+    hash = "sha256-uuXEn1OKHXeOYcpNe3PRcIwnMrBos2RtfXetao18XBI=";
   };
 
   outputs = [
@@ -27,13 +26,8 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     libsForQt5.wrapQtAppsHook
-    pkg-config
     python3Packages.python
   ];
 
@@ -47,7 +41,16 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.hpp-manipulation-corba
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Qt based GUI for HPP project";

@@ -13,6 +13,7 @@
   example-robot-data,
   ndcurves,
   pinocchio,
+  python,
 }:
 toPythonModule (
   pkgs.multicontact-api.overrideAttrs (super: {
@@ -22,6 +23,8 @@ toPythonModule (
       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
       (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" buildStandalone)
     ];
+
+    nativeBuildInputs = (super.nativeBuildInputs or [ ]) ++ [ python ];
 
     propagatedBuildInputs =
       (super.propagatedBuildInputs or [ ])

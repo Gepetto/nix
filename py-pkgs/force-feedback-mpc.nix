@@ -6,12 +6,13 @@
   toPythonModule,
   pythonImportsCheckHook,
 
-  standalone ? true,
+  buildStandalone ? true,
 
   # propagatedBuildInputs
   boost,
   eigenpy,
   pinocchio,
+  python,
   crocoddyl,
 }:
 toPythonModule (
@@ -20,8 +21,12 @@ toPythonModule (
 
     cmakeFlags = (super.cmakeFlags or [ ]) ++ [
       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
-      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" standalone)
-      (lib.cmakeBool "INSTALL_PYTHON_INTERFACE_ONLY" standalone)
+      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" buildStandalone)
+      (lib.cmakeBool "INSTALL_PYTHON_INTERFACE_ONLY" buildStandalone)
+    ];
+
+    nativeBuildInputs = super.nativeBuildInputs ++ [
+      python
     ];
 
     propagatedBuildInputs = [
@@ -30,7 +35,7 @@ toPythonModule (
       pinocchio
       crocoddyl
     ]
-    ++ lib.optional standalone pkgs.force-feedback-mpc;
+    ++ lib.optional buildStandalone pkgs.force-feedback-mpc;
 
     checkInputs = [ ];
 

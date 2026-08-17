@@ -5,25 +5,24 @@
   jrl-cmakemodules,
 
   # nativeBuildInputs
-  cmake,
-  doxygen,
   omniorb,
-  pkg-config,
   python3Packages,
 
   # propagatedBuildInputs
   hpp-manipulation-urdf,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation-corba";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation-corba";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-3mmBZqfEcUuBVVNfRGvCg0ZSbPgbIjT/yXwjzczPI5U=";
+    hash = "sha256-Z+02/qMrCYeBucvnh7G8AN/KnqqhrUqUsbmZxu53xV0=";
   };
 
   outputs = [
@@ -31,17 +30,14 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     omniorb
-    pkg-config
     python3Packages.python
   ];
 
-  buildInputs = [ jrl-cmakemodules ];
+  buildInputs = [
+    jrl-cmakemodules
+  ];
 
   propagatedBuildInputs = [
     hpp-manipulation-urdf
@@ -51,7 +47,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   enableParallelBuilding = false;
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Corba server for manipulation planning";

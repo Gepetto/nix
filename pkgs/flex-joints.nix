@@ -4,16 +4,14 @@
   stdenv,
   fetchFromGitHub,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-
-  # propagatedBuildInputs
+  # buildInputs
   eigen,
   jrl-cmakemodules,
 
   # checkInputs
   doctest,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -32,22 +30,28 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  buildInputs = [
+    jrl-cmakemodules
+    eigen
   ];
 
-  buildInputs = [ jrl-cmakemodules ];
+  checkInputs = [
+    doctest
+  ];
 
-  propagatedBuildInputs = [ eigen ];
-
-  checkInputs = [ doctest ];
-
-  cmakeFlags = [ (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false) ];
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+  ];
 
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     changelog = "https://github.com/Gepetto/flex-joints/blob/${finalAttrs.src.tag}/CHANGELOG.md";

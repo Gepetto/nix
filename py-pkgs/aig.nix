@@ -12,6 +12,7 @@
   eigenpy,
   example-robot-data,
   pinocchio,
+  python,
 }:
 toPythonModule (
   pkgs.aig.overrideAttrs (super: {
@@ -20,6 +21,10 @@ toPythonModule (
     cmakeFlags = (super.cmakeFlags or [ ]) ++ [
       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
       (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" buildStandalone)
+    ];
+
+    nativeBuildInputs = super.nativeBuildInputs ++ [
+      python
     ];
 
     propagatedBuildInputs =

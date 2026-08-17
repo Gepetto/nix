@@ -4,22 +4,21 @@
   stdenv,
   jrl-cmakemodules,
 
-  cmake,
-  doxygen,
   omniorb,
-  pkg-config,
   hpp-util,
+
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-template-corba";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-template-corba";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-2/h8PUhkMnEbd0dRIylSVK0MBvrN3mhAQdbfXUARrKs=";
+    hash = "sha256-e8IOvhRAdBfPaNCAcbKEX4VMt86EsO0zYA5ezfLeta0=";
   };
 
   outputs = [
@@ -27,13 +26,8 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     omniorb
-    pkg-config
   ];
 
   buildInputs = [ jrl-cmakemodules ];
@@ -43,7 +37,16 @@ stdenv.mkDerivation (finalAttrs: {
     omniorb
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "This package is intended to ease construction of CORBA servers by templating actions that are common to all servers";
