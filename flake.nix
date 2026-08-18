@@ -52,63 +52,9 @@
                 { flakoboros = module args; }
               ];
             });
-          systemConfigs = {
-            default = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/shared.nix
-              ];
-            };
-            # keep-sorted start block=yes
-            dainishi = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-595-71-05.nix
-              ];
-            };
-            hako = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-595-71-05.nix
-              ];
-            };
-            kurai = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-595-71-05.nix
-              ];
-            };
-            miyanoura = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-575-64.nix
-              ];
-            };
-            osasa = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-595-71-05.nix
-              ];
-            };
-            shunbetsu = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-535-309-01.nix
-              ];
-            };
-            tomuraushi = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-580-159-03.nix
-              ];
-            };
-            yamizoyama = inputs.system-manager.lib.makeSystemConfig {
-              modules = [
-                inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-590-48.nix
-              ];
-            };
-            # keep-sorted end
+          systemConfigs = import ./modules/system-manager {
+            inherit lib;
+            inherit (inputs) nix-system-graphics system-manager;
           };
           templates = {
             default = {
