@@ -142,11 +142,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787093552,
-        "narHash": "sha256-ubgUiWIQekHsmPmOAy6f2J6BL0QtDahCHZYw36cJL+8=",
+        "lastModified": 1787135018,
+        "narHash": "sha256-3zLTBjLhPaTfH3W2BOXp8Y6lvC7D6j5cVrdM50a06Mg=",
         "owner": "gepetto",
         "repo": "gazebros2nix",
-        "rev": "116529a4de94c79112c917195c76c8f9ded2c3de",
+        "rev": "647dd1ec0440de69413105da7cd6e7db32c9d095",
         "type": "github"
       },
       "original": {
