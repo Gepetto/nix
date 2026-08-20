@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   username,
   ...
@@ -14,7 +15,12 @@
   };
 
   programs = {
-    bash.enable = true;
+    bash = {
+      enable = true;
+      initExtra = ''
+        eval "$(${lib.getExe' pkgs.python3Packages.argcomplete "register-python-argcomplete"} colcon ros2)"
+      '';
+    };
     direnv = {
       enable = true;
       nix-direnv.enable = true;
