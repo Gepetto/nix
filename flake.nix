@@ -3,7 +3,7 @@
     gazebros2nix.url = "github:gepetto/gazebros2nix";
     flakoboros.follows = "gazebros2nix/flakoboros";
     flake-parts.follows = "gazebros2nix/flake-parts";
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.follows = "gazebros2nix/nixpkgs";
     nix-ros-overlay.follows = "gazebros2nix/nix-ros-overlay";
@@ -39,10 +39,6 @@
         ];
         flake = {
           inherit flakeModule;
-          homeConfigurations.cpene = inputs.home-manager.lib.homeManagerConfiguration {
-            pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
-            modules = [ ./home/cpene.nix ];
-          };
           lib.mkFlakoboros =
             localInputs: module:
             inputs.flake-parts.lib.mkFlake { inputs = localInputs; } (args: {
@@ -52,6 +48,10 @@
                 { flakoboros = module args; }
               ];
             });
+          homeConfigurations = import ./modules/home-manager {
+            inherit lib;
+            inherit (inputs) home-manager nixpkgs;
+          };
           systemConfigs = import ./modules/system-manager {
             inherit lib;
             inherit (inputs) nix-system-graphics system-manager;
