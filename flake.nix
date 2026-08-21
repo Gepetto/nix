@@ -238,6 +238,8 @@
               };
             };
 
+            legacyPackages = pkgs;
+
             packages = {
               inherit (inputs'.home-manager.packages) home-manager;
             }
