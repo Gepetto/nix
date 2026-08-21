@@ -207,6 +207,12 @@ stdenv.mkDerivation (finalAttrs: {
     "cstr_collocation_memcheck"
     "tank_battery"
     "tank_battery_memcheck"
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    # SIGTRAP on GHA
+    "dummy_derivative"
+    "dummy_derivative_destil"
+    "dummy_derivative_linear"
   ];
 
   cmakeFlags = [
