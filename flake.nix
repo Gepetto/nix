@@ -238,6 +238,8 @@
               };
             };
 
+            legacyPackages = pkgs;
+
             packages = {
               inherit (inputs'.home-manager.packages) home-manager;
             }
@@ -322,6 +324,7 @@
                   casadi
                   coal
                   colmpc
+                  cppadcodegen
                   crocoddyl
                   example-adder
                   example-robot-data
@@ -414,6 +417,7 @@
                   pinocchio
                   platypus
                   proxsuite
+                  pycppad
                   sensitivity
                   toolbox-parallel-robots
                   toppra
