@@ -3,20 +3,23 @@
     gazebros2nix.url = "github:gepetto/gazebros2nix";
     flakoboros.follows = "gazebros2nix/flakoboros";
     flake-parts.follows = "gazebros2nix/flake-parts";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.follows = "gazebros2nix/nixpkgs";
     nix-ros-overlay.follows = "gazebros2nix/nix-ros-overlay";
     systems.follows = "gazebros2nix/systems";
     treefmt-nix.follows = "gazebros2nix/treefmt-nix";
 
-    nix-system-graphics = {
-      url = "github:soupglasses/nix-system-graphics";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs-update.url = "github:NixOS/nixpkgs/nixos-unstable";
     system-manager = {
       url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-update";
+    };
+    nix-system-graphics = {
+      url = "github:soupglasses/nix-system-graphics";
+      inputs.nixpkgs.follows = "nixpkgs-update";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-update";
     };
   };
   outputs =
