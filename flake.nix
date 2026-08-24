@@ -279,6 +279,14 @@
                   ];
                 };
 
+                ros-lyrical = pkgs.rosPackages.lyrical.buildEnv {
+                  name = "ros-lyrical";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "lyrical" { };
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-lyrical-" n) self'.packages) ++ [
+                    pkgs.qt6.wrapQtAppsHook
+                  ];
+                };
+
                 ros-rolling = pkgs.rosPackages.rolling.buildEnv {
                   name = "ros-rolling";
                   postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "rolling" { };
@@ -448,6 +456,11 @@
               }
               // lib.mapAttrs' (n: lib.nameValuePair "ros-kilted-${n}") {
                 inherit (pkgs.rosPackages.kilted)
+                  hpp-rviz
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-lyrical-${n}") {
+                inherit (pkgs.rosPackages.lyrical)
                   hpp-rviz
                   ;
               }

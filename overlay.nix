@@ -46,6 +46,14 @@ final: prev:
       }
     );
 
+    lyrical = prev.rosPackages.lyrical.overrideScope (
+      lyrical-final: _lyrical-prev:
+      final.lib.filesystem.packagesFromDirectoryRecursive {
+        inherit (lyrical-final) callPackage;
+        directory = ./ros-pkgs/lyrical;
+      }
+    );
+
     rolling = prev.rosPackages.rolling.overrideScope (
       rolling-final: _rolling-prev:
       final.lib.filesystem.packagesFromDirectoryRecursive {

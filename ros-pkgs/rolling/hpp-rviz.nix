@@ -29,13 +29,13 @@
 }:
 buildRosPackage rec {
   pname = "ros-rolling-hpp-rviz";
-  version = "8.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-rviz";
-    rev = "500a384aa8c10cc1363ee4d59e9ae717d4ac24cc";
-    hash = "sha256-T+gilYnYVZAviIbY4LhqHl1ZqIqXo/4szgFJYIglMYo=";
+    tag = "v${version}";
+    hash = "sha256-9Owe0dSs+WkeF35f/cXpfs1IDiIANREl5fH/yXPczzo=";
   };
   sourceRoot = "source/";
 

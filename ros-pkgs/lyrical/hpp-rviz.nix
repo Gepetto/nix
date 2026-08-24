@@ -28,7 +28,7 @@
   writableTmpDirAsHomeHook,
 }:
 buildRosPackage rec {
-  pname = "ros-kilted-hpp-rviz";
+  pname = "ros-lyrical-hpp-rviz";
   version = "9.0.2";
 
   src = fetchFromGitHub {
