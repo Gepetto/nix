@@ -94,11 +94,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1787362168,
-        "narHash": "sha256-wjptxZS0AczHaM7aRZfUjP3Uonx1Gk01Xad40MoUFgY=",
+        "lastModified": 1787681867,
+        "narHash": "sha256-EDS+athZryaXoyyaSGx2CAFubiHjBBv091aO7fWmsQs=",
         "owner": "gepetto",
         "repo": "flakoboros",
-        "rev": "3b1782f9e6710be862de9a6f111e1e0102f532c9",
+        "rev": "c9263824f07efad4ca8c158c70b0314866bbb4e8",
         "type": "github"
       },
       "original": {
@@ -142,11 +142,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787594900,
-        "narHash": "sha256-F4TrNNWh6qoh3lr3wp//blSX/uGsxF3k/xdFZCUi2MA=",
+        "lastModified": 1787690521,
+        "narHash": "sha256-uFx+F0eEMLfMVB/2ZLioVsf1S6lLqVkPOVt0HvfWjlQ=",
         "owner": "gepetto",
         "repo": "gazebros2nix",
-        "rev": "51e137cf8cda470a30bd0048f094a848ad94e7b5",
+        "rev": "9b81b5a9e2d5230dbf43c50393326e4b8739dbcd",
         "type": "github"
       },
       "original": {
