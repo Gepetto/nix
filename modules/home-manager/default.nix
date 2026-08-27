@@ -18,4 +18,5 @@ lib.mapAttrs
   )
   {
     cpene = ./users/cpene.nix;
+    gsaurel = ./users/gsaurel.nix;
   }

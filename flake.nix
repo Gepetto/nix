@@ -18,7 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs-update";
     };
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nim65s/home-manager/autoupgrade-flake-uri";
       inputs.nixpkgs.follows = "nixpkgs-update";
     };
   };
