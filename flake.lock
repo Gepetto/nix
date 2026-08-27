@@ -185,15 +185,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1787680808,
-        "narHash": "sha256-9168tNt0NZdtlx5RM5huEuc9NCWMLACJA9O4UK/l2Zc=",
-        "owner": "nix-community",
+        "lastModified": 1787843271,
+        "narHash": "sha256-7ZG5yx7XoRohS0Vlm9+P08Tzrp6MXW7ixnQsZCW0XP8=",
+        "owner": "nim65s",
         "repo": "home-manager",
-        "rev": "6840c9a8f50722944eb106ce8bb237c138584f2a",
+        "rev": "46a6916f26598794b53dbb09dc75f024ff2cc084",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "nim65s",
+        "ref": "autoupgrade-flake-uri",
         "repo": "home-manager",
         "type": "github"
       }
