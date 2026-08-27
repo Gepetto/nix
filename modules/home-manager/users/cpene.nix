@@ -1,7 +1,5 @@
-{
-  ...
-}:
+{ pkgs, ... }:
 {
   programs.starship.enable = true;
-  programs.git-lfs.enable = true;
+  home.packages = [ pkgs.git-lfs ];
 }
