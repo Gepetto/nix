@@ -1,6 +1,6 @@
 {
   inputs = {
-    gazebros2nix.url = "github:gepetto/gazebros2nix";
+    gazebros2nix.url = "github:gepetto/gazebros2nix/nowrap";
     flakoboros.follows = "gazebros2nix/flakoboros";
     flake-parts.follows = "gazebros2nix/flake-parts";
     nixpkgs.follows = "gazebros2nix/nixpkgs";
