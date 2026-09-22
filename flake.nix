@@ -144,8 +144,6 @@
                         example-robot-data
                         lxml
                         numpy
-                        omniorb
-                        omniorbpy
                         pinocchio
                         pybind11
                         scipy
