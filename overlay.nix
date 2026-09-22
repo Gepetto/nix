@@ -5,14 +5,10 @@ final: prev:
     (
       python-final: python-prev:
       {
-        # https://github.com/NixOS/nixpkgs/pull/549237 merged
-        tyro = python-prev.tyro.overrideAttrs {
-          patches = [ ./patches/fix-shtab-1.9.patch ];
-        };
-
         # https://github.com/tensorflow/tensorflow/issues/102890
         tensorflow-bin = null;
-        # https://github.com/NixOS/nixpkgs/pull/556423
+
+        # https://github.com/NixOS/nixpkgs/pull/556423 merged
         etils = python-prev.etils.overrideAttrs (super: {
           # need tensorflow
           disabledTests = super.disabledTests ++ [
