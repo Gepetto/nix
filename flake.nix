@@ -161,7 +161,7 @@
                     urdfdom
                     zlib
                   ]
-                  ++ lib.optionals stdenv.isLinux [
+                  ++ lib.optionals stdenv.hostPlatform.isLinux [
                     psmisc
                   ];
               };
