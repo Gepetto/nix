@@ -5,10 +5,6 @@ final: prev:
     (
       python-final: python-prev:
       {
-        python-qt = python-final.toPythonModule (
-          final.python-qt.override { python3 = python-final.python; }
-        );
-
         # https://github.com/NixOS/nixpkgs/pull/549237 merged
         tyro = python-prev.tyro.overrideAttrs {
           patches = [ ./patches/fix-shtab-1.9.patch ];

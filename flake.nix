@@ -148,7 +148,6 @@
                         omniorbpy
                         pinocchio
                         pybind11
-                        python-qt
                         scipy
                         (toPythonModule rosPackages.rolling.xacro)
                         viser
