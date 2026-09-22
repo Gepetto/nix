@@ -249,42 +249,28 @@
                   p.matplotlib
                   # keep-sorted end
                 ]);
-                ros-humble = pkgs.rosPackages.humble.buildEnv {
+                ros-humble = pkgs.buildEnv {
                   name = "ros-humble";
-                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "humble" { };
-                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-humble-" n) self'.packages) ++ [
-                    pkgs.qt5.qtgraphicaleffects
-                    pkgs.qt5.wrapQtAppsHook
-                  ];
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-humble-" n) self'.packages);
                 };
 
-                ros-jazzy = pkgs.rosPackages.jazzy.buildEnv {
+                ros-jazzy = pkgs.buildEnv {
                   name = "ros-jazzy";
-                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "jazzy" { };
-                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-jazzy-" n) self'.packages) ++ [
-                    pkgs.qt5.wrapQtAppsHook
-                  ];
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-jazzy-" n) self'.packages);
                 };
 
-                ros-kilted = pkgs.rosPackages.kilted.buildEnv {
+                ros-kilted = pkgs.buildEnv {
                   name = "ros-kilted";
-                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "kilted" { };
-                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-kilted-" n) self'.packages) ++ [
-                    pkgs.qt5.wrapQtAppsHook
-                  ];
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-kilted-" n) self'.packages);
                 };
 
-                ros-lyrical = pkgs.rosPackages.lyrical.buildEnv {
+                ros-lyrical = pkgs.buildEnv {
                   name = "ros-lyrical";
-                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "lyrical" { };
-                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-lyrical-" n) self'.packages) ++ [
-                    pkgs.qt6.wrapQtAppsHook
-                  ];
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-lyrical-" n) self'.packages);
                 };
 
-                ros-rolling = pkgs.rosPackages.rolling.buildEnv {
+                ros-rolling = pkgs.buildEnv {
                   name = "ros-rolling";
-                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "rolling" { };
                   paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-rolling-" n) self'.packages) ++ [
                     pkgs.qt6.wrapQtAppsHook
                   ];
