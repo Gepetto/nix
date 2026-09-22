@@ -1,6 +1,26 @@
 { lib, ... }:
 final: prev:
 {
+  proxsuite = prev.proxsuite.overrideAttrs (super: {
+    src = final.fetchFromGitHub {
+      owner = "ahoarau";
+      repo = "proxsuite";
+      rev = "23f9117";
+      hash = "sha256-z4wkIKCCr9+y3HzOG9p+so8J8v8Oe1pQWvq1+52I85k=";
+    };
+    patches = [ ];
+    cmakeFlags = super.cmakeFlags ++ [
+      (lib.cmakeBool "BUILD_TESTING" true)
+      (lib.cmakeBool "PROXSUITE_BUILD_EXAMPLES" true)
+      (lib.cmakeBool "BUILD_BENCHMARK" true)
+      (lib.cmakeBool "BUILD_WITH_OPENMP_SUPPORT" true)
+      (lib.cmakeBool "PROXSUITE_BUILD_MAROS_MESZAROS_TESTS" true)
+      (lib.cmakeBool "GENERATE_PYTHON_STUBS" true)
+    ];
+    checkInputs = super.checkInputs ++ [
+      final.catch2_3
+    ];
+  });
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (
       python-final: python-prev:
