@@ -77,26 +77,6 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: ros
       - run: nix flake check -L -j 1 --cores 1
-  system:
-    runs-on: "ubuntu-latest"
-    steps:
-      - uses: actions/checkout@v7
-      - uses: cachix/install-nix-action@v31
-      - uses: cachix/cachix-action@v17
-        with:
-          name: gepetto
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-          extraPullNames: ros
-      - run: nix build -L .#systemConfigs.default
-  home:
-    runs-on: "ubuntu-latest"
-    steps:
-      - uses: actions/checkout@v7
-      - uses: cachix/install-nix-action@v31
-      - uses: cachix/cachix-action@v17
-        with:
-          name: gepetto
-      - run: nix build -L .#homeConfigurations.cpene.activationPackage
   check:
     if: always()
     name: check-macos-linux-nix

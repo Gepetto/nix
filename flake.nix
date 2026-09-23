@@ -7,20 +7,6 @@
     nix-ros-overlay.follows = "gazebros2nix/nix-ros-overlay";
     systems.follows = "gazebros2nix/systems";
     treefmt-nix.follows = "gazebros2nix/treefmt-nix";
-
-    nixpkgs-update.url = "github:NixOS/nixpkgs/nixos-unstable";
-    system-manager = {
-      url = "github:numtide/system-manager";
-      inputs.nixpkgs.follows = "nixpkgs-update";
-    };
-    nix-system-graphics = {
-      url = "github:soupglasses/nix-system-graphics";
-      inputs.nixpkgs.follows = "nixpkgs-update";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-update";
-    };
   };
   outputs =
     inputs:
@@ -35,7 +21,6 @@
         systems = import inputs.systems;
         imports = [
           flakeModule
-          inputs.home-manager.flakeModules.home-manager
           {
             flakoboros.check = true;
           }
@@ -51,14 +36,6 @@
                 { flakoboros = module args; }
               ];
             });
-          homeConfigurations = import ./modules/home-manager {
-            inherit lib;
-            inherit (inputs) home-manager nixpkgs;
-          };
-          systemConfigs = import ./modules/system-manager {
-            inherit lib;
-            inherit (inputs) nix-system-graphics system-manager;
-          };
           templates = {
             default = {
               path = ./templates/default;
@@ -237,10 +214,7 @@
 
             legacyPackages = pkgs;
 
-            packages = {
-              inherit (inputs'.home-manager.packages) home-manager;
-            }
-            // lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
+            packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
               {
                 python = pkgs.python3.withPackages (p: [
                   # keep-sorted start
@@ -299,9 +273,6 @@
                     ];
                   };
 
-              }
-              // lib.optionalAttrs (system == "x86_64-linux") {
-                system-manager = inputs'.system-manager.packages.default;
               }
               // {
                 inherit (pkgs)
