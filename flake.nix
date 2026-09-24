@@ -121,11 +121,8 @@
                         example-robot-data
                         lxml
                         numpy
-                        omniorb
-                        omniorbpy
                         pinocchio
                         pybind11
-                        python-qt
                         scipy
                         (toPythonModule rosPackages.rolling.xacro)
                         viser
@@ -138,7 +135,7 @@
                     urdfdom
                     zlib
                   ]
-                  ++ lib.optionals stdenv.isLinux [
+                  ++ lib.optionals stdenv.hostPlatform.isLinux [
                     psmisc
                   ];
               };
