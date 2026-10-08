@@ -15,13 +15,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation";
-  version = "9.0.2";
+  version = "9.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-aljpqMqEJ7ZnwkbuDGkortYxeRZ3vcPquJp7MR6kXc0=";
+    hash = "sha256-xMsNyV19wdgG4d6NtEYY6dmjgcqimjRZ/2gsDTbgUdA=";
   };
 
   outputs = [
