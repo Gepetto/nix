@@ -103,12 +103,8 @@
                     eigen
                     example-robot-data
                     glpk
-                    graphviz
-                    libGL
                     nodejs_24
                     octomap
-                    openscenegraph
-                    osgqt
                     pinocchio
                     pkg-config
                     proxsuite
