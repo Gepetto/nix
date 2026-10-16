@@ -12,6 +12,8 @@
   qgv,
 
   nix-update-script,
+
+  withQt ? false,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -30,13 +32,19 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
-    python3Packages.python
-    libsForQt5.wrapQtAppsHook
-  ];
+  nativeBuildInputs =
+    jrl-cmakemodules.docsNativeBuildInputs
+    ++ [
+      python3Packages.python
+    ]
+    ++ lib.optionals withQt [
+      libsForQt5.wrapQtAppsHook
+    ];
 
   buildInputs = [
     jrl-cmakemodules
+  ]
+  ++ lib.optionals withQt [
     libsForQt5.qtbase
     qgv
   ];
