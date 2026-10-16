@@ -105,8 +105,6 @@
                     glpk
                     graphviz
                     libGL
-                    libsForQt5.qtbase
-                    libsForQt5.qttools
                     nodejs_24
                     octomap
                     openscenegraph
@@ -126,7 +124,6 @@
                         viser
                       ]
                     ))
-                    qgv
                     qhull
                     qpoases
                     tinyxml-2

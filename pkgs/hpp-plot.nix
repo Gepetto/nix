@@ -16,6 +16,8 @@
   qgv,
 
   nix-update-script,
+
+  withQt ? false,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -45,6 +47,8 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     hpp-manipulation
     jrl-cmakemodules
+  ]
+  ++ lib.optionals withQt [
     libsForQt5.qtbase
     libsForQt5.qtwayland
     qgv
@@ -54,7 +58,7 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
     (lib.cmakeBool "USE_CORBA" false)
     (lib.cmakeBool "USE_JS" false) # build from nix not cmake
-    (lib.cmakeBool "USE_QT" true)
+    (lib.cmakeBool "USE_QT" withQt)
   ];
 
   postPatch = ''
