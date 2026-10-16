@@ -139,6 +139,7 @@
                 ROS_PACKAGE_PATH = lib.makeSearchPathOutput "out" "share" [
                   pkgs.example-robot-data
                   pkgs.hpp-environments
+                  pkgs.hpp-tutorial
                 ];
                 packages = [
                   # keep-sorted start
