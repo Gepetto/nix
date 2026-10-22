@@ -13,9 +13,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # os: TODO [macos-15, ubuntu-24.04]
-        os: [ubuntu-24.04]
-        build: ["pinocchio", "py-aligator", "devShells.x86_64-linux.hpp", "devShells.x86_64-linux.hpp-bin", "python", "ros-humble", "ros-jazzy", "ros-kilted", "ros-lyrical", "ros-rolling"]
+        os:
+          - "ubuntu-24.04"
+          # - "macos-15"
+        build:
+          - "pinocchio"
+          - "py-aligator"
+          - "devShells.x86_64-linux.hpp"
+          - "devShells.x86_64-linux.hpp-bin"
+          - "python"
+          - "ros-humble"
+          - "ros-jazzy"
+          # - "ros-kilted"
+          - "ros-lyrical"
+          - "ros-rolling"
         # include:
         #   - os: macos-15-intel
         #     build: py-aligator
