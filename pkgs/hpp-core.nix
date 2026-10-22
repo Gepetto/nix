@@ -15,13 +15,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-core";
-  version = "9.2.0";
+  version = "9.3.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-core";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-4FWM7yuOE27WLxhDBzb/3NBCkXDhk4ES3wfPBEBbWLw=";
+    hash = "sha256-lARqXEZhIzDhYjvLOX7XzlcXnkYHykgDHR56ZfY2rRI=";
   };
 
   outputs = [
