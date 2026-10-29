@@ -24,13 +24,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-python";
-  version = "9.1.0";
+  version = "9.2.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-python";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-5vzTL83qfBunhUos2YKmOzK2vEowoiygA4li3x3N6go=";
+    hash = "sha256-5jIYcxlePaG1N7WH8wRACPNywpLYZucj3d0WKyAULBI=";
   };
 
   prePatch = ''
